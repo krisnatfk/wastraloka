@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin · VirtualFit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+<!-- Belum disiapkan -->
+<main class="gate" id="viewSetup" hidden>
+  <section class="gate-card" aria-labelledby="setup-title">
+    <p class="eyebrow">Admin VirtualFit</p>
+    <h1 id="setup-title">Admin belum disiapkan</h1>
+    <p class="muted">Jalankan perintah ini di terminal project, lalu jalankan ulang <code>npm run dev</code>.</p>
+    <pre class="cmd">npm run admin:setup</pre>
+  </section>
+</main>
+
+<!-- Login -->
+<main class="gate" id="viewLogin" hidden>
+  <form class="gate-card" id="loginForm" aria-labelledby="login-title" novalidate>
+    <p class="eyebrow">Admin VirtualFit</p>
+    <h1 id="login-title">Masuk ke dashboard</h1>
+    <label class="field">Username
+      <input id="loginUser" name="username" autocomplete="username" required>
+    </label>
+    <label class="field">Password
+      <input id="loginPass" name="password" type="password" autocomplete="current-password" required>
+    </label>
+    <p class="form-error" id="loginError" role="alert"></p>
+    <button class="btn btn-lime" id="loginSubmit" type="submit">Masuk</button>
+  </form>
+</main>
+
+<!-- Dashboard -->
+<div class="shell" id="viewDashboard" hidden>
+  <header class="topbar">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path d="M4 25 13 7h4l-9 18H4Zm10 0 6-12h4l-6 12h-4Zm9 0 2-4h4l-2 4h-4Z" fill="currentColor"/></svg>
+      VirtualFit <span class="tag">Admin</span>
+    </a>
+    <div class="topbar-right">
+      <span class="muted mono" id="whoami"></span>
+      <button class="btn btn-line" id="logoutBtn" type="button">Keluar</button>
+    </div>
+  </header>
+
+  <main class="dash">
+    <section class="hero-panel" aria-labelledby="dash-title">
+      <div>
+        <p class="eyebrow eyebrow-light">Kredit Decart</p>
+        <h1 id="dash-title">API key &amp; kredit</h1>
+        <p class="hero-sub">Key dipakai berurutan dari atas. Kalau kreditnya habis atau ditolak Decart, cermin otomatis pindah ke key berikutnya.</p>
+      </div>
+      <div class="hero-meta">
+        <p class="updated mono" id="updatedAt" aria-live="polite"></p>
+        <p class="updated mono" id="trialLine"></p>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Ringkasan">
+      <article class="stat stat-white">
+        <small>Total kredit siap pakai</small>
+        <strong id="statCredits">–</strong>
+        <span id="statCreditsSub" class="muted"></span>
+      </article>
+      <article class="stat stat-lime">
+        <small>Perkiraan sisa waktu coba-pakai</small>
+        <strong id="statTime">–</strong>
+        <span id="statTimeSub"></span>
+      </article>
+      <article class="stat stat-mist">
+        <small>Key yang dipakai sekarang</small>
+        <strong class="stat-name" id="statCurrent">–</strong>
+        <span id="statCounts" class="muted"></span>
+      </article>
+      <article class="stat stat-ink">
+        <small>Total pemakaian tercatat</small>
+        <strong id="statUsage">–</strong>
+        <span id="statSessions"></span>
+      </article>
+    </section>
+
+    <section class="panel" aria-labelledby="keys-title">
+      <div class="panel-head">
+        <div>
+          <h2 id="keys-title">Daftar API key</h2>
+          <p class="muted">Saldo diambil langsung dari Decart. Key dengan sisa di bawah <span id="minCredits">10</span> kredit dianggap habis.</p>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-line" id="refreshAllBtn" type="button">Cek semua saldo</button>
+          <button class="btn btn-ink" id="addToggle" type="button" aria-expanded="false" aria-controls="addForm">+ Tambah key</button>
+        </div>
+      </div>
+
+      <form class="add-form" id="addForm" hidden novalidate>
+        <label class="field">Nama key
+          <input id="addLabel" maxlength="40" placeholder="contoh: Akun cadangan 1" required>
+        </label>
+        <label class="field field-grow">API key Decart
+          <span class="reveal-wrap">
+            <input id="addKey" type="password" autocomplete="off" spellcheck="false" placeholder="dct_..." required>
+            <button class="reveal" id="addReveal" type="button" aria-pressed="false">Tampilkan</button>
+          </span>
+        </label>
+        <div class="add-actions">
+          <button class="btn btn-lime" id="addSubmit" type="submit">Simpan key</button>
+        </div>
+        <p class="form-error" id="addError" role="alert"></p>
+        <p class="hint">Key diperiksa ke Decart dulu sebelum disimpan, lalu disimpan terenkripsi. Setelah tersimpan, key tidak bisa dilihat lagi.</p>
+      </form>
+
+      <ol class="keys" id="keyList" aria-live="polite"></ol>
+      <p class="empty" id="keysEmpty" hidden>Belum ada API key. Tambahkan key dari platform.decart.ai supaya cermin bisa dipakai.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="log-title">
+      <div class="panel-head">
+        <h2 id="log-title">Aktivitas terbaru</h2>
+      </div>
+      <ul class="log" id="eventList"></ul>
+      <p class="empty" id="eventsEmpty" hidden>Belum ada aktivitas.</p>
+    </section>
+  </main>
+</div>
+
+<dialog id="confirmDlg" aria-labelledby="confirm-title">
+  <form method="dialog" class="dlg">
+    <h3 id="confirm-title">Hapus API key?</h3>
+    <p class="muted" id="confirmText"></p>
+    <div class="dlg-actions">
+      <button class="btn btn-line" value="cancel">Batal</button>
+      <button class="btn btn-danger" value="ok">Hapus key</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="/admin/admin.js"></script>
+</body>
+</html>
