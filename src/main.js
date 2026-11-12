@@ -3,12 +3,9 @@ import { createDecartClient, models } from "@decartai/sdk";
 import { createCameraQuality, keepStageRatio } from "./camera-quality.js";
 import { WASTRA_CATALOG } from "./content/wastra-catalog.js";
 import { provinceById } from "./content/provinces.js";
-import { initHome, renderPassport } from "./home.js";
+import { renderPassport } from "./home.js";
 import { provinceUrl } from "./map.js";
-import { initMarquee } from "./marquee.js";
 import { stampTried } from "./paspor.js";
-import { initSiteNav } from "./site-nav.js";
-import { initTabBar } from "./tab-bar.js";
 
 const $ = (id) => document.getElementById(id);
 const CREDITS_PER_SEC = 2; // Lucy VTON realtime mode standar (fast = 4 credits/detik)
@@ -799,8 +796,4 @@ function hideToast() { $("toast").classList.remove("show"); }
 
 renderCatalog();
 refreshTrial();
-initSiteNav({ nav: $("siteNav"), sentinel: $("navSentinel") });
-initMarquee(document.querySelector(".marquee"));
-initTabBar();
-initHome();
 selectFromUrl();

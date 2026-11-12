@@ -26,39 +26,55 @@
     </a>
     <ul class="nav-links">
       <li><a href="#peta">Peta</a></li>
+      <li><a href="#galeri">Galeri</a></li>
+      <li><a href="#kuis">Kuis</a></li>
       <li><a href="#cermin">Cermin</a></li>
-      <li><a href="#wastra">Jelajah Wastra</a></li>
+      <li><a href="#wastra">Wastra</a></li>
       <li><a href="#paspor">Paspor</a></li>
-      <li><a href="#umkm">Untuk UMKM</a></li>
-      <li><a href="#sumber">Tentang &amp; Sumber</a></li>
+      <li><a href="#umkm">UMKM</a></li>
+      <li><a href="#sumber">Sumber</a></li>
     </ul>
     <a class="pill pill-gold nav-cta" href="#cermin">Coba cermin</a>
   </div>
 </nav>
 
 <header class="hero" id="beranda">
-  <img class="hero-bg" id="heroBg" alt="" fetchpriority="high">
+  <img class="hero-bg is-front" alt="" fetchpriority="high" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Borobudur%2C_Java%2C_Indonesia%2C_20220817_1016_8757.jpg/1920px-Borobudur%2C_Java%2C_Indonesia%2C_20220817_1016_8757.jpg">
+  <img class="hero-bg" alt="">
   <div class="hero-rail" aria-hidden="true"><i></i><span>38 provinsi · satu cermin</span><i></i></div>
 
   <div class="hero-copy">
-    <p class="eyebrow eyebrow-light eyebrow-left">BUDAYA GO! 2026</p>
-    <h1>Kenali wastra Nusantara, <em>lalu kenakan.</em></h1>
-    <p>Pilih provinsi di peta, pelajari kain, pakaian adat, rumah adat, dan tariannya. Setelah itu coba motifnya di badanmu sendiri lewat cermin AI live.</p>
-    <div class="hero-actions">
+    <p class="eyebrow eyebrow-light eyebrow-left hero-in" style="--d:0">BUDAYA GO! 2026</p>
+    <h1 class="hero-in" style="--d:1">Kenali wastra Nusantara, <em>lalu kenakan.</em></h1>
+    <p class="hero-in" style="--d:2">Pilih provinsi di peta, lihat rumah adat, tarian, alat musik, dan kainnya. Setelah itu coba motif wastra di badanmu sendiri lewat cermin AI live.</p>
+    <div class="hero-actions hero-in" style="--d:3">
       <a class="pill pill-gold pill-arrow" href="#peta">Buka peta
         <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
       </a>
-      <a class="pill pill-glass" href="#cermin">Coba cermin</a>
+      <a class="pill pill-glass" href="#kuis">Main kuis</a>
     </div>
+    <dl class="hero-stats hero-in" style="--d:4">
+      <div><dt>Provinsi</dt><dd>38</dd></div>
+      <div><dt>Wastra tercatat</dt><dd id="statWastra">58</dd></div>
+      <div><dt>Alat musik</dt><dd id="statMusic">74</dd></div>
+      <div><dt>Foto budaya</dt><dd id="statPhotos">92</dd></div>
+    </dl>
   </div>
 
-  <div>
-    <p class="hero-list-title">Jelajahi wastra</p>
-    <ol class="hero-list" id="heroList"></ol>
-  </div>
+  <aside class="hero-side hero-in" style="--d:2" aria-labelledby="heroListTitle">
+    <p class="hero-list-title" id="heroListTitle">Jelajahi provinsi</p>
+    <ol class="hero-list">
+      <li data-slide="jawa-tengah"><a href="/provinsi/?p=jawa-tengah"><b>Jawa Tengah</b><small>Batik Tiga Negeri · Lurik · Gamelan</small></a></li>
+      <li data-slide="sumatera-barat"><a href="/provinsi/?p=sumatera-barat"><b>Sumatera Barat</b><small>Songket Pandai Sikek · Saluang</small></a></li>
+      <li data-slide="bali"><a href="/provinsi/?p=bali"><b>Bali</b><small>Endek · Gringsing · Kecak</small></a></li>
+      <li data-slide="nusa-tenggara-timur"><a href="/provinsi/?p=nusa-tenggara-timur"><b>Nusa Tenggara Timur</b><small>Tenun Ikat Sumba · Sasando</small></a></li>
+      <li data-slide="papua-barat-daya"><a href="/provinsi/?p=papua-barat-daya"><b>Papua Barat Daya</b><small>Noken · Triton</small></a></li>
+    </ol>
+    <div class="hero-progress" aria-hidden="true"><i id="heroProgress"></i></div>
+  </aside>
 
   <div class="hero-strip" id="heroStrip">
-    <p class="photo-credit" id="heroCredit"></p>
+    <p class="photo-credit" id="heroCredit">Jawa Tengah: foto Jakub Hałun · CC BY-SA 4.0</p>
   </div>
 </header>
 
@@ -76,20 +92,44 @@
 <main>
   <section id="peta" aria-labelledby="peta-title">
     <p class="eyebrow">Peta wastra</p>
-    <h2 id="peta-title" class="sec-title">Satu peta, <em>38 provinsi.</em></h2>
+    <h2 id="peta-title" class="sec-title" data-reveal>Satu peta, <em>38 provinsi.</em></h2>
     <p class="sec-sub">Klik provinsi untuk membuka halamannya: wastra, pakaian adat, rumah adat, dan tarian. Provinsi yang sudah kamu kunjungi berwarna kunyit.</p>
 
-    <div class="map-card">
-      <div class="region-chips" id="regionChips" role="group" aria-label="Sorot wilayah"></div>
+    <div class="map-card" data-reveal>
+      <div class="map-tools"><div class="region-chips" id="regionChips" role="group" aria-label="Sorot wilayah"></div><button class="btn-line dice" id="randomProvince" type="button">🎲 Provinsi acak</button></div>
       <div class="map-wrap" id="map"></div>
       <p class="map-legend"><span><i style="background:#c9a37a"></i>Belum dikunjungi</span><span><i style="background:var(--kunyit)"></i>Sudah ada cap di paspor</span></p>
       <div class="prov-index" id="provIndex" aria-label="Daftar provinsi per wilayah"></div>
     </div>
   </section>
 
+  <section id="galeri" aria-labelledby="galeri-title">
+    <p class="eyebrow" data-reveal>Galeri budaya</p>
+    <h2 id="galeri-title" class="sec-title" data-reveal>Rumah, tari, musik, <em>dan busana.</em></h2>
+    <p class="sec-sub" data-reveal>Foto dari Wikipedia &amp; Wikimedia Commons. Klik untuk memperbesar, lihat siapa fotografernya, lalu lompat ke provinsinya.</p>
+    <div class="gallery-tabs" id="galleryTabs" role="group" aria-label="Jenis budaya"></div>
+    <div class="gallery-grid" id="galleryGrid" data-reveal-group></div>
+  </section>
+
+  <section id="kuis" aria-labelledby="kuis-title">
+    <p class="eyebrow" data-reveal>Kuis</p>
+    <h2 id="kuis-title" class="sec-title" data-reveal>Tebak <em>asalnya!</em></h2>
+    <p class="sec-sub" data-reveal>Lihat fotonya, tebak provinsinya. Jawaban benar memberi cap di paspor wastramu.</p>
+    <div class="quiz" id="quiz" data-reveal>
+      <figure class="quiz-photo"><img id="quizImg" alt=""></figure>
+      <div class="quiz-body">
+        <p class="quiz-score" id="quizScore" aria-live="polite">Skor 0/0</p>
+        <h3 id="quizQuestion">Memuat soal...</h3>
+        <div class="quiz-options" id="quizOptions"></div>
+        <p class="quiz-feedback" id="quizFeedback" role="status"></p>
+        <button class="pill pill-gold" id="quizNext" type="button" hidden>Soal berikutnya →</button>
+      </div>
+    </div>
+  </section>
+
   <section id="cermin" class="mirror-sec" aria-labelledby="mirror-title">
     <p class="eyebrow">Cermin</p>
-    <h2 id="mirror-title" class="sec-title">Seret wastra <em>ke badanmu.</em></h2>
+    <h2 id="mirror-title" class="sec-title" data-reveal>Seret wastra <em>ke badanmu.</em></h2>
     <p class="sec-sub">Kenali dulu ceritanya, baru coba. Lepas jaket tebal dulu supaya hasilnya paling pas.</p>
 
     <div class="app">
@@ -191,14 +231,14 @@
 
   <section id="wastra" aria-labelledby="wastra-title">
     <p class="eyebrow">Jelajah wastra</p>
-    <h2 id="wastra-title" class="sec-title">Kain yang bisa <em>kamu coba hari ini.</em></h2>
+    <h2 id="wastra-title" class="sec-title" data-reveal>Kain yang bisa <em>kamu coba hari ini.</em></h2>
     <p class="sec-sub">Setiap kain punya asal, teknik, dan cerita. Foto dari Wikimedia Commons, nama fotografer dan lisensinya tercantum di tiap kartu.</p>
-    <div class="wastra-grid" id="wastraGrid"></div>
+    <div class="wastra-grid" id="wastraGrid" data-reveal-group></div>
   </section>
 
   <section id="paspor" aria-labelledby="paspor-title">
     <p class="eyebrow">Paspor wastra</p>
-    <h2 id="paspor-title" class="sec-title">Kumpulkan cap <em>dari 38 provinsi.</em></h2>
+    <h2 id="paspor-title" class="sec-title" data-reveal>Kumpulkan cap <em>dari 38 provinsi.</em></h2>
     <p class="sec-sub">Cap kunjungan didapat saat membuka halaman provinsi, cap coba saat mencoba wastra dari provinsi itu. Tersimpan di browser ini saja, tanpa akun.</p>
     <div class="paspor">
       <div class="paspor-cover">
@@ -215,20 +255,23 @@
 
   <section id="umkm" aria-labelledby="umkm-title">
     <p class="eyebrow">Perajin &amp; UMKM</p>
-    <h2 id="umkm-title" class="sec-title">Dari cermin <em>ke perajin.</em></h2>
+    <h2 id="umkm-title" class="sec-title" data-reveal>Dari cermin <em>ke perajin.</em></h2>
     <p class="sec-sub">Tujuan akhirnya: orang yang sudah mencoba sebuah wastra bisa langsung memesan ke perajin aslinya.</p>
-    <ol class="umkm">
+    <ol class="umkm" data-reveal-group>
       <li><h3>Kirim foto produk</h3><p>Foto kemeja atau kain tampak depan dengan latar polos, plus nama motif dan asal daerahnya.</p></li>
       <li><h3>Kami kurasi</h3><p>Asal, teknik (tulis, cap, tenun, ikat), dan cerita motif dicek ke sumber sebelum tampil di cermin.</p></li>
       <li><h3>Pembeli pesan langsung</h3><p>Kartu wastra mendapat tombol "Pesan via WhatsApp" ke nomor perajin. Tanpa komisi selama masa prototipe.</p></li>
     </ol>
-    <p class="honest">Saat ini <b>belum ada perajin terdaftar</b>, jadi tombol pesan belum tampil di kartu mana pun. Kami tidak menampilkan toko atau ulasan contoh.</p>
+    <h3 class="sub-title" data-reveal>Sentra wastra yang bisa kamu kunjungi</h3>
+    <p class="sec-sub" data-reveal>Kampung dan desa perajin yang dikenal luas. Ini tempat umum, bukan mitra kami. Tiap halaman provinsi juga punya tautan pencarian toko di Google Maps, Tokopedia, dan Shopee.</p>
+    <div class="sentra-grid" id="sentraGrid" data-reveal-group></div>
+    <p class="honest">Belum ada perajin yang mendaftar langsung ke Cermin Wastra, jadi tombol "Pesan via WhatsApp" belum tampil. Kami tidak menampilkan toko, nomor, atau ulasan karangan.</p>
   </section>
 
   <section id="sumber" aria-labelledby="sumber-title">
     <p class="eyebrow">Tentang &amp; sumber</p>
-    <h2 id="sumber-title" class="sec-title">Dari mana <em>datanya.</em></h2>
-    <div class="sources">
+    <h2 id="sumber-title" class="sec-title" data-reveal>Dari mana <em>datanya.</em></h2>
+    <div class="sources" data-reveal-group>
       <article>
         <h3>Data budaya</h3>
         <ul id="sourceList"></ul>
@@ -267,6 +310,8 @@
     <div>
       <h3>Menu</h3>
       <ul>
+        <li><a href="#galeri">Galeri budaya</a></li>
+        <li><a href="#kuis">Kuis tebak asal</a></li>
         <li><a href="#cermin">Cermin</a></li>
         <li><a href="#wastra">Jelajah Wastra</a></li>
         <li><a href="#paspor">Paspor Wastra</a></li>
@@ -292,7 +337,7 @@
   <a href="#beranda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Beranda</a>
   <a href="#peta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Peta</a>
   <a href="#cermin"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="11" rx="6" ry="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 19v3M8 22h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Cermin</a>
-  <a href="#wastra"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3 4 6l2 4 2-1v12h8V9l2 1 2-4-4-3c-1 1.5-2.4 2-4 2s-3-.5-4-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Wastra</a>
+  <a href="#galeri"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m3 16 5-5 5 5 3-3 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Galeri</a>
   <a href="#paspor"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="11" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 17h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Paspor</a>
 </nav>
 
@@ -324,6 +369,22 @@
   </form>
 </dialog>
 
+<dialog id="lightbox" class="lightbox" aria-labelledby="lightboxTitle">
+  <figure>
+    <img id="lightboxImg" alt="">
+    <figcaption>
+      <small id="lightboxKind"></small>
+      <h3 id="lightboxTitle"></h3>
+      <p class="tiny" id="lightboxCredit"></p>
+      <div class="lightbox-actions">
+        <a class="pill pill-sogan" id="lightboxLink" href="/">Jelajahi provinsi</a>
+        <button class="btn-line" id="lightboxClose" type="button">Tutup</button>
+      </div>
+    </figcaption>
+  </figure>
+</dialog>
+
+<script type="module" src="/src/home.js"></script>
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>

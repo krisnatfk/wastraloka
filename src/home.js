@@ -1,56 +1,44 @@
-// Beranda: hero foto, peta provinsi, daftar per wilayah, kartu jelajah wastra, dan paspor.
+// Beranda: hero, peta, galeri budaya, kuis, kartu wastra, paspor, sentra UMKM, sumber.
+// Dimuat sebagai script sendiri (terpisah dari cermin AI), jadi kalau cermin gagal dimuat, isi beranda tetap tampil.
 
-import { PROVINCE_PHOTOS } from "./content/province-photos.js";
+import { CULTURE_PHOTOS } from "./content/culture-photos.js";
+import { MUSIC, MUSIC_SOURCE, SENTRA, sentraMapUrl } from "./content/culture.js";
 import { PROVINCES, REGIONS, SOURCES, provinceById } from "./content/provinces.js";
-import { WASTRA_CATALOG, wikimediaSized } from "./content/wastra-catalog.js";
+import { WASTRA_CATALOG } from "./content/wastra-catalog.js";
+import { el } from "./dom.js";
+import { initGallery } from "./gallery.js";
+import { initHero } from "./hero.js";
 import { provinceUrl, renderMap } from "./map.js";
-import { clearPassport, formatStampDate, readPassport } from "./paspor.js";
+import { initMarquee } from "./marquee.js";
+import { clearPassport, formatStampDate, readPassport, stampVisited } from "./paspor.js";
+import { initQuiz } from "./quiz.js";
+import { initReveal } from "./reveal.js";
+import { initSiteNav } from "./site-nav.js";
+import { initTabBar } from "./tab-bar.js";
 
-const HERO_PROVINCE = "jawa-tengah";
-const HERO_LIST = ["sumatera-barat", "daerah-istimewa-yogyakarta", "bali", "kalimantan-selatan", "sulawesi-selatan"];
-const HERO_THUMBS = ["bali", "sumatera-utara", "nusa-tenggara-timur", "papua-pegunungan"];
-const THUMB_WIDTH = 500;
-const HERO_WIDTH = 1920;
+const COUNT_UP_MS = 900;
+let mapApi = null;
 
-const el = (tag, props = {}, children = []) => {
-  const node = Object.assign(document.createElement(tag), props);
-  node.append(...children);
-  return node;
-};
+const stampedIds = (passport) => new Set([...Object.keys(passport.visited), ...Object.keys(passport.tried)]);
 
-export const photoCredit = (photo) => `Foto: ${photo.artist} · ${photo.license}`;
+function renderMapSection() {
+  const visited = stampedIds(readPassport());
+  const host = document.getElementById("map");
+  mapApi = renderMap(host, { visited });
 
-function creditLink(photo, prefix = "") {
-  const link = el("a", { href: photo.page, rel: "noopener", textContent: `${prefix}${photo.artist} · ${photo.license}` });
-  return link;
-}
-
-function renderHero() {
-  const photo = PROVINCE_PHOTOS[HERO_PROVINCE];
-  const bg = document.getElementById("heroBg");
-  bg.src = wikimediaSized(photo.src, HERO_WIDTH);
-  bg.alt = "";
-
-  document.getElementById("heroList").replaceChildren(...HERO_LIST.map((id) => {
-    const p = provinceById(id);
-    return el("li", {}, [el("a", { href: provinceUrl(id) }, [el("b", { textContent: p.name }), el("small", { textContent: p.wastra.map((x) => x.name).join(" · ") })])]);
-  }));
-
-  const strip = document.getElementById("heroStrip");
-  const credit = document.getElementById("heroCredit");
-  for (const id of HERO_THUMBS) {
-    const p = provinceById(id);
-    const ph = PROVINCE_PHOTOS[id];
-    const img = el("img", { src: wikimediaSized(ph.src, THUMB_WIDTH), alt: "", loading: "lazy" });
-    const link = el("a", { className: "thumb", href: provinceUrl(id), title: photoCredit(ph) }, [img, el("span", { textContent: p.name })]);
-    strip.insertBefore(link, credit);
+  // provinsi muncul bergantian saat peta pertama kali terlihat
+  const paths = host.querySelectorAll(".map-prov");
+  paths.forEach((p, i) => p.style.setProperty("--i", i));
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      host.classList.add("is-drawn");
+      io.disconnect();
+    }, { threshold: 0.2 });
+    io.observe(host);
+  } else {
+    host.classList.add("is-drawn");
   }
-  credit.replaceChildren(`Latar: Borobudur, Jawa Tengah. `, creditLink(photo, "Foto "), ". Foto kecil: lihat halaman provinsinya.");
-}
-
-function renderMapSection(passport) {
-  const visited = new Set([...Object.keys(passport.visited), ...Object.keys(passport.tried)]);
-  const map = renderMap(document.getElementById("map"), { visited });
 
   const chips = document.getElementById("regionChips");
   const params = new URLSearchParams(location.search);
@@ -62,7 +50,7 @@ function renderMapSection(passport) {
   });
   const sync = () => {
     for (const b of buttons) b.setAttribute("aria-pressed", String(b.dataset.region === activeRegion));
-    map.setRegion(activeRegion);
+    mapApi.setRegion(activeRegion);
   };
   chips.replaceChildren(...buttons);
   chips.addEventListener("click", (e) => {
@@ -72,6 +60,11 @@ function renderMapSection(passport) {
     sync();
   });
   sync();
+
+  document.getElementById("randomProvince").addEventListener("click", () => {
+    const pick = PROVINCES[Math.floor(Math.random() * PROVINCES.length)];
+    location.href = provinceUrl(pick.id);
+  });
 
   // daftar teks per wilayah: cara cepat ke provinsi kecil (DKI, DIY, Bali) dan untuk pembaca layar
   document.getElementById("provIndex").replaceChildren(...REGIONS.map((r) => {
@@ -83,7 +76,7 @@ function renderMapSection(passport) {
     return el("div", {}, [el("h3", { textContent: r.name }), el("ul", {}, items)]);
   }));
 
-  document.getElementById("footRegions").replaceChildren(...REGIONS.slice(0, 7).map((r) => el("li", {}, [el("a", { href: `/?wilayah=${r.id}#peta`, textContent: r.name })])));
+  document.getElementById("footRegions").replaceChildren(...REGIONS.map((r) => el("li", {}, [el("a", { href: `/?wilayah=${r.id}#peta`, textContent: r.name })])));
 }
 
 function renderWastraGrid() {
@@ -102,10 +95,23 @@ function renderWastraGrid() {
   }));
 }
 
+function countUp(node, target, suffix) {
+  const start = performance.now();
+  const from = Number(node.dataset.value || 0);
+  node.dataset.value = String(target);
+  const step = (now) => {
+    const t = Math.min(1, (now - start) / COUNT_UP_MS);
+    const eased = 1 - (1 - t) ** 3;
+    node.replaceChildren(`${Math.round(from + (target - from) * eased)} `, suffix.cloneNode(true));
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
 export function renderPassport() {
   const passport = readPassport();
-  const stamped = new Set([...Object.keys(passport.visited), ...Object.keys(passport.tried)]);
-  document.getElementById("pasporCount").replaceChildren(`${stamped.size} `, el("small", { textContent: `/ ${PROVINCES.length}` }));
+  const stamped = stampedIds(passport);
+  countUp(document.getElementById("pasporCount"), stamped.size, el("small", { textContent: `/ ${PROVINCES.length}` }));
   document.getElementById("pasporBar").style.width = `${(stamped.size / PROVINCES.length) * 100}%`;
   document.getElementById("pasporTried").textContent = `${Object.keys(passport.tried).length} provinsi sudah dicoba di cermin`;
   document.getElementById("stamps").replaceChildren(...PROVINCES.map((p) => {
@@ -118,23 +124,62 @@ export function renderPassport() {
     li.append(el("a", { href: provinceUrl(p.id) }, [p.name, el("small", { textContent: status })]));
     return li;
   }));
+  for (const link of document.querySelectorAll(".map-prov, .prov-index a")) {
+    const id = link.dataset.id || new URL(link.href, location.href).searchParams.get("p");
+    link.classList.toggle("is-visited", stamped.has(id));
+  }
+}
+
+function renderSentra() {
+  const cards = Object.entries(SENTRA).flatMap(([provinceId, list]) => list.map((s) => {
+    const province = provinceById(provinceId);
+    return el("article", { className: "sentra" }, [
+      el("small", { textContent: s.wastra }),
+      el("h3", { textContent: s.name }),
+      el("p", { textContent: `${s.place}, ${province.name}` }),
+      el("div", { className: "sentra-links" }, [
+        el("a", { href: sentraMapUrl(s), rel: "noopener", target: "_blank", textContent: "Lihat di peta ↗" }),
+        el("a", { href: provinceUrl(provinceId), textContent: "Halaman provinsi" }),
+        el("a", { href: s.source, rel: "noopener", target: "_blank", textContent: "Sumber" }),
+      ]),
+    ]);
+  }));
+  document.getElementById("sentraGrid").replaceChildren(...cards);
 }
 
 function renderSources() {
-  document.getElementById("sourceList").replaceChildren(...Object.values(SOURCES).map((s) => el("li", {}, [el("a", { href: s.url, rel: "noopener", textContent: s.label })])));
+  const all = [...Object.values(SOURCES), MUSIC_SOURCE];
+  document.getElementById("sourceList").replaceChildren(...all.map((s) => el("li", {}, [el("a", { href: s.url, rel: "noopener", textContent: s.label })])));
 }
 
-export function initHome() {
-  const passport = readPassport();
-  renderHero();
-  renderMapSection(passport);
+// angka di hero dihitung dari data, supaya tidak basi saat data bertambah
+function renderStats() {
+  const set = (id, value) => { const node = document.getElementById(id); if (node) node.textContent = String(value); };
+  set("statWastra", PROVINCES.reduce((total, p) => total + p.wastra.length, 0));
+  set("statMusic", Object.values(MUSIC).flat().length);
+  set("statPhotos", Object.values(CULTURE_PHOTOS).flatMap(Object.values).filter(Boolean).length);
+}
+
+function initHome() {
+  initSiteNav({ nav: document.getElementById("siteNav"), sentinel: document.getElementById("navSentinel") });
+  initTabBar();
+  initMarquee(document.querySelector(".marquee"));
+  initHero();
+  renderStats();
+  renderMapSection();
   renderWastraGrid();
-  renderPassport();
+  renderSentra();
   renderSources();
+  renderPassport();
+  const reveal = initReveal();
+  initGallery({ onRender: (grid) => reveal.observe(grid.parentElement) });
+  initQuiz({ onCorrect: (id) => { if (stampVisited(id)) renderPassport(); } });
+
   document.getElementById("pasporReset").addEventListener("click", () => {
     if (!window.confirm("Kosongkan semua cap di paspor? Tidak bisa dibatalkan.")) return;
     clearPassport();
     renderPassport();
-    for (const node of document.querySelectorAll(".map-prov.is-visited, .prov-index a.is-visited")) node.classList.remove("is-visited");
   });
 }
+
+initHome();

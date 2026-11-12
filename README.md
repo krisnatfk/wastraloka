@@ -8,6 +8,10 @@ Fitur:
 - **Peta 38 provinsi** (`/#peta`): klik provinsi, sorot per wilayah, daftar teks untuk provinsi kecil dan pembaca layar.
 - **Halaman provinsi** (`/provinsi/?p=<id>`): foto, warna aksen per wilayah, wastra (berlabel "perlu verifikasi" bila belum pasti), pakaian adat, rumah adat, tarian, sumber, peta mini, provinsi tetangga.
 - **Cermin**: katalog wastra (foto Wikimedia Commons), "Kenali dulu, baru coba", foto asli di pojok cermin untuk membandingkan motif, **Simpan foto** (bagikan di HP, unduh di laptop), link langsung `/?coba=<id>#cermin`.
+- **Galeri budaya** (`/#galeri`): 92 foto rumah adat, tarian, alat musik, dan pakaian dari Wikimedia Commons, filter per jenis, acak, lightbox dengan kredit.
+- **Kuis "Tebak asalnya"** (`/#kuis`): tebak provinsi dari foto; jawaban benar memberi cap paspor.
+- **Belanja & sentra**: halaman provinsi memuat tautan pencarian toko (Google Maps, Tokopedia, Shopee) dan sentra perajin yang dikenal umum. Tidak ada toko karangan.
+- **Animasi**: hero berganti foto antar provinsi, konten muncul saat di-scroll, peta "tergambar" per provinsi. Semua mati otomatis bila sistem meminta "kurangi gerakan".
 - **Paspor Wastra**: cap kunjungan dan cap coba per provinsi, disimpan di browser (localStorage), tanpa akun.
 - **Untuk UMKM**: alur pendaftaran perajin. Belum ada perajin terdaftar, jadi tidak ada toko atau ulasan contoh yang ditampilkan.
 
