@@ -2,152 +2,109 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
-<title>VirtualFit · Cermin AI</title>
-<meta name="description" content="Coba baju secara live lewat kamera. VirtualFit memakaikan baju dari katalog atau link toko online ke badanmu dengan AI.">
+<meta name="theme-color" content="#3b1f13">
+<title>Cermin Wastra · Coba Wastra Nusantara</title>
+<meta name="description" content="Jelajahi wastra dari 38 provinsi Indonesia lewat peta interaktif, lalu coba motifnya secara live di cermin AI. Prototipe BUDAYA GO! 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://thumb.wikimedia.org" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
-<a class="skip" href="#cermin">Langsung ke cermin</a>
+<a class="skip" href="#peta">Langsung ke peta</a>
 
-<!-- Navbar: melayang di atas halaman; setelah di-scroll berubah jadi "pulau" kaca (lihat src/site-nav.js) -->
 <div class="nav-sentinel" id="navSentinel" aria-hidden="true"></div>
 <nav class="site-nav" id="siteNav" aria-label="Utama">
   <div class="nav-shell">
     <span class="nav-glass" aria-hidden="true"></span>
-    <a class="brand" href="#">
-      <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><path d="M4 25 13 7h4l-9 18H4Zm10 0 6-12h4l-6 12h-4Zm9 0 2-4h4l-2 4h-4Z" fill="currentColor"/></svg>
-      VirtualFit
+    <a class="brand" href="/">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="16" cy="8.5" rx="4" ry="6.5"/><ellipse cx="16" cy="23.5" rx="4" ry="6.5"/><ellipse cx="8.5" cy="16" rx="6.5" ry="4"/><ellipse cx="23.5" cy="16" rx="6.5" ry="4"/></g></svg>
+      Cermin Wastra
     </a>
     <ul class="nav-links">
+      <li><a href="#peta">Peta</a></li>
       <li><a href="#cermin">Cermin</a></li>
-      <li><a href="#cara-kerja">Cara kerja</a></li>
-      <li><a href="#fitur">Fitur</a></li>
-      <li><a href="#toko">Untuk toko</a></li>
+      <li><a href="#wastra">Jelajah Wastra</a></li>
+      <li><a href="#paspor">Paspor</a></li>
+      <li><a href="#umkm">Untuk UMKM</a></li>
+      <li><a href="#sumber">Tentang &amp; Sumber</a></li>
     </ul>
-    <a class="pill pill-lime nav-cta" href="#cermin">Coba sekarang</a>
+    <a class="pill pill-gold nav-cta" href="#cermin">Coba cermin</a>
   </div>
 </nav>
 
-<header class="hero-wrap">
-  <div class="hero">
+<header class="hero" id="beranda">
+  <img class="hero-bg" id="heroBg" alt="" fetchpriority="high">
+  <div class="hero-rail" aria-hidden="true"><i></i><span>38 provinsi · satu cermin</span><i></i></div>
 
-    <div class="hero-copy">
-      <h1>Coba baju secara live<br><span>dengan cermin AI</span></h1>
-      <p>Nyalakan kamera, pilih baju, dan lihat dirimu memakainya saat itu juga. Bisa dari katalog, foto sendiri, atau link toko online.</p>
-      <div class="hero-actions">
-        <a class="pill pill-glass" href="#cara-kerja">Lihat cara kerja</a>
-        <a class="pill pill-lime pill-arrow" href="#cermin">Coba sekarang
-          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-        </a>
-      </div>
+  <div class="hero-copy">
+    <p class="eyebrow eyebrow-light eyebrow-left">BUDAYA GO! 2026</p>
+    <h1>Kenali wastra Nusantara, <em>lalu kenakan.</em></h1>
+    <p>Pilih provinsi di peta, pelajari kain, pakaian adat, rumah adat, dan tariannya. Setelah itu coba motifnya di badanmu sendiri lewat cermin AI live.</p>
+    <div class="hero-actions">
+      <a class="pill pill-gold pill-arrow" href="#peta">Buka peta
+        <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+      </a>
+      <a class="pill pill-glass" href="#cermin">Coba cermin</a>
     </div>
+  </div>
 
-    <!-- Deretan kartu melengkung: cuplikan isi aplikasi yang sebenarnya -->
-    <div class="arc" data-carousel tabindex="0" role="group" aria-roledescription="carousel" aria-label="Cuplikan fitur VirtualFit. Geser atau pakai panah kiri dan kanan.">
-      <div class="tile t-photo" style="--o:-6"><img src="/garments/unsplash/jaket-denim.jpg" alt=""><span class="chip">Outer</span><b>Jaket denim</b></div>
-      <div class="tile t-stat" style="--o:-5"><small>Biaya</small><b>±2</b><small>kredit per detik</small></div>
-      <div class="tile t-mini" style="--o:-4"><img src="/garments/unsplash/beanie-hitam.jpg" alt=""><b>Beanie hitam</b></div>
-      <div class="tile t-list" style="--o:-3">
-        <small>Katalog</small>
-        <i><img src="/garments/unsplash/kemeja-putih.jpg" alt="">Linen putih</i>
-        <i><img src="/garments/unsplash/kemeja-biru.jpg" alt="">Linen biru</i>
-        <i><img src="/garments/unsplash/kemeja-rajut.jpg" alt="">Tekstur krem</i>
-      </div>
-      <div class="tile t-photo" style="--o:-2"><img src="/garments/unsplash/bomber-cokelat.jpg" alt=""><span class="chip">Outer</span><b>Bomber cokelat</b></div>
-      <div class="tile t-prompt" style="--o:-1">
-        <small>Prompt ke AI</small>
-        <p>Wearing a tan brown bomber jacket with a ribbed collar, zipped closed.</p>
-      </div>
-      <div class="tile t-dark" style="--o:0" data-start>
-        <span class="live-dot"></span><small>AI aktif</small>
-        <p>Video kamera digambar ulang <em>secara live</em> memakai baju pilihanmu.</p>
-      </div>
-      <div class="tile t-glass" style="--o:1"><span class="plus">+</span><b>Impor baju</b><small>Tempel link toko</small></div>
-      <div class="tile t-stat" style="--o:2"><small>Kamera</small><b>720p</b><small>30 fps</small></div>
-      <div class="tile t-photo" style="--o:3"><img src="/garments/unsplash/blazer-navy.jpg" alt=""><span class="chip">Outer</span><b>Blazer navy</b></div>
-      <div class="tile t-mini" style="--o:4"><img src="/garments/unsplash/topi-kuning.jpg" alt="" style="object-position: 82% 62%"><b>Topi mustard</b></div>
-      <div class="tile t-mini" style="--o:5"><img src="/garments/unsplash/puffer-putih.jpg" alt=""><b>Puffer putih</b></div>
-    </div>
+  <div>
+    <p class="hero-list-title">Jelajahi wastra</p>
+    <ol class="hero-list" id="heroList"></ol>
+  </div>
 
-    <div class="hero-foot">
-      <button class="carousel-toggle" type="button" data-carousel-toggle aria-pressed="false">Jeda kartu</button>
-    </div>
+  <div class="hero-strip" id="heroStrip">
+    <p class="photo-credit" id="heroCredit"></p>
   </div>
 </header>
 
-<div class="marquee" role="group" aria-label="Sumber baju yang bisa diimpor">
+<div class="marquee" role="group" aria-label="Contoh wastra Nusantara">
   <div class="marquee-track">
     <div class="marquee-group">
-      <span>Tokopedia</span><span>Shopee</span><span>Lazada</span><span>Zalora</span><span>Instagram</span><span>Foto sendiri</span><span>Tempel gambar</span>
+      <span>Songket Palembang</span><span>Ulos</span><span>Tapis Lampung</span><span>Batik Tiga Negeri</span><span>Mega Mendung</span><span>Gringsing</span><span>Tenun Ikat Sumba</span><span>Sasirangan</span><span>Ulap Doyo</span><span>Karawo</span><span>Lipa Sabbe</span><span>Tenun Tanimbar</span><span>Noken</span>
     </div>
     <div class="marquee-group" aria-hidden="true">
-      <span>Tokopedia</span><span>Shopee</span><span>Lazada</span><span>Zalora</span><span>Instagram</span><span>Foto sendiri</span><span>Tempel gambar</span>
+      <span>Songket Palembang</span><span>Ulos</span><span>Tapis Lampung</span><span>Batik Tiga Negeri</span><span>Mega Mendung</span><span>Gringsing</span><span>Tenun Ikat Sumba</span><span>Sasirangan</span><span>Ulap Doyo</span><span>Karawo</span><span>Lipa Sabbe</span><span>Tenun Tanimbar</span><span>Noken</span>
     </div>
   </div>
 </div>
 
 <main>
-  <section class="about" aria-labelledby="about-title">
-    <p class="eyebrow">Tentang</p>
-    <h2 id="about-title" class="statement">
-      Cermin yang memakaikan
-      <span class="ico ico-sky" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 3 4 6l2 4 2-1v12h8V9l2 1 2-4-4-3c-1 1.5-2.4 2-4 2s-3-.5-4-2Z" fill="currentColor"/></svg></span>
-      baju pilihanmu
-      <span class="dim">dan bikin belanja online
-      <span class="ico ico-lime" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M5 12.5 10 17l9-10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      lebih yakin</span>
-    </h2>
+  <section id="peta" aria-labelledby="peta-title">
+    <p class="eyebrow">Peta wastra</p>
+    <h2 id="peta-title" class="sec-title">Satu peta, <em>38 provinsi.</em></h2>
+    <p class="sec-sub">Klik provinsi untuk membuka halamannya: wastra, pakaian adat, rumah adat, dan tarian. Provinsi yang sudah kamu kunjungi berwarna kunyit.</p>
 
-    <div class="bento">
-      <article class="b b-photo">
-        <img src="/garments/unsplash/kemeja-biru.jpg" alt="">
-        <div class="b-card">
-          <strong>9</strong>
-          <span>Baju contoh siap dicoba: atasan, outer, dan topi.</span>
-        </div>
-      </article>
-      <article class="b b-mist">
-        <small>Video hasil AI</small>
-        <strong>720p</strong>
-        <span>Digambar ulang 30 kali per detik, mengikuti gerak badanmu.</span>
-      </article>
-      <div class="b-stack">
-        <article class="b b-lime">
-          <small>Biaya pemakaian</small>
-          <strong>±2</strong>
-          <span>kredit Decart per detik selama cermin menyala.</span>
-        </article>
-        <article class="b b-ink">
-          <small>Mati otomatis</small>
-          <strong>20 dtk</strong>
-        </article>
-      </div>
+    <div class="map-card">
+      <div class="region-chips" id="regionChips" role="group" aria-label="Sorot wilayah"></div>
+      <div class="map-wrap" id="map"></div>
+      <p class="map-legend"><span><i style="background:#c9a37a"></i>Belum dikunjungi</span><span><i style="background:var(--kunyit)"></i>Sudah ada cap di paspor</span></p>
+      <div class="prov-index" id="provIndex" aria-label="Daftar provinsi per wilayah"></div>
     </div>
   </section>
 
   <section id="cermin" class="mirror-sec" aria-labelledby="mirror-title">
     <p class="eyebrow">Cermin</p>
-    <h2 id="mirror-title" class="sec-title">Seret baju ke badanmu.</h2>
-    <p class="sec-sub">Lepas jaket tebal atau outer dulu supaya hasilnya paling pas.</p>
+    <h2 id="mirror-title" class="sec-title">Seret wastra <em>ke badanmu.</em></h2>
+    <p class="sec-sub">Kenali dulu ceritanya, baru coba. Lepas jaket tebal dulu supaya hasilnya paling pas.</p>
 
     <div class="app">
-      <section class="panel" aria-label="Katalog baju">
-        <div class="tabs" id="tabs" role="group" aria-label="Filter kategori">
+      <section class="panel" aria-label="Katalog wastra">
+        <div class="tabs" id="tabs" role="group" aria-label="Filter katalog">
           <button data-cat="all" class="on" type="button">Semua</button>
-          <button data-cat="top" type="button">Atasan</button>
-          <button data-cat="outer" type="button">Outer</button>
-          <button data-cat="hat" type="button">Topi</button>
+          <button data-cat="top" type="button">Kemeja batik</button>
+          <button data-cat="kain" type="button">Motif kain</button>
+          <button data-cat="mine" type="button">Milikmu</button>
         </div>
 
         <div class="catalog" id="catalog"></div>
 
         <div class="import">
-          <p class="import-title">Impor dari toko online</p>
+          <p class="import-title">Punya wastra sendiri?</p>
           <div class="urlrow">
             <label class="sr-only" for="url">Link produk atau gambar</label>
             <input id="url" type="text" placeholder="Tempel link produk atau gambar">
@@ -156,7 +113,7 @@
           <div class="import-actions">
             <button id="upBtn" class="btn-line" type="button">Upload foto</button>
             <input id="up" type="file" accept="image/*" hidden>
-            <span class="tiny">atau seret foto baju dari tab lain ke kamera</span>
+            <span class="tiny">atau seret foto dari tab lain ke cermin</span>
           </div>
         </div>
       </section>
@@ -169,11 +126,11 @@
           <div class="intro" id="intro">
             <div class="intro-box">
               <p class="eyebrow eyebrow-light">Cermin AI live</p>
-              <h3>Lihat dirimu memakai baju pilihan</h3>
-              <p>Video kamera dikirim ke AI Decart lalu digambar ulang secara live. Biaya dihitung per detik selama cermin menyala.</p>
+              <h3>Lihat dirimu mengenakan wastra Nusantara</h3>
+              <p>Video kamera dikirim ke AI Decart lalu digambar ulang secara live. Hasilnya tafsiran AI, bukan foto kain asli.</p>
               <p class="trial-note" id="trialNote" data-state="ok" role="status" hidden></p>
               <div class="intro-actions">
-                <button id="start" class="pill pill-lime" type="button">Nyalakan cermin</button>
+                <button id="start" class="pill pill-gold" type="button">Nyalakan cermin</button>
               </div>
             </div>
           </div>
@@ -182,24 +139,40 @@
           <div class="badge" id="badge" role="status" aria-live="polite"></div>
           <div class="quality" id="quality" data-level="ok" hidden></div>
           <div class="toast" id="toast" role="status" aria-live="polite"></div>
-          <button class="stop" id="stop" type="button" hidden>■ Stop</button>
+          <button class="ref-card" id="refCard" type="button" aria-expanded="false" hidden>
+            <img id="refImg" alt="">
+            <span>Motif asli</span>
+          </button>
+          <div class="stage-actions">
+            <button class="snap" id="snap" type="button" hidden>Simpan foto</button>
+            <button class="stop" id="stop" type="button" hidden>■ Stop</button>
+          </div>
         </div>
 
         <div class="now" id="now">
           <div class="now-thumb" id="nowThumb"></div>
           <div>
             <div class="now-name" id="nowName">Belum memakai apa-apa</div>
-            <div class="now-sub" id="nowSub">Pilih atau seret baju ke kamera</div>
+            <div class="now-sub" id="nowSub">Pilih atau seret wastra ke cermin</div>
           </div>
           <div class="meter" id="meter"></div>
         </div>
 
+        <section class="know" id="know" aria-labelledby="knowTitle" hidden>
+          <div class="know-head">
+            <h3 id="knowTitle"></h3>
+            <a class="know-link" id="knowLink" hidden></a>
+          </div>
+          <p id="knowText"></p>
+          <p class="tiny" id="knowCredit"></p>
+        </section>
+
         <section class="prompt-box" id="promptBox" aria-labelledby="promptTitle" hidden>
           <div class="prompt-head">
             <span id="promptTitle">Prompt ke AI</span>
-            <span class="tiny">Bahasa Inggris · warna, bahan, potongan</span>
+            <span class="tiny">Bahasa Inggris · warna, motif, potongan</span>
           </div>
-          <label class="sr-only" for="promptText">Prompt untuk baju yang sedang dipakai</label>
+          <label class="sr-only" for="promptText">Prompt untuk wastra yang sedang dipakai</label>
           <textarea id="promptText" rows="2" maxlength="400" spellcheck="false"></textarea>
           <div class="prompt-actions">
             <button id="promptReset" class="btn-line" type="button">Kembalikan bawaan</button>
@@ -216,101 +189,132 @@
     </div>
   </section>
 
-  <section id="cara-kerja" class="steps-sec" aria-labelledby="steps-title">
-    <p class="eyebrow">Cara kerja</p>
-    <h2 id="steps-title" class="sec-title">Tiga langkah, <span class="dim">tanpa install.</span></h2>
-    <ol class="steps">
-      <li class="step">
-        <span class="step-n">01</span>
-        <h3>Nyalakan cermin</h3>
-        <p>Izinkan kamera di browser. Berdiri dengan badan atas terlihat dan cahaya dari depan.</p>
-      </li>
-      <li class="step">
-        <span class="step-n">02</span>
-        <h3>Pilih baju</h3>
-        <p>Klik atau seret baju dari katalog. Bisa juga tempel link toko, upload foto, atau Ctrl+V gambar.</p>
-      </li>
-      <li class="step step-lime">
-        <span class="step-n">03</span>
-        <h3>Lihat hasilnya live</h3>
-        <p>Dalam beberapa detik kamu tampil memakai baju itu. Ganti baju kapan saja tanpa memutus kamera.</p>
-      </li>
-    </ol>
+  <section id="wastra" aria-labelledby="wastra-title">
+    <p class="eyebrow">Jelajah wastra</p>
+    <h2 id="wastra-title" class="sec-title">Kain yang bisa <em>kamu coba hari ini.</em></h2>
+    <p class="sec-sub">Setiap kain punya asal, teknik, dan cerita. Foto dari Wikimedia Commons, nama fotografer dan lisensinya tercantum di tiap kartu.</p>
+    <div class="wastra-grid" id="wastraGrid"></div>
   </section>
 
-  <section id="fitur" class="feat-sec" aria-labelledby="feat-title">
-    <p class="eyebrow">Fitur</p>
-    <h2 id="feat-title" class="sec-title">Dibuat untuk mencoba, <span class="dim">bukan menebak.</span></h2>
-    <div class="feats">
-      <article class="feat">
-        <span class="feat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
-        <h3>Impor dari link toko</h3>
-        <p>Tempel link produk, foto utamanya diambil otomatis.</p>
+  <section id="paspor" aria-labelledby="paspor-title">
+    <p class="eyebrow">Paspor wastra</p>
+    <h2 id="paspor-title" class="sec-title">Kumpulkan cap <em>dari 38 provinsi.</em></h2>
+    <p class="sec-sub">Cap kunjungan didapat saat membuka halaman provinsi, cap coba saat mencoba wastra dari provinsi itu. Tersimpan di browser ini saja, tanpa akun.</p>
+    <div class="paspor">
+      <div class="paspor-cover">
+        <h3>Paspor Wastra</h3>
+        <p>Republik Kain Nusantara</p>
+        <p class="paspor-count" id="pasporCount">0 <small>/ 38</small></p>
+        <div class="paspor-bar" aria-hidden="true"><i id="pasporBar"></i></div>
+        <p id="pasporTried">0 provinsi sudah dicoba di cermin</p>
+        <button class="btn-line" id="pasporReset" type="button">Kosongkan paspor</button>
+      </div>
+      <ol class="stamps" id="stamps"></ol>
+    </div>
+  </section>
+
+  <section id="umkm" aria-labelledby="umkm-title">
+    <p class="eyebrow">Perajin &amp; UMKM</p>
+    <h2 id="umkm-title" class="sec-title">Dari cermin <em>ke perajin.</em></h2>
+    <p class="sec-sub">Tujuan akhirnya: orang yang sudah mencoba sebuah wastra bisa langsung memesan ke perajin aslinya.</p>
+    <ol class="umkm">
+      <li><h3>Kirim foto produk</h3><p>Foto kemeja atau kain tampak depan dengan latar polos, plus nama motif dan asal daerahnya.</p></li>
+      <li><h3>Kami kurasi</h3><p>Asal, teknik (tulis, cap, tenun, ikat), dan cerita motif dicek ke sumber sebelum tampil di cermin.</p></li>
+      <li><h3>Pembeli pesan langsung</h3><p>Kartu wastra mendapat tombol "Pesan via WhatsApp" ke nomor perajin. Tanpa komisi selama masa prototipe.</p></li>
+    </ol>
+    <p class="honest">Saat ini <b>belum ada perajin terdaftar</b>, jadi tombol pesan belum tampil di kartu mana pun. Kami tidak menampilkan toko atau ulasan contoh.</p>
+  </section>
+
+  <section id="sumber" aria-labelledby="sumber-title">
+    <p class="eyebrow">Tentang &amp; sumber</p>
+    <h2 id="sumber-title" class="sec-title">Dari mana <em>datanya.</em></h2>
+    <div class="sources">
+      <article>
+        <h3>Data budaya</h3>
+        <ul id="sourceList"></ul>
+        <p class="tiny" style="margin-top:12px">Diringkas dari sumber publik dan masih dikurasi. Yang belum bisa dipastikan diberi label <span class="verify">perlu verifikasi</span>. Ada koreksi? Kabari kami.</p>
       </article>
-      <article class="feat">
-        <span class="feat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 4v12m0 0-4-4m4 4 4-4M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <h3>Seret ke kamera</h3>
-        <p>Tarik foto baju dari tab lain langsung ke cermin.</p>
-      </article>
-      <article class="feat">
-        <span class="feat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 6h16M4 12h10M4 18h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
-        <h3>Deskripsi untuk AI</h3>
-        <p>Tambahkan detail bahan dan potongan supaya hasilnya lebih mirip.</p>
-      </article>
-      <article class="feat">
-        <span class="feat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 8h3l2-3h6l2 3h3v11H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
-        <h3>Pilih kamera</h3>
-        <p>Pakai webcam eksternal dan ganti kamera saat cermin menyala.</p>
-      </article>
-      <article class="feat">
-        <span class="feat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
-        <h3>Hemat kredit</h3>
-        <p>Penghitung biaya live, dan cermin mati sendiri saat tab ditinggal.</p>
-      </article>
-      <article class="feat">
-        <span class="feat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><rect x="5" y="10" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg></span>
-        <h3>API key aman</h3>
-        <p>Browser hanya menerima token sementara, kunci asli tetap di server.</p>
+      <article>
+        <h3>Foto &amp; AI</h3>
+        <p>Foto provinsi dan katalog berasal dari Wikimedia Commons (CC BY, CC BY-SA, CC0, domain publik) dan ditampilkan langsung dari sana; nama fotografer tercantum di tiap foto. Video cermin dibuat oleh model Lucy VTON dari Decart dan merupakan tafsiran AI. Video kamera diproses Decart dan tidak disimpan di server Cermin Wastra.</p>
       </article>
     </div>
   </section>
 
   <section id="toko" class="cta" aria-labelledby="cta-title">
     <div>
-      <p class="eyebrow eyebrow-light">Untuk toko · sedang dikembangkan</p>
-      <h2 id="cta-title">Pasang cermin di tokomu.</h2>
-      <p>Widget coba-pakai untuk halaman produk, plus data baju mana yang paling sering dicoba pembeli.</p>
+      <p class="eyebrow eyebrow-light eyebrow-left">Untuk perajin, galeri &amp; museum</p>
+      <h2 id="cta-title">Pasang wastramu di cermin.</h2>
+      <p>Kirim foto produk dan data asalnya. Kami bantu menulis prompt supaya motifnya tampil semirip mungkin.</p>
     </div>
-    <a class="pill pill-lime pill-arrow" href="mailto:rudeykadalz@gmail.com?subject=VirtualFit%20untuk%20toko">Hubungi kami
+    <a class="pill pill-gold pill-arrow" href="mailto:rudeykadalz@gmail.com?subject=Cermin%20Wastra%20untuk%20perajin">Hubungi kami
       <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M4 12 12 4M6 4h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
     </a>
   </section>
 </main>
 
 <footer class="foot">
-  <span>© 2026 VirtualFit</span>
-  <span>Video kamera diproses oleh Decart dan tidak disimpan di server VirtualFit.</span>
+  <div class="lurik" aria-hidden="true"></div>
+  <div class="foot-inner">
+    <div>
+      <a class="brand" href="/">Cermin Wastra</a>
+      <p>Prototipe BUDAYA GO! 2026: mengenalkan wastra Nusantara lewat peta dan cermin AI.</p>
+    </div>
+    <div>
+      <h3>Jelajah</h3>
+      <ul id="footRegions"></ul>
+    </div>
+    <div>
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="#cermin">Cermin</a></li>
+        <li><a href="#wastra">Jelajah Wastra</a></li>
+        <li><a href="#paspor">Paspor Wastra</a></li>
+        <li><a href="#umkm">Untuk UMKM</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Tentang</h3>
+      <ul>
+        <li><a href="#sumber">Sumber data</a></li>
+        <li><a href="https://github.com/denyherianto/indonesia-geojson-topojson-maps-with-38-provinces" rel="noopener">Data peta (CC BY 4.0)</a></li>
+        <li><a href="https://commons.wikimedia.org" rel="noopener">Wikimedia Commons</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Cermin Wastra</span>
+    <span>Video kamera diproses oleh Decart dan tidak disimpan di server kami.</span>
+  </div>
 </footer>
+
+<nav class="tabbar" aria-label="Navigasi cepat">
+  <a href="#beranda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Beranda</a>
+  <a href="#peta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Peta</a>
+  <a href="#cermin"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="11" rx="6" ry="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 19v3M8 22h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Cermin</a>
+  <a href="#wastra"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3 4 6l2 4 2-1v12h8V9l2 1 2-4-4-3c-1 1.5-2.4 2-4 2s-3-.5-4-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Wastra</a>
+  <a href="#paspor"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="11" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 17h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Paspor</a>
+</nav>
 
 <dialog id="dlg" aria-labelledby="dlg-title">
   <form method="dialog" class="dlg">
-    <h3 id="dlg-title">Tambah baju</h3>
+    <h3 id="dlg-title">Tambah wastra</h3>
     <div class="dlg-body">
-      <img id="dlgImg" alt="Pratinjau baju yang diimpor">
+      <img id="dlgImg" alt="Pratinjau wastra yang diimpor">
       <div class="dlg-fields">
-        <label>Nama <input id="dlgName" type="text" placeholder="contoh: Kemeja flanel"></label>
+        <label>Nama <input id="dlgName" type="text" placeholder="contoh: Kemeja batik parang"></label>
         <label>Jenis
           <select id="dlgCat">
-            <option value="top">Atasan (kaos, kemeja, sweater)</option>
-            <option value="outer">Outer (jaket, hoodie zip, blazer)</option>
-            <option value="hat">Topi</option>
+            <option value="top">Atasan (kemeja, kaos, kebaya)</option>
+            <option value="outer">Outer (jaket, blazer, rompi)</option>
+            <option value="hat">Penutup kepala (topi, peci, udeng)</option>
           </select>
         </label>
         <label id="openWrap" hidden><span><input id="dlgOpen" type="checkbox"> Dipakai terbuka (resleting/kancing dibuka)</span></label>
         <label>Deskripsi untuk AI <span class="opt">(opsional, lebih detail = lebih mirip)</span>
-          <textarea id="dlgDesc" rows="3" placeholder="contoh: red and black plaid flannel shirt, long sleeves, button front, chest pocket"></textarea>
+          <textarea id="dlgDesc" rows="3" placeholder="contoh: brown batik shirt with parang pattern, long sleeves, button front"></textarea>
         </label>
-        <p class="tiny">Tips: foto baju saja (tanpa model), tampak depan, latar polos, minimal 512px.</p>
+        <p class="tiny">Tips: foto bajunya saja (tanpa model), tampak depan, latar polos, minimal 512px.</p>
       </div>
     </div>
     <div class="dlg-actions">

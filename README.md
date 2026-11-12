@@ -1,8 +1,15 @@
 # Cermin Wastra · BUDAYA GO! 2026
 
-> Turunan dari VirtualFit, dikhususkan untuk lomba BUDAYA GO! 2026 (Inovasi Digital). Isi di bawah masih dokumentasi VirtualFit dan akan diperbarui.
+> Turunan dari VirtualFit untuk lomba BUDAYA GO! 2026 (Inovasi Digital).
 
-Website cermin AI: nyalakan kamera, seret baju ke badan, dan AI (Decart **Lucy VTON**) menggambar ulang video kamu memakai baju itu secara live. Baju bisa diambil dari Tokopedia, Shopee, atau toko online mana pun.
+Kenali wastra Nusantara, lalu kenakan. Pengunjung memilih provinsi di **peta interaktif 38 provinsi**, membaca wastra, pakaian adat, rumah adat, dan tariannya, lalu mencoba motif wastra di badannya sendiri lewat **cermin AI live** (Decart **Lucy VTON**).
+
+Fitur:
+- **Peta 38 provinsi** (`/#peta`): klik provinsi, sorot per wilayah, daftar teks untuk provinsi kecil dan pembaca layar.
+- **Halaman provinsi** (`/provinsi/?p=<id>`): foto, warna aksen per wilayah, wastra (berlabel "perlu verifikasi" bila belum pasti), pakaian adat, rumah adat, tarian, sumber, peta mini, provinsi tetangga.
+- **Cermin**: katalog wastra (foto Wikimedia Commons), "Kenali dulu, baru coba", foto asli di pojok cermin untuk membandingkan motif, **Simpan foto** (bagikan di HP, unduh di laptop), link langsung `/?coba=<id>#cermin`.
+- **Paspor Wastra**: cap kunjungan dan cap coba per provinsi, disimpan di browser (localStorage), tanpa akun.
+- **Untuk UMKM**: alur pendaftaran perajin. Belum ada perajin terdaftar, jadi tidak ada toko atau ulasan contoh yang ditampilkan.
 
 ## Yang dibutuhkan
 - **Node.js 18+** — https://nodejs.org
@@ -98,6 +105,7 @@ Supaya kredit Decart tidak habis dipakai pengunjung, cermin di situs publik diba
 ## Struktur
 - `server/`: endpoint `/api/*` (token, laporan pemakaian, proxy gambar, admin). Dipasang ke dev server lewat `vite.config.js`, ditulis sebagai middleware Node biasa supaya bisa dipindah ke server produksi.
 - `admin/`: halaman dashboard `/admin`.
-- `src/main.js`: kamera, koneksi Decart realtime, katalog, seret & impor, ganti key otomatis. `src/hero-carousel.js`: carousel 3D di hero.
-- `public/garments/unsplash/`: foto katalog (sumber di `CREDITS.md`).
+- `src/main.js`: kamera, koneksi Decart realtime, katalog, seret & impor, ganti key otomatis, simpan foto.
+- `src/home.js`: hero, peta, kartu wastra, paspor di beranda. `src/province-page.js`: halaman provinsi. `src/map.js`: peta SVG. `src/paspor.js`: cap paspor.
+- `src/content/`: data provinsi, foto provinsi, katalog wastra, dan bentuk peta. Sumber dan lisensi di `CREDITS.md`. (Bukan `src/data/`: Vite memblokir semua folder `data/` supaya `data/keys.json` tidak ikut tersaji.)
 - `scripts/admin-setup.mjs`: menyiapkan login admin.

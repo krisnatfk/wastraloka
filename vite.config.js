@@ -8,7 +8,7 @@ import { createApi } from "./server/api.js";
 // Logikanya ada di folder server/ supaya nanti bisa dipindah ke server produksi apa adanya.
 function apiPlugin(env) {
   return {
-    name: "virtualfit-api",
+    name: "cermin-wastra-api",
     configureServer(server) {
       server.middlewares.use(createApi({ env, rootDir: process.cwd() }));
     },
@@ -28,7 +28,11 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       rollupOptions: {
-        input: { main: resolve(process.cwd(), "index.html"), admin: resolve(process.cwd(), "admin/index.html") },
+        input: {
+          main: resolve(process.cwd(), "index.html"),
+          provinsi: resolve(process.cwd(), "provinsi/index.html"),
+          admin: resolve(process.cwd(), "admin/index.html"),
+        },
       },
     },
     // SDK Decart memuat Web Worker lewat new URL("./frame-metadata-worker.js", import.meta.url).

@@ -1,38 +1,23 @@
 import { createDecartClient, models } from "@decartai/sdk";
 
 import { createCameraQuality, keepStageRatio } from "./camera-quality.js";
-import { initHeroCarousel } from "./hero-carousel.js";
+import { WASTRA_CATALOG } from "./content/wastra-catalog.js";
+import { provinceById } from "./content/provinces.js";
+import { initHome, renderPassport } from "./home.js";
+import { provinceUrl } from "./map.js";
 import { initMarquee } from "./marquee.js";
+import { stampTried } from "./paspor.js";
 import { initSiteNav } from "./site-nav.js";
+import { initTabBar } from "./tab-bar.js";
 
 const $ = (id) => document.getElementById(id);
 const CREDITS_PER_SEC = 2; // Lucy VTON realtime mode standar (fast = 4 credits/detik)
 
 /* ===================== Katalog ===================== */
-// Foto katalog: Unsplash License, sumber & fotografer di CREDITS.md
-const GARMENT_DIR = "/garments/unsplash";
-const BUILTIN = [
-  { id: "u-kemeja-putih", cat: "top", tag: "ATASAN", name: "Kemeja linen putih", src: `${GARMENT_DIR}/kemeja-putih.jpg`,
-    prompt: "Wearing an off-white linen short-sleeve shirt with a band collar and a button front, untucked." },
-  { id: "u-kemeja-biru", cat: "top", tag: "ATASAN", name: "Kemeja linen biru", src: `${GARMENT_DIR}/kemeja-biru.jpg`,
-    prompt: "Wearing a light blue linen short-sleeve shirt with a band collar and a full button front, untucked." },
-  { id: "u-kemeja-rajut", cat: "top", tag: "ATASAN", name: "Kemeja tekstur krem", src: `${GARMENT_DIR}/kemeja-rajut.jpg`,
-    prompt: "Wearing a cream textured short-sleeve shirt with a round neck, a button front and a gathered hem." },
-  { id: "u-bomber", cat: "outer", tag: "OUTER", name: "Bomber cokelat", src: `${GARMENT_DIR}/bomber-cokelat.jpg`,
-    prompt: "Wearing a tan brown bomber jacket with a ribbed collar, ribbed cuffs and hem, and a front zipper, zipped closed." },
-  { id: "u-puffer", cat: "outer", tag: "OUTER", name: "Puffer putih", src: `${GARMENT_DIR}/puffer-putih.jpg`,
-    prompt: "Wearing a white quilted puffer jacket with a high collar, long sleeves and a front zipper, zipped closed." },
-  { id: "u-denim", cat: "outer", tag: "OUTER", name: "Jaket denim", src: `${GARMENT_DIR}/jaket-denim.jpg`,
-    prompt: "Wearing a dark indigo denim trucker jacket with a brown corduroy collar, chest flap pockets and metal buttons, buttoned closed." },
-  { id: "u-blazer", cat: "outer", tag: "OUTER", name: "Blazer navy", src: `${GARMENT_DIR}/blazer-navy.jpg`,
-    prompt: "Wearing a navy blue single-breasted blazer with notch lapels and a white pocket square, worn closed over a white shirt." },
-  { id: "u-topi", cat: "hat", tag: "TOPI", name: "Topi mustard", src: `${GARMENT_DIR}/topi-kuning.jpg`,
-    prompt: "Wearing a mustard yellow baseball cap with a curved brim.", focus: "82% 62%" },
-  { id: "u-beanie", cat: "hat", tag: "TOPI", name: "Beanie hitam", src: `${GARMENT_DIR}/beanie-hitam.jpg`,
-    prompt: "Wearing a charcoal black cuffed knit beanie with a small round logo patch on the front." },
-];
+// Wastra bawaan: foto dari Wikimedia Commons (lisensi & fotografer di src/data/wastra-catalog.js dan CREDITS.md)
+const BUILTIN = WASTRA_CATALOG;
 
-const LS_KEY = "virtualfit.custom.v1";
+const LS_KEY = "cerminwastra.custom.v1";
 const loadCustom = () => {
   try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); } catch { return []; }
 };
@@ -50,8 +35,11 @@ const byId = (id) => all().find((g) => g.id === id);
 function renderCatalog() {
   const box = $("catalog");
   box.innerHTML = "";
-  for (const g of all()) {
-    if (cat !== "all" && g.cat !== cat) continue;
+  const visible = all().filter((g) => cat === "all" || (cat === "mine" ? g.custom : !g.custom && g.cat === cat));
+  if (!visible.length) {
+    box.append(Object.assign(document.createElement("p"), { className: "catalog-empty", textContent: "Belum ada. Upload foto wastra milikmu atau tempel link produknya di bawah." }));
+  }
+  for (const g of visible) {
     const el = document.createElement("div");
     el.className = "g" + (g.id === currentId ? " on" : "");
     el.draggable = true;
@@ -60,6 +48,8 @@ function renderCatalog() {
     el.querySelector("img").src = g.src;
     if (g.focus) el.querySelector("img").style.objectPosition = g.focus; // titik fokus saat foto di-crop
     el.querySelector(".nm").textContent = g.name;
+    el.title = g.credit ? `${g.name} · Foto: ${g.credit.artist} (${g.credit.license})` : g.name;
+    if (g.experimental) el.append(Object.assign(document.createElement("span"), { className: "exp", textContent: "EKSPERIMEN" }));
     if (g.custom) {
       const del = document.createElement("button");
       del.className = "del"; del.textContent = "✕"; del.title = "Hapus";
@@ -315,7 +305,7 @@ async function initialStateFor(id) {
 
 /* ===================== Pilih kamera ===================== */
 // Buat iPhone di Windows: pasang Camo / Iriun Webcam, lalu pilih kameranya di sini.
-const CAM_KEY = "virtualfit.camera.v1";
+const CAM_KEY = "cerminwastra.camera.v1";
 const loadSavedCam = () => { try { return localStorage.getItem(CAM_KEY) || ""; } catch { return ""; } };
 const saveCam = (id) => { try { localStorage.setItem(CAM_KEY, id); } catch (err) { console.warn("Pilihan kamera tidak tersimpan", err); } };
 
@@ -461,11 +451,13 @@ async function start() {
     if (trialSeconds) beginTrialCountdown(trialSeconds);
     meterT = setInterval(updateMeter, 1000);
     $("stop").hidden = false;
+    $("snap").hidden = false;
+    $("refCard").hidden = !currentId;
     // mulai pantau dari sekarang, bukan menunggu remote stream (yang bisa tidak pernah datang)
     watchAiFrames();
 
     if (currentId) $("nowSub").textContent = "Sedang dipakai · AI menyesuaikan beberapa detik";
-    else toast("Sudah live. Seret baju ke kamera atau klik salah satu baju.");
+    else toast("Sudah live. Seret wastra ke cermin atau klik salah satu kartu.");
   } catch (err) {
     console.error(err);
     toast(friendly(err), true);
@@ -542,6 +534,8 @@ function stop(silent) {
   $("intro").style.display = "";
   $("start").disabled = false; $("start").textContent = "Nyalakan cermin";
   $("stop").hidden = true;
+  $("snap").hidden = true;
+  $("refCard").hidden = true;
   $("badge").classList.remove("show");
   if (startedAt) reportUsage({ seconds: Math.round((Date.now() - startedAt) / 1000) });
   if (trialEnded) toast(`Waktu coba gratis ${trialInfo?.seconds ?? ""} detik habis.`.replace("  ", " "));
@@ -608,7 +602,7 @@ async function refreshTrial() {
 }
 
 /* ===================== Prompt ke AI (bisa diedit) ===================== */
-const PROMPT_KEY = "virtualfit.prompts.v1";
+const PROMPT_KEY = "cerminwastra.prompts.v1";
 const MAX_PROMPT_LENGTH = 400;
 const loadPromptOverrides = () => {
   try { return JSON.parse(localStorage.getItem(PROMPT_KEY) || "{}"); } catch { return {}; }
@@ -663,6 +657,8 @@ async function wear(id) {
   $("nowThumb").style.backgroundImage = `url("${g.src}")`;
   $("nowName").textContent = g.name;
   showPrompt(g);
+  showKnowCard(g);
+  showReference(g);
   $("nowSub").textContent = rt ? "Memakaikan..." : "Nyalakan cermin untuk mencoba";
   if (!rt) return;
   try {
@@ -672,6 +668,10 @@ async function wear(id) {
     console.info("[VTON] set", { name: g.name, prompt: promptOf(g), imageBytes: image.size, imageType: image.type });
     await rt.set({ prompt: promptOf(g), image, enhance: false });
     console.info("[VTON] diterima server:", g.name);
+    if (g.province && stampTried(g.province)) {
+      renderPassport();
+      toast(`Cap coba ${provinceById(g.province)?.name ?? ""} masuk paspor wastra.`);
+    }
     if (currentId === id) $("nowSub").textContent = "Sedang dipakai · AI menyesuaikan beberapa detik";
   } catch (err) {
     console.error(err);
@@ -679,6 +679,96 @@ async function wear(id) {
     toast(friendly(err), true);
   }
 }
+
+/* ===================== Kenali dulu, baru coba ===================== */
+function showKnowCard(g) {
+  const box = $("know");
+  if (!g.about) { box.hidden = true; return; }
+  const province = g.province && provinceById(g.province);
+  $("knowTitle").textContent = g.name;
+  $("knowText").textContent = g.about;
+  const link = $("knowLink");
+  link.hidden = !province;
+  if (province) { link.href = provinceUrl(province.id); link.textContent = `Kenali ${province.name} →`; }
+  const credit = $("knowCredit");
+  credit.replaceChildren();
+  if (g.credit) {
+    const a = Object.assign(document.createElement("a"), { href: g.credit.page, rel: "noopener", textContent: `${g.credit.artist} · ${g.credit.license}` });
+    credit.append("Foto: ", a, g.experimental ? ". Eksperimen: motif kain lembaran dipakaikan AI sebagai atasan." : ".");
+  }
+  box.hidden = false;
+}
+
+/* ===================== Pembanding motif ===================== */
+// Foto asli wastra tetap terlihat di pojok cermin, supaya pengguna bisa membandingkan dengan tafsiran AI.
+function showReference(g) {
+  $("refImg").src = g.src;
+  $("refImg").alt = `Foto asli: ${g.name}`;
+  $("refCard").hidden = !rt;
+}
+$("refCard").addEventListener("click", () => {
+  const card = $("refCard");
+  card.setAttribute("aria-expanded", String(card.getAttribute("aria-expanded") !== "true"));
+});
+
+/* ===================== Simpan foto & bagikan ===================== */
+const SNAPSHOT_BAND_PX = 64;
+function captureSnapshot() {
+  const video = $("out").classList.contains("live") ? $("out") : $("local");
+  if (!video.videoWidth) throw new Error("Belum ada gambar dari kamera.");
+  const g = byId(currentId);
+  const width = video.videoWidth, height = video.videoHeight;
+  const canvas = document.createElement("canvas");
+  canvas.width = width; canvas.height = height + SNAPSHOT_BAND_PX;
+  const ctx = canvas.getContext("2d");
+  ctx.save(); ctx.translate(width, 0); ctx.scale(-1, 1); ctx.drawImage(video, 0, 0, width, height); ctx.restore(); // sama seperti cermin di layar
+  ctx.fillStyle = "#3b1f13"; ctx.fillRect(0, height, width, SNAPSHOT_BAND_PX);
+  ctx.fillStyle = "#e8c77a"; ctx.font = "600 22px Fraunces, Georgia, serif"; ctx.textBaseline = "middle";
+  ctx.fillText(`Cermin Wastra · ${g ? g.name : "tanpa wastra"}`, 20, height + SNAPSHOT_BAND_PX / 2 - 9);
+  ctx.fillStyle = "rgba(255,255,255,0.75)"; ctx.font = "500 13px 'Plus Jakarta Sans', sans-serif";
+  const origin = g?.province ? `Asal: ${provinceById(g.province)?.name}. ` : "";
+  ctx.fillText(`${origin}Gambar hasil AI (Decart Lucy VTON), bukan foto kain asli.`, 20, height + SNAPSHOT_BAND_PX / 2 + 14);
+  return new Promise((resolve, reject) => canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("Gagal membuat foto."))), "image/jpeg", 0.92));
+}
+
+async function saveSnapshot() {
+  try {
+    const blob = await captureSnapshot();
+    const file = new File([blob], `cermin-wastra-${Date.now()}.jpg`, { type: "image/jpeg" });
+    if (navigator.canShare?.({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: "Cermin Wastra" }); return; }
+      catch (err) { if (err.name === "AbortError") return; console.warn("[SNAP] bagikan gagal, unduh saja", err); }
+    }
+    const url = URL.createObjectURL(blob);
+    const a = Object.assign(document.createElement("a"), { href: url, download: file.name });
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 10_000);
+    toast("Foto disimpan ke folder unduhan.");
+  } catch (err) {
+    console.error("[SNAP]", err);
+    toast(err.message, true);
+  }
+}
+$("snap").addEventListener("click", saveSnapshot);
+
+/* ===================== Pilih wastra dari link (?coba=) ===================== */
+function selectGarment(id) {
+  if (!byId(id)) return false;
+  if (cat !== "all") $("tabs").querySelector('[data-cat="all"]').click();
+  wear(id);
+  $("cermin").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  return true;
+}
+function selectFromUrl() {
+  const id = new URLSearchParams(location.search).get("coba");
+  if (id) selectGarment(id);
+}
+// tombol "Coba di cermin" di kartu wastra: tidak perlu memuat ulang halaman
+document.addEventListener("click", (e) => {
+  const link = e.target.closest?.("a[data-coba]");
+  if (!link || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  if (selectGarment(link.dataset.coba)) e.preventDefault();
+});
 
 $("start").onclick = start;
 $("stop").onclick = () => stop(false);
@@ -711,5 +801,6 @@ renderCatalog();
 refreshTrial();
 initSiteNav({ nav: $("siteNav"), sentinel: $("navSentinel") });
 initMarquee(document.querySelector(".marquee"));
-const heroCarousel = document.querySelector("[data-carousel]");
-if (heroCarousel) initHeroCarousel(heroCarousel);
+initTabBar();
+initHome();
+selectFromUrl();
