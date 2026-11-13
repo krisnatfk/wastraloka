@@ -200,11 +200,13 @@ function renderMapSection() {
 
   // Mode Lentera: sorot provinsi yang punya budaya memudar
   const lenteraToggle = document.getElementById("lenteraToggle");
-  lenteraToggle?.addEventListener("click", () => {
-    const isOn = lenteraToggle.getAttribute("aria-pressed") !== "true";
-    lenteraToggle.setAttribute("aria-pressed", String(isOn));
+  const setLentera = (isOn) => {
+    lenteraToggle?.setAttribute("aria-pressed", String(isOn));
     mapApi.setLentera(isOn);
-  });
+  };
+  lenteraToggle?.addEventListener("click", () => setLentera(lenteraToggle.getAttribute("aria-pressed") !== "true"));
+  // tautan "/?lentera=1#peta" langsung membuka peta dalam Mode Lentera
+  if (new URLSearchParams(location.search).get("lentera") === "1") setLentera(true);
 
   // tautan footer "?wilayah=..." tetap menyorot pulau terkait, tanpa tombol wilayah di atas peta
   const region = new URLSearchParams(location.search).get("wilayah");
