@@ -186,6 +186,14 @@ function renderMapSection() {
     mapApi.loadImages();
   }
 
+  // petunjuk "geser peta" di HP hilang setelah peta digeser sedikit
+  const sea = document.querySelector("#peta .map-sea");
+  const hint = document.getElementById("mapHint");
+  const SWIPE_HIDE_PX = 24;
+  sea?.addEventListener("scroll", () => {
+    if (sea.scrollLeft > SWIPE_HIDE_PX) hint?.classList.add("is-hidden");
+  }, { passive: true });
+
   // tautan footer "?wilayah=..." tetap menyorot pulau terkait, tanpa tombol wilayah di atas peta
   const region = new URLSearchParams(location.search).get("wilayah");
   if (REGIONS.some((r) => r.id === region)) mapApi.setRegion(region);

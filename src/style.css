@@ -1042,7 +1042,6 @@ body.is-province-open #beranda, body.is-province-open .marquee, body.is-province
   /* HP: peta diperbesar dan bisa digeser ke samping supaya provinsi kecil tetap bisa disentuh */
   .map-card .map-sea { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
   .map-card .map-sea .map-wrap { width: 900px; }
-  .map-card .map-sea::after { content: "94  geser peta"; position: sticky; left: 8px; display: inline-block; margin-top: 8px; padding: 3px 10px; border-radius: 999px; background: rgba(232, 199, 122, 0.18); color: var(--kunyit-soft); font-size: 11px; font-weight: 700; }
 }
 @media (prefers-reduced-motion: reduce) {
   .map-sea::before { animation: none; }
@@ -1056,8 +1055,9 @@ body.is-province-open #beranda, body.is-province-open .marquee, body.is-province
 /* ---- Menu hamburger di HP: pulau kaca melebar ke bawah berisi menu ---- */
 .nav-toggle { display: none; }
 @media (max-width: 920px) {
-  .nav-shell { flex-wrap: wrap; height: auto; min-height: 54px; padding-block: 5px; row-gap: 0; }
-  .brand { margin-right: auto; }
+  .site-nav .nav-shell, .site-nav.is-scrolled .nav-shell, .site-nav.is-open .nav-shell { flex-wrap: wrap; align-items: center; height: auto; min-height: 56px; padding: 6px 6px 6px 16px; row-gap: 0; }
+  .brand { margin-right: auto; min-height: 44px; line-height: 1; }
+  .brand svg { flex: none; }
   .nav-toggle {
     display: grid;
     place-items: center;
@@ -1066,17 +1066,20 @@ body.is-province-open #beranda, body.is-province-open .marquee, body.is-province
     height: 44px;
     margin-left: 6px;
     padding: 0;
-    border: 1px solid rgba(232, 199, 122, 0.35);
+    border: 0;
     border-radius: 50%;
-    background: rgba(25, 12, 5, 0.35);
+    background: transparent;
     color: #fff;
+    transition: color 0.2s ease, background-color 0.2s ease;
   }
+  .nav-toggle:hover { background: rgba(255, 255, 255, 0.08); }
+  .nav-toggle:focus-visible { outline: 2px solid var(--kunyit-soft); outline-offset: 0; }
   .nav-toggle-bars { position: relative; display: block; width: 20px; height: 14px; }
   .nav-toggle-bars i { position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px; background: currentColor; transition: transform 0.35s var(--nav-ease), opacity 0.2s ease; }
   .nav-toggle-bars i:nth-child(1) { top: 0; }
   .nav-toggle-bars i:nth-child(2) { top: 6px; }
   .nav-toggle-bars i:nth-child(3) { top: 12px; }
-  .site-nav.is-open .nav-toggle { background: var(--kunyit); color: var(--tinta); border-color: transparent; }
+  .site-nav.is-open .nav-toggle { color: var(--kunyit-soft); }
   .site-nav.is-open .nav-toggle-bars i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .site-nav.is-open .nav-toggle-bars i:nth-child(2) { opacity: 0; }
   .site-nav.is-open .nav-toggle-bars i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
@@ -1117,10 +1120,49 @@ body.is-province-open #beranda, body.is-province-open .marquee, body.is-province
 
   /* saat menu terbuka, pulau kaca selalu tampil (juga di puncak halaman) dan sudutnya melunak */
   .site-nav.is-open { padding: 10px 12px 0; }
-  .site-nav.is-open .nav-shell { padding: 5px 8px 5px 18px; }
+
   .site-nav.is-open .nav-glass { opacity: 1; transform: none; border-radius: 26px; }
   .nav-glass { transition: opacity 0.45s var(--nav-ease), transform var(--nav-duration) var(--nav-ease), border-radius 0.4s var(--nav-ease); }
 }
 @media (prefers-reduced-motion: reduce) {
   .site-nav .nav-links, .nav-toggle-bars i, .site-nav.is-open .nav-links li { transition: none; animation: none; }
+}
+
+/* ---- Petunjuk "geser peta" (HP): pil kaca di bawah peta, hilang setelah peta digeser ---- */
+.map-stage { position: relative; min-width: 0; }
+.map-hint { display: none; }
+@media (max-width: 600px) {
+  .map-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 12px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px 7px 10px;
+    border-radius: 999px;
+    background: rgba(16, 32, 52, 0.72);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 8px 20px rgba(0, 20, 40, 0.35);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    pointer-events: none;
+    transform: translateX(-50%);
+    transition: opacity 0.35s ease, transform 0.35s var(--nav-ease);
+  }
+  .map-hint svg { width: 22px; height: 22px; color: var(--kunyit-soft); animation: swipeHint 1.8s ease-in-out infinite; }
+  .map-hint.is-hidden { opacity: 0; transform: translate(-50%, 8px); }
+  /* scrollbar peta disembunyikan; petunjuk geser menggantikannya */
+  .map-card .map-sea { scrollbar-width: none; }
+  .map-card .map-sea::-webkit-scrollbar { display: none; }
+  @keyframes swipeHint { 0%, 100% { transform: translateX(-3px); } 50% { transform: translateX(4px); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-hint svg { animation: none; }
 }

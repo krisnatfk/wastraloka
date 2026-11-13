@@ -100,12 +100,18 @@
 
     <div class="map-card" data-reveal>
       <div class="map-layout">
+        <div class="map-stage">
         <div class="map-sea">
           <div class="map-wrap" id="map"></div>
           <svg class="compass" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="50" cy="50" r="36" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2 3"/><path d="M50 6 56 50 50 94 44 50Z" fill="currentColor" opacity=".9"/><path d="M6 50 50 44 94 50 50 56Z" fill="currentColor" opacity=".45"/><text x="50" y="4" font-size="9" text-anchor="middle" fill="currentColor">U</text></svg>
           <p class="sea-label sea-1" aria-hidden="true">Samudra Hindia</p>
           <p class="sea-label sea-2" aria-hidden="true">Laut Jawa</p>
           <p class="sea-label sea-3" aria-hidden="true">Samudra Pasifik</p>
+        </div>
+        <div class="map-hint" id="mapHint" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10m0-1.5a1.5 1.5 0 0 1 3 0V11m0-1a1.5 1.5 0 0 1 3 0v4.5c0 3.6-2.4 6.5-6 6.5-2.4 0-3.9-1.1-5.2-3L4.5 14a1.5 1.5 0 0 1 2.4-1.8L9 14.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 4h4M3 4l1.5-1.5M3 4l1.5 1.5M21 4h-4m4 0-1.5-1.5M21 4l-1.5 1.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Geser peta ke samping
+        </div>
         </div>
         <aside class="map-panel" id="mapPanel" aria-live="polite">
           <div class="map-panel-intro">
