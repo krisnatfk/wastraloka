@@ -1,0 +1,9 @@
+# jangan pernah ikut terunggah ke Vercel
+.env
+.env.*
+!.env.example
+data/
+node_modules/
+dist/
+.claude/
+review-tmp/
