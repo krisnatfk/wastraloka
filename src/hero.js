@@ -10,7 +10,7 @@ import { provinceUrl } from "./map.js";
 const SLIDE_MS = 6500;
 const HERO_WIDTH = 1920;
 const THUMB_WIDTH = 500;
-const THUMBS = ["sumatera-utara", "kalimantan-timur", "sulawesi-selatan", "maluku"];
+const THUMBS = ["sumatera-utara", "kalimantan-timur", "sulawesi-selatan", "maluku", "papua-pegunungan"];
 
 export function initHero() {
   const hero = document.getElementById("beranda");
