@@ -27,6 +27,14 @@ const province = provinceById(requested);
 if (province) {
   document.documentElement.style.setProperty("--accent", regionOf(province).accent);
   renderProvinceView(document.getElementById("page"), province);
+  // tautan langsung ke satu bab (mis. #bab-memudar dari Mode Lentera)
+  const target = location.hash && document.getElementById(location.hash.slice(1));
+  if (target) {
+    const jump = () => target.scrollIntoView({ block: "start", behavior: "instant" });
+    requestAnimationFrame(jump);
+    // ulangi setelah gambar dimuat, karena tinggi halaman berubah
+    if (document.readyState !== "complete") window.addEventListener("load", jump, { once: true });
+  }
 }
 else renderNotFound(requested);
 initReveal(".chapter, [data-reveal-group] > *");

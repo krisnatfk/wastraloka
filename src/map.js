@@ -10,6 +10,7 @@ import { PROVINCE_PHOTOS } from "./content/province-photos.js";
 import { PROVINCES, REGIONS } from "./content/provinces.js";
 import { wikimediaSized } from "./content/wastra-catalog.js";
 import { coupleMarkup } from "./figures.js";
+import { HERITAGE_RISKS, RISK_LEVELS } from "./content/heritage-risk.js";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 const FILL_IMAGE_WIDTH = 500;
@@ -57,6 +58,35 @@ const MAP_LABELS = {
 const LABEL_FONT = 10.5;
 const LABEL_GAP = 9; // jarak dari kaki figur ke garis dasar teks
 const LABEL_CHAR_WIDTH = 0.6; // perkiraan lebar huruf relatif terhadap ukuran font, untuk menjaga label di dalam peta
+
+const risksByProvince = HERITAGE_RISKS.reduce((map, risk) => map.set(risk.province, [...(map.get(risk.province) || []), risk]), new Map());
+
+// Lapisan "Mode Lentera": lentera menyala di provinsi yang punya budaya memudar atau sudah hilang.
+function lanternLayer(svg, shapesById) {
+  const layer = svgEl("g", { class: "map-lanterns", "aria-hidden": "true" });
+  for (const [id, risks] of risksByProvince) {
+    const shape = shapesById.get(id);
+    if (!shape) continue;
+    const worst = [...risks].sort((a, b) => RISK_LEVELS[a.level].order - RISK_LEVELS[b.level].order)[0];
+    const group = svgEl("g", { class: `map-lantern tone-${RISK_LEVELS[worst.level].tone}`, transform: `translate(${shape.cx} ${shape.cy})` });
+    group.dataset.id = id;
+    group.append(
+      svgEl("circle", { r: "16", class: "lantern-glow" }),
+      svgEl("circle", { r: "9.5", class: "lantern-core" }),
+      svgEl("path", { d: "M-3.5 -5h7M0 -5v1.6M-4 -3h8l.8 1.6v6l-.8 1.6h-8l-.8-1.6v-6z", class: "lantern-frame" }),
+      svgEl("path", { d: "M0 -1.4c1.2 1.2 1.5 2.2 1.1 3.1a1.2 1.2 0 0 1-2.2 0c-.4-.9 0-1.9 1.1-3.1Z", class: "lantern-flame" }),
+    );
+    const badge = svgEl("g", { class: "lantern-count", transform: "translate(8 -8)" });
+    badge.append(svgEl("circle", { r: "5.2" }));
+    const n = svgEl("text", { "text-anchor": "middle", y: "2.3", "font-size": "6.5" });
+    n.textContent = String(risks.length);
+    badge.append(n);
+    group.append(badge);
+    layer.append(group);
+  }
+  svg.append(layer);
+  return layer;
+}
 
 // foto untuk isi provinsi: rumah adat dulu, lalu foto budaya lain, terakhir foto utama provinsi
 export function fillPhotoOf(id) {
@@ -133,6 +163,7 @@ export function renderMap(container, { current = "", visited = new Set(), label 
     link.dataset.id = shape.id;
     link.dataset.region = data?.region ?? "";
     if (visited.has(shape.id)) link.classList.add("is-visited");
+    if (risksByProvince.has(shape.id)) link.classList.add("has-risk");
 
     // foto dipotong mengikuti bentuk provinsi lewat clipPath (lebih andal daripada <pattern> di Chrome
     // saat fotonya baru dimuat setelah peta tampil)
@@ -148,6 +179,7 @@ export function renderMap(container, { current = "", visited = new Set(), label 
     links.set(shape.id, { link, shape, image, landPath });
   }
   const figureLayer = figures ? figuresLayer(svg, shapesById) : null;
+  const lanterns = figures ? lanternLayer(svg, shapesById) : null;
 
   const tip = document.createElement("div");
   tip.className = "map-tip";
@@ -198,7 +230,7 @@ export function renderMap(container, { current = "", visited = new Set(), label 
     svg.addEventListener("click", (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey) return; // buka di tab baru tetap boleh
       const link = e.target.closest?.(".map-prov");
-      const fig = e.target.closest?.(".map-figure");
+      const fig = e.target.closest?.(".map-figure") || e.target.closest?.(".map-lantern");
       const id = link?.dataset.id || fig?.dataset.id;
       if (!id) return;
       if (onActivate) { e.preventDefault(); onActivate(id); return; }
@@ -222,7 +254,10 @@ export function renderMap(container, { current = "", visited = new Set(), label 
     const name = document.createElement("b");
     name.textContent = data.name;
     const sub = document.createElement("span");
-    sub.textContent = onActivate ? "Klik untuk masuk ke provinsinya" : onSelect ? (id === selected ? "Klik lagi untuk membuka kisahnya" : "Klik untuk melihat budayanya") : (data.wastra[0]?.name ?? "");
+    const risks = risksByProvince.get(id) || [];
+    sub.textContent = svg.classList.contains("is-lentera")
+      ? (risks.length ? `${risks.length} budaya memudar: ${risks.slice(0, 3).map((r) => r.name).join(", ")}${risks.length > 3 ? ", ..." : ""}` : "Belum ada catatan dari sumber kami")
+      : onActivate ? "Klik untuk masuk ke provinsinya" : onSelect ? (id === selected ? "Klik lagi untuk membuka kisahnya" : "Klik untuk melihat budayanya") : (data.wastra[0]?.name ?? "");
     body.append(kicker, name, sub);
     tip.replaceChildren(img, body);
     const [, , vbWidth, vbHeight] = MAP_VIEWBOX.split(" ").map(Number);
@@ -237,8 +272,9 @@ export function renderMap(container, { current = "", visited = new Set(), label 
 
   svg.addEventListener("pointerover", (e) => {
     const link = e.target.closest?.(".map-prov");
-    const fig = e.target.closest?.(".map-figure");
+    const fig = e.target.closest?.(".map-figure") || e.target.closest?.(".map-lantern");
     if (link) showTip(link.dataset.id);
+    else if (fig?.classList.contains("map-lantern")) showTip(fig.dataset.id);
     const id = link?.dataset.id || fig?.dataset.id;
     if (id) onHover?.(id);
   });
@@ -285,6 +321,12 @@ export function renderMap(container, { current = "", visited = new Set(), label 
     select,
     /** Perbesar peta ke satu provinsi. Selesai saat animasi selesai. */
     hideTip,
+    /** Nyalakan/matikan Mode Lentera. */
+    setLentera(isOn) {
+      svg.classList.toggle("is-lentera", isOn);
+      if (lanterns) svg.append(lanterns);
+    },
+    isLentera: () => svg.classList.contains("is-lentera"),
     zoomTo(id, duration = ZOOM_MS) {
       if (!links.has(id)) return Promise.resolve();
       hideTip();

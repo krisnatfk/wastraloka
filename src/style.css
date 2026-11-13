@@ -1149,3 +1149,145 @@ body.is-province-open #beranda, body.is-province-open .marquee, body.is-province
 @media (prefers-reduced-motion: reduce) {
   .map-hint svg { animation: none; }
 }
+
+/* =================================================================
+   Lentera Warisan: budaya yang memudar atau sudah hilang
+   ================================================================= */
+:root {
+  --risk-punah: #6f6862;
+  --risk-kritis: #c2411f;
+  --risk-mendesak: #d9a62e;
+  --risk-terancam: #e07b2b;
+}
+.tone-punah { --tone: var(--risk-punah); }
+.tone-kritis { --tone: var(--risk-kritis); }
+.tone-mendesak { --tone: var(--risk-mendesak); }
+.tone-terancam { --tone: var(--risk-terancam); }
+
+/* bagian bertema malam: lentera tampak menyala di gelap */
+main > .lentera-sec { position: relative; isolation: isolate; color: #f3ead8; padding-bottom: clamp(56px, 8vw, 96px); margin-top: clamp(64px, 9vw, 104px); }
+.lentera-sec::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(50% - 50vw);
+  z-index: -1;
+  background:
+    radial-gradient(60% 40% at 50% 0%, rgba(217, 166, 46, 0.18), transparent 70%),
+    radial-gradient(40% 30% at 85% 70%, rgba(194, 65, 31, 0.12), transparent 70%),
+    linear-gradient(180deg, #14100d, #1d1611 60%, #14100d);
+}
+.lentera-sec .eyebrow { color: var(--kunyit-soft); }
+.lentera-sec .sec-title { color: #fff; }
+.lentera-sec .sec-title em { color: var(--kunyit-soft); }
+.lentera-sec .sec-sub { color: rgba(243, 234, 216, 0.75); }
+.lentera-sec .gallery-tabs button { background: rgba(255, 255, 255, 0.06); border-color: rgba(232, 199, 122, 0.25); color: #f3ead8; }
+.lentera-sec .gallery-tabs button[aria-pressed="true"] { background: var(--kunyit); border-color: var(--kunyit); color: var(--tinta); }
+
+.lentera-levels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 34px; }
+.level { position: relative; padding: 16px 16px 16px 18px; border-radius: var(--r-lg); background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; }
+.level::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--tone); }
+.level b { display: block; font-family: var(--display); font-size: 34px; line-height: 1; color: var(--tone); }
+.level strong { display: block; margin-top: 6px; font-size: 13.5px; color: #fff; }
+.level span { display: block; margin-top: 2px; font-size: 12px; color: rgba(243, 234, 216, 0.65); }
+.lentera-mine { margin: 18px auto 0; max-width: 640px; text-align: center; font-size: 13.5px; color: var(--kunyit-soft); }
+
+.risk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; margin-top: 22px; }
+.risk-card { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: var(--r-lg); background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)); border: 1px solid rgba(255, 255, 255, 0.1); color: #f3ead8; overflow: hidden; }
+.risk-card::after { content: ""; position: absolute; right: -40px; top: -40px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--tone) 45%, transparent), transparent 70%); pointer-events: none; }
+.risk-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.risk-badge { padding: 3px 10px; border-radius: 999px; background: var(--tone); color: #1a120c; font-size: 11px; font-weight: 800; letter-spacing: 0.04em; }
+.risk-badge.tone-punah { color: #fff; }
+.risk-kind { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(243, 234, 216, 0.6); }
+.risk-card h3 { margin: 4px 0 0; font-family: var(--display); font-size: 21px; font-weight: 600; line-height: 1.15; color: #fff; }
+.risk-place { margin: 0; font-size: 12.5px; color: var(--kunyit-soft); }
+.risk-place a { color: inherit; }
+.risk-why { margin: 4px 0 0; font-size: 13.5px; line-height: 1.5; }
+.risk-note { margin: 0; font-size: 12.5px; color: rgba(243, 234, 216, 0.65); }
+.risk-src { margin: auto 0 0; padding-top: 6px; font-size: 11px; color: rgba(243, 234, 216, 0.55); }
+.risk-src a { color: inherit; }
+.lantern-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; margin-top: 8px; padding: 0 16px; border: 1px solid rgba(232, 199, 122, 0.45); border-radius: 999px; background: transparent; color: var(--kunyit-soft); font-size: 13px; font-weight: 700; transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.3s ease; }
+.lantern-btn svg { width: 20px; height: 20px; }
+.lantern-btn:hover { background: rgba(232, 199, 122, 0.1); }
+.lantern-btn.is-lit { background: var(--kunyit); color: var(--tinta); border-color: var(--kunyit); box-shadow: 0 0 22px rgba(232, 199, 122, 0.55); }
+.lantern-btn.is-lit svg { animation: flicker 2.4s ease-in-out infinite; }
+@keyframes flicker { 0%, 100% { opacity: 1; } 45% { opacity: 0.82; } 55% { opacity: 1; } 70% { opacity: 0.9; } }
+
+.lentera-bottom { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px; margin-top: 30px; }
+.lentera-help, .lentera-report { padding: 22px; border-radius: var(--r-lg); background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); }
+.lentera-help h3, .lentera-report h3 { margin: 0 0 12px; font-family: var(--display); font-size: 22px; font-weight: 600; color: #fff; }
+.lentera-report p { margin: 0 0 14px; font-size: 13.5px; color: rgba(243, 234, 216, 0.8); }
+.lentera-report .tiny { margin: 14px 0 0; color: rgba(243, 234, 216, 0.55); }
+.help-steps { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; counter-reset: help; }
+.help-steps li { counter-increment: help; display: grid; grid-template-columns: 30px 1fr; gap: 2px 10px; font-size: 13.5px; }
+.help-steps li::before { content: counter(help); grid-row: span 2; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--kunyit); color: var(--tinta); font-weight: 800; }
+.help-steps b { color: #fff; }
+.help-steps span { color: rgba(243, 234, 216, 0.75); }
+
+/* bab "Sebelum hilang" di halaman provinsi: kartu gelap di atas kertas */
+#bab-memudar .risk-grid { margin-top: 0; }
+#bab-memudar .risk-card { background: linear-gradient(180deg, #221a14, #1a140f); border-color: rgba(232, 199, 122, 0.2); }
+#bab-memudar .lentera-bottom { margin-top: 16px; }
+#bab-memudar .lentera-help, #bab-memudar .lentera-report { background: #1d1611; }
+
+/* ---- Mode Lentera di peta ---- */
+.lentera-toggle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(16, 32, 52, 0.7);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.3s ease;
+}
+.lentera-toggle-icon {
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  -webkit-mask: var(--lantern-mask) center / contain no-repeat;
+  mask: var(--lantern-mask) center / contain no-repeat;
+  --lantern-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 3h6M12 3v2M8 7h8l1 2v8l-1 2H8l-1-2V9z' fill='none' stroke='black' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M12 10.5c1.3 1.3 1.6 2.4 1.2 3.4a1.3 1.3 0 0 1-2.4 0c-.4-1 0-2.1 1.2-3.4Z'/%3E%3Cpath d='M9 21h6' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.lentera-toggle[aria-pressed="true"] { background: var(--kunyit); color: var(--tinta); border-color: var(--kunyit); box-shadow: 0 0 24px rgba(232, 199, 122, 0.6); }
+.map-sea:has(svg.is-lentera)::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: rgba(8, 10, 22, 0.55); }
+.map-sea:has(svg.is-lentera) .map-wrap { position: relative; z-index: 1; }
+.map-lanterns { display: none; }
+.map-svg.is-lentera .map-lanterns { display: inline; }
+.map-svg.is-lentera .map-figure { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.map-svg.is-lentera .map-prov .prov-land { filter: saturate(0.25) brightness(0.45); }
+.map-svg.is-lentera .map-prov.has-risk .prov-land { filter: sepia(0.55) saturate(1.5) hue-rotate(-12deg) brightness(0.95); }
+.map-svg.is-lentera .map-prov.has-risk:hover .prov-land { filter: sepia(0.4) saturate(1.8) brightness(1.1); }
+.map-lantern { cursor: pointer; }
+.map-lantern .lantern-glow { fill: var(--tone); opacity: 0.35; transform-box: fill-box; transform-origin: center; animation: lanternPulse 2.6s ease-in-out infinite; }
+.map-lantern .lantern-core { fill: #2a1d13; stroke: var(--tone); stroke-width: 1.4; }
+.map-lantern .lantern-frame { fill: none; stroke: #f6e7c6; stroke-width: 1; stroke-linejoin: round; }
+.map-lantern .lantern-flame { fill: var(--tone); }
+.map-lantern .lantern-count circle { fill: #fff; stroke: #2a1d13; stroke-width: 0.8; }
+.map-lantern .lantern-count text { fill: #2a1d13; font-family: var(--font); font-weight: 800; }
+.map-lantern.tone-punah .lantern-glow { animation: none; opacity: 0.15; }
+.map-lantern.tone-punah .lantern-flame { fill: #4d4741; }
+.map-lantern.tone-kritis .lantern-glow { animation-duration: 1.2s; }
+.map-lantern:hover .lantern-core { stroke-width: 2.4; }
+@keyframes lanternPulse { 0%, 100% { transform: scale(0.85); opacity: 0.25; } 50% { transform: scale(1.15); opacity: 0.5; } }
+.map-legend i.lg-lentera { background: radial-gradient(circle, #ffd27a 30%, #c2411f 75%); border-radius: 50%; }
+
+@media (max-width: 920px) {
+  .lentera-levels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lentera-bottom { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .lentera-toggle { top: 8px; left: 8px; font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-lantern .lantern-glow, .lantern-btn.is-lit svg { animation: none; }
+}

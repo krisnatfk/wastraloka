@@ -4,12 +4,14 @@
 
 import { CULTURE_KINDS, CULTURE_PHOTOS } from "./content/culture-photos.js";
 import { FOODS, FOOD_SOURCE, MUSIC, MUSIC_SOURCE, SENTRA, WEAPONS, WEAPON_SOURCE, shopSearches } from "./content/culture.js";
+import { groupForDisplay, risksForProvince } from "./content/heritage-risk.js";
 import { HISTORY, historySource } from "./content/history.js";
 import { PROVINCE_PHOTOS } from "./content/province-photos.js";
 import { PROVINCES, SOURCES, regionOf } from "./content/provinces.js";
 import { catalogForProvince, wikimediaSized } from "./content/wastra-catalog.js";
 import { el } from "./dom.js";
 import { coupleSvg } from "./figures.js";
+import { helpList, reportLink, riskCard } from "./lentera.js";
 import { provinceUrl, renderMap } from "./map.js";
 import { readPassport, stampVisited } from "./paspor.js";
 import { sentraCard } from "./sentra.js";
@@ -24,10 +26,12 @@ const withPrefix = (prefix, value, alreadyPrefixed) => (!value ? "" : alreadyPre
 
 const CHAPTERS = [
   ["bab-sejarah", "Sejarah"], ["bab-wastra", "Wastra"], ["bab-budaya", "Rumah · Tari · Musik"], ["bab-busana", "Busana"],
-  ["bab-senjata", "Senjata & Kuliner"], ["bab-belanja", "Belanja"], ["bab-lokasi", "Peta"],
+  ["bab-memudar", "Sebelum Hilang"], ["bab-senjata", "Senjata & Kuliner"], ["bab-belanja", "Belanja"], ["bab-lokasi", "Peta"],
 ];
 
-function chapter(id, number, kicker, title, children) {
+function chapter(id, _number, kicker, title, children) {
+  // nomor bab mengikuti urutan CHAPTERS, supaya tetap urut bila ada bab baru
+  const number = String(CHAPTERS.findIndex(([chapterId]) => chapterId === id) + 1).padStart(2, "0");
   return el("section", { className: "chapter", id }, [
     el("header", { className: "chapter-head" }, [el("span", { className: "chapter-no", textContent: number }), el("div", {}, [el("small", { textContent: kicker }), el("h2", { textContent: title })])]),
     ...children,
@@ -176,6 +180,26 @@ function weaponFoodChapter(province) {
   ]);
 }
 
+// Bab Lentera Warisan: budaya dari provinsi ini yang memudar atau sudah hilang
+function fadingChapter(province) {
+  const risks = risksForProvince(province.id);
+  const lead = risks.length
+    ? `Dari sumber yang bisa kami telusuri, ${risks.length} budaya dari ${province.name} tercatat memudar atau sudah hilang. Kenali, lalu nyalakan lenteranya dengan ikut menjaga.`
+    : `Belum ada budaya dari ${province.name} yang tercatat memudar di sumber yang kami telusuri. Bukan berarti semuanya aman: bila kamu tahu tradisi, bahasa, atau kain yang mulai ditinggalkan, kabari kami.`;
+  return chapter("bab-memudar", "", "Lentera Warisan", "Sebelum hilang", [
+    el("p", { className: "chapter-lead", textContent: lead }),
+    risks.length ? el("div", { className: "risk-grid" }, groupForDisplay(risks).map((r) => riskCard(r, { withProvince: false }))) : null,
+    el("div", { className: "lentera-bottom compact" }, [
+      el("div", { className: "lentera-help" }, [el("h3", { textContent: "Lima cara menjaga nyalanya" }), helpList()]),
+      el("div", { className: "lentera-report" }, [
+        el("h3", { textContent: "Tahu budaya yang mulai ditinggalkan?" }),
+        el("p", { textContent: "Setiap kabar dicek ke sumbernya sebelum tampil." }),
+        el("a", { className: "pill pill-gold", href: reportLink(province.name), textContent: "Kirim kabar budaya" }),
+      ]),
+    ]),
+  ]);
+}
+
 function shopChapter(province) {
   const sentra = SENTRA[province.id] || [];
   const links = shopSearches(province).map((x) => el("a", { href: x.url, rel: "noopener", target: "_blank" }, [el("small", { textContent: x.kind }), `${x.label} ↗`]));
@@ -259,7 +283,7 @@ export function renderProvinceView(root, province) {
     chapterNav(),
     el("div", { className: "chapters" }, [
       historyChapter(province), wastraChapter(province), cultureChapter(province), costumeChapter(province),
-      weaponFoodChapter(province), shopChapter(province), locationChapter(province, region, isNewStamp),
+      fadingChapter(province), weaponFoodChapter(province), shopChapter(province), locationChapter(province, region, isNewStamp),
       pager(province), ...notes,
     ]),
   ]);

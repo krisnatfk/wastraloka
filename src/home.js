@@ -10,6 +10,7 @@ import { coupleSvg } from "./figures.js";
 import { initGallery } from "./gallery.js";
 import { initHero } from "./hero.js";
 import { fillPhotoOf, provinceUrl, renderMap } from "./map.js";
+import { initLenteraSection, lanternCount } from "./lentera.js";
 import { initMarquee } from "./marquee.js";
 import { clearPassport, formatStampDate, readPassport, stampVisited } from "./paspor.js";
 import { initQuiz } from "./quiz.js";
@@ -72,7 +73,7 @@ function previewProvince(id) {
   hoverTimer = setTimeout(() => renderMapPanel(id), HOVER_PREVIEW_MS);
 }
 
-function showProvinceView(id) {
+function showProvinceView(id, { chapterId = "" } = {}) {
   const province = provinceById(id);
   if (!province) return false;
   const root = document.getElementById("provinceView");
@@ -85,6 +86,9 @@ function showProvinceView(id) {
   root.classList.add("is-entering");
   window.scrollTo({ top: 0, behavior: "auto" });
   reveal?.observe(root);
+  // dari Mode Lentera: langsung ke bab "Sebelum hilang"
+  const target = chapterId && document.getElementById(chapterId);
+  if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: "instant", block: "start" }));
   return true;
 }
 
@@ -100,7 +104,8 @@ async function enterProvince(id) {
     await mapApi.zoomTo(id);
     mapCard.classList.add("is-diving");
     await new Promise((resolve) => setTimeout(resolve, prefersReducedMotion() ? 0 : 280));
-    if (showProvinceView(id)) history.pushState({ province: id }, "", provinceUrl(id));
+    const chapterId = mapApi.isLentera() ? "bab-memudar" : "";
+    if (showProvinceView(id, { chapterId })) history.pushState({ province: id }, "", provinceUrl(id) + (chapterId ? `#${chapterId}` : ""));
   } finally {
     mapCard.classList.remove("is-diving");
     isEntering = false;
@@ -193,6 +198,14 @@ function renderMapSection() {
     if (sea.scrollLeft > SWIPE_HIDE_PX) hint?.classList.add("is-hidden");
   }, { passive: true });
 
+  // Mode Lentera: sorot provinsi yang punya budaya memudar
+  const lenteraToggle = document.getElementById("lenteraToggle");
+  lenteraToggle?.addEventListener("click", () => {
+    const isOn = lenteraToggle.getAttribute("aria-pressed") !== "true";
+    lenteraToggle.setAttribute("aria-pressed", String(isOn));
+    mapApi.setLentera(isOn);
+  });
+
   // tautan footer "?wilayah=..." tetap menyorot pulau terkait, tanpa tombol wilayah di atas peta
   const region = new URLSearchParams(location.search).get("wilayah");
   if (REGIONS.some((r) => r.id === region)) mapApi.setRegion(region);
@@ -234,7 +247,8 @@ export function renderPassport() {
   const stamped = stampedIds(passport);
   countUp(document.getElementById("pasporCount"), stamped.size, el("small", { textContent: `/ ${PROVINCES.length}` }));
   document.getElementById("pasporBar").style.width = `${(stamped.size / PROVINCES.length) * 100}%`;
-  document.getElementById("pasporTried").textContent = `${Object.keys(passport.tried).length} provinsi sudah dicoba di cermin`;
+  const lit = lanternCount();
+  document.getElementById("pasporTried").textContent = `${Object.keys(passport.tried).length} provinsi sudah dicoba di cermin${lit ? ` · ${lit} lentera dinyalakan` : ""}`;
   document.getElementById("stamps").replaceChildren(...PROVINCES.map((p) => {
     const visitedAt = passport.visited[p.id];
     const triedAt = passport.tried[p.id];
@@ -283,6 +297,8 @@ function initHome() {
   reveal = initReveal();
   initProvinceRouting();
   initGallery({ onRender: (grid) => reveal.observe(grid.parentElement) });
+  initLenteraSection({ onRender: (grid) => reveal.observe(grid.parentElement) });
+  document.addEventListener("lentera:change", () => renderPassport());
   initQuiz({ onCorrect: (id) => { if (stampVisited(id)) renderPassport(); } });
 
   document.getElementById("pasporReset").addEventListener("click", () => {

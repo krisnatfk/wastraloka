@@ -176,6 +176,7 @@ Sentra lain memakai foto kain atau busana provinsinya; keterangan foto selalu me
 
 | Data | Sumber | Catatan |
 |---|---|---|
+| Lentera Warisan (budaya yang memudar) | UNESCO (Saman 2011, Noken 2012, Reog Ponorogo 2024: Daftar Warisan Budaya Takbenda yang Memerlukan Perlindungan Mendesak); Antara/Kemendikbudristek (11 bahasa daerah punah); Pemprov Jawa Tengah (Tenun Kluwung Gendong, 2020); detikJabar (Tenun Gadod 2021, Tenun Gedogan Indramayu); GNFI (Batik Gedog Tuban 2024, Tenun Sembalun 2024); Medcom (16 dari 85 motif Tenun Sumba terancam, 2023) | Alasan "memudar" ditulis sebatas yang disebut sumber; angka mengikuti tahun liputan. Tautan lengkap ada di `src/content/heritage-risk.js` dan di setiap kartu. |
 | Sejarah singkat 38 provinsi | Wikipedia bahasa Indonesia (bagian Sejarah tiap provinsi) dan undang-undang pembentukan provinsi | Ditulis ulang dengan kata-kata sendiri, 3 babak per provinsi. |
 | Alat musik & cara memainkan | [detikJogja, alat musik tradisional 38 provinsi (2025)](https://www.detik.com/jogja/budaya/d-7761408/daftar-alat-musik-tradisional-38-provinsi-di-indonesia-dan-cara-memainkannya) | Merangkum buku *Alat Musik Tradisional Nusantara* (Akhmalul Khuluq) dan *Ensiklopedia Mini Alat Musik Tradisional* (Tegar Utama). |
 | Senjata tradisional | [detikJogja, 38 senjata tradisional tiap provinsi](https://www.detik.com/jogja/budaya/d-7668676/38-senjata-tradisional-dan-asalnya-dari-tiap-provinsi-di-indonesia) | |

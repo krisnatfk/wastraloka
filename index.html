@@ -26,6 +26,7 @@
     </a>
     <ul class="nav-links" id="navMenu">
       <li><a href="#peta">Peta</a></li>
+      <li><a href="#lentera">Lentera</a></li>
       <li><a href="#galeri">Galeri</a></li>
       <li><a href="#kuis">Kuis</a></li>
       <li><a href="#cermin">Cermin</a></li>
@@ -101,6 +102,10 @@
     <div class="map-card" data-reveal>
       <div class="map-layout">
         <div class="map-stage">
+        <button class="lentera-toggle" id="lenteraToggle" type="button" aria-pressed="false">
+          <span class="lentera-toggle-icon" aria-hidden="true"></span>
+          <span>Mode Lentera</span>
+        </button>
         <div class="map-sea">
           <div class="map-wrap" id="map"></div>
           <svg class="compass" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="50" cy="50" r="36" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2 3"/><path d="M50 6 56 50 50 94 44 50Z" fill="currentColor" opacity=".9"/><path d="M6 50 50 44 94 50 50 56Z" fill="currentColor" opacity=".45"/><text x="50" y="4" font-size="9" text-anchor="middle" fill="currentColor">U</text></svg>
@@ -121,7 +126,29 @@
           </div>
         </aside>
       </div>
-      <p class="map-legend"><span><i class="lg-land"></i>Belum dipilih</span><span><i class="lg-photo"></i>Diklik: zoom ke foto rumah adat</span><span><i class="lg-visited"></i>Sudah ada cap paspor</span><span>Ilustrasi busana adalah gambar sederhana, bukan reproduksi detail.</span></p>
+      <p class="map-legend"><span><i class="lg-land"></i>Belum dipilih</span><span><i class="lg-photo"></i>Diklik: zoom ke foto rumah adat</span><span><i class="lg-visited"></i>Sudah ada cap paspor</span><span><i class="lg-lentera"></i>Mode Lentera: budaya yang memudar</span><span>Ilustrasi busana adalah gambar sederhana, bukan reproduksi detail.</span></p>
+    </div>
+  </section>
+
+  <section id="lentera" class="lentera-sec" aria-labelledby="lentera-title">
+    <p class="eyebrow" data-reveal>Lentera Warisan</p>
+    <h2 id="lentera-title" class="sec-title" data-reveal>Sebelum <em>hilang.</em></h2>
+    <p class="sec-sub" data-reveal>Sebagian budaya Nusantara nyalanya tinggal sedikit: bahasa yang sudah tak punya penutur, tenun yang penenunnya bisa dihitung dengan jari, tradisi yang kehilangan maestro. Kenali mereka, lalu nyalakan lenteranya dengan ikut menjaga.</p>
+    <div class="lentera-levels" id="lenteraLevels" data-reveal-group></div>
+    <p class="lentera-mine" id="lenteraMine" role="status"></p>
+    <div class="gallery-tabs" id="lenteraTabs" role="group" aria-label="Jenis budaya"></div>
+    <div class="risk-grid" id="lenteraGrid" data-reveal-group></div>
+    <div class="lentera-bottom">
+      <div class="lentera-help" data-reveal>
+        <h3>Lima cara menjaga nyalanya</h3>
+        <div id="lenteraHelp"></div>
+      </div>
+      <div class="lentera-report" data-reveal>
+        <h3>Tahu budaya yang mulai ditinggalkan?</h3>
+        <p>Kabari kami: nama budayanya, daerahnya, apa yang terjadi, dan sumber atau kontak yang bisa dihubungi. Setiap kabar dicek ke sumbernya sebelum tampil di Lentera Warisan.</p>
+        <a class="pill pill-gold" id="lenteraReport" href="#">Kirim kabar budaya</a>
+        <p class="tiny">Data di bagian ini hanya diambil dari sumber yang bisa ditelusuri (UNESCO, Kemendikbudristek, pemerintah daerah, media nasional). Angka mengikuti tahun liputannya.</p>
+      </div>
     </div>
   </section>
 
