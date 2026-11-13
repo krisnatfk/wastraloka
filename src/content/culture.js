@@ -1,7 +1,7 @@
 // Alat musik dan sentra wastra per provinsi.
 // Alat musik: detikJogja (3 Feb 2025), merangkum buku "Alat Musik Tradisional Nusantara" (Akhmalul Khuluq)
 // dan "Ensiklopedia Mini Alat Musik Tradisional" (Tegar Utama). Sentra: tempat umum yang dikenal luas
-// sebagai pusat perajin; BUKAN mitra Cermin Wastra. Tautan toko berupa pencarian, bukan toko pilihan kami.
+// sebagai pusat perajin; BUKAN mitra Wastraloka. Tautan toko berupa pencarian, bukan toko pilihan kami.
 
 export const MUSIC_SOURCE = {
   label: "detikJogja, alat musik tradisional 38 provinsi (2025)",
@@ -83,3 +83,37 @@ export function shopSearches(province) {
 }
 
 export const sentraMapUrl = (sentra) => `https://www.google.com/maps/search/${encodeURIComponent(`${sentra.name} ${sentra.place}`)}`;
+
+// Senjata tradisional: detikJogja (2024). Makanan khas: detikEdu (2022), merangkum buku Tata Boga
+// dan e-modul Badan Bahasa. null = sumber belum menyebut khusus untuk provinsi itu.
+export const WEAPON_SOURCE = { label: "detikJogja, 38 senjata tradisional tiap provinsi", url: "https://www.detik.com/jogja/budaya/d-7668676/38-senjata-tradisional-dan-asalnya-dari-tiap-provinsi-di-indonesia" };
+export const FOOD_SOURCE = { label: "detikEdu, makanan khas 38 provinsi", url: "https://www.detik.com/edu/detikpedia/d-6476079/lengkap-makanan-khas-indonesia-dari-38-provinsi-bisa-dicoba-saat-libur-nataru" };
+
+export const WEAPONS = {
+  "aceh": "Rencong", "sumatera-utara": "Pedang Si Ular", "sumatera-barat": "Karambit", "riau": "Pedang Jenawi",
+  "kepulauan-riau": "Badik Tumbuk Lado", "jambi": "Keris Siginjai", "sumatera-selatan": "Tombak Trisula",
+  "kepulauan-bangka-belitung": "Siwar Panjang", "bengkulu": "Rodos", "lampung": "Terapang",
+  "kalimantan-barat": "Sipet", "kalimantan-timur": "Mandau", "kalimantan-tengah": "Lonjo",
+  "kalimantan-selatan": "Keris Bujak Beliung", "kalimantan-utara": "Kupang Mandau", "dki-jakarta": "Golok",
+  "banten": "Congkrang", "jawa-barat": "Kujang", "jawa-tengah": "Condroso", "jawa-timur": "Clurit",
+  "daerah-istimewa-yogyakarta": "Keris Patrem", "bali": "Wedhung", "nusa-tenggara-barat": "Klewang",
+  "nusa-tenggara-timur": "Sundu", "gorontalo": "Baladu", "sulawesi-barat": "Badek", "sulawesi-selatan": "Bessing",
+  "sulawesi-tengah": "Guma", "sulawesi-tenggara": "Parang Taawu", "sulawesi-utara": "Pedang Bara Sangihe",
+  "papua": "Belati Tulang Kasuari", "papua-barat": "Busur dan Panah", "papua-barat-daya": "Kapak",
+  "papua-pegunungan": "Parang", "papua-selatan": "Pisuwe", "papua-tengah": "Pisau Belati",
+  "maluku": "Salawaku", "maluku-utara": "Kalawai",
+};
+
+export const FOODS = {
+  "aceh": "Mi Aceh", "sumatera-utara": "Bika Ambon", "sumatera-barat": "Rendang", "jambi": "Gulai Ikan Patin",
+  "bengkulu": "Pendap", "riau": "Gulai Belacan", "kepulauan-riau": "Otak-otak", "sumatera-selatan": "Pempek",
+  "kepulauan-bangka-belitung": "Mi Bangka", "lampung": "Seruit", "banten": "Sate Bandeng", "dki-jakarta": "Kerak Telor",
+  "jawa-barat": "Karedok", "jawa-tengah": "Lumpia", "daerah-istimewa-yogyakarta": "Gudeg", "jawa-timur": "Rujak Cingur",
+  "bali": "Ayam Betutu", "nusa-tenggara-barat": "Ayam Taliwang", "nusa-tenggara-timur": "Catemak Jagung",
+  "kalimantan-barat": "Bubur Pedas Sambas", "kalimantan-tengah": "Juhu Singkah", "kalimantan-selatan": "Soto Banjar",
+  "kalimantan-timur": "Ayam Cincane", "kalimantan-utara": "Kepiting Soka", "sulawesi-selatan": "Sup Konro",
+  "sulawesi-tengah": "Ikan Jantung Pisang", "sulawesi-tenggara": "Lapa-lapa", "sulawesi-barat": "Bolu Paranggi",
+  "gorontalo": "Binte Biluhuta", "sulawesi-utara": "Tinutuan", "maluku": "Ikan Asar", "maluku-utara": "Gohu Ikan",
+  "papua-barat": "Ikan Bakar Manokwari", "papua-tengah": "Kue Sagu", "papua": "Papeda",
+  "papua-barat-daya": null, "papua-pegunungan": null, "papua-selatan": null,
+};

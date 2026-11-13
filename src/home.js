@@ -2,10 +2,10 @@
 // Dimuat sebagai script sendiri (terpisah dari cermin AI), jadi kalau cermin gagal dimuat, isi beranda tetap tampil.
 
 import { CULTURE_PHOTOS } from "./content/culture-photos.js";
-import { MUSIC, MUSIC_SOURCE, SENTRA, sentraMapUrl } from "./content/culture.js";
+import { MUSIC, MUSIC_SOURCE, SENTRA } from "./content/culture.js";
 import { PROVINCES, REGIONS, SOURCES, provinceById } from "./content/provinces.js";
 import { WASTRA_CATALOG } from "./content/wastra-catalog.js";
-import { el } from "./dom.js";
+import { el, installImageRetry } from "./dom.js";
 import { initGallery } from "./gallery.js";
 import { initHero } from "./hero.js";
 import { provinceUrl, renderMap } from "./map.js";
@@ -13,6 +13,7 @@ import { initMarquee } from "./marquee.js";
 import { clearPassport, formatStampDate, readPassport, stampVisited } from "./paspor.js";
 import { initQuiz } from "./quiz.js";
 import { initReveal } from "./reveal.js";
+import { sentraCard } from "./sentra.js";
 import { initSiteNav } from "./site-nav.js";
 import { initTabBar } from "./tab-bar.js";
 
@@ -33,11 +34,13 @@ function renderMapSection() {
     const io = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
       host.classList.add("is-drawn");
+      mapApi.loadImages();
       io.disconnect();
     }, { threshold: 0.2 });
     io.observe(host);
   } else {
     host.classList.add("is-drawn");
+    mapApi.loadImages();
   }
 
   const chips = document.getElementById("regionChips");
@@ -131,19 +134,7 @@ export function renderPassport() {
 }
 
 function renderSentra() {
-  const cards = Object.entries(SENTRA).flatMap(([provinceId, list]) => list.map((s) => {
-    const province = provinceById(provinceId);
-    return el("article", { className: "sentra" }, [
-      el("small", { textContent: s.wastra }),
-      el("h3", { textContent: s.name }),
-      el("p", { textContent: `${s.place}, ${province.name}` }),
-      el("div", { className: "sentra-links" }, [
-        el("a", { href: sentraMapUrl(s), rel: "noopener", target: "_blank", textContent: "Lihat di peta ↗" }),
-        el("a", { href: provinceUrl(provinceId), textContent: "Halaman provinsi" }),
-        el("a", { href: s.source, rel: "noopener", target: "_blank", textContent: "Sumber" }),
-      ]),
-    ]);
-  }));
+  const cards = Object.entries(SENTRA).flatMap(([provinceId, list]) => list.map((sentra) => sentraCard(sentra, provinceId)));
   document.getElementById("sentraGrid").replaceChildren(...cards);
 }
 
@@ -161,6 +152,7 @@ function renderStats() {
 }
 
 function initHome() {
+  installImageRetry();
   initSiteNav({ nav: document.getElementById("siteNav"), sentinel: document.getElementById("navSentinel") });
   initTabBar();
   initMarquee(document.querySelector(".marquee"));

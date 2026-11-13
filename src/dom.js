@@ -15,3 +15,22 @@ export function shuffle(list) {
   }
   return copy;
 }
+
+// Thumbnail Wikimedia dibuat saat pertama diminta dan kadang gagal (500/429) di permintaan pertama.
+// Coba muat ulang sekali setelah jeda; kalau tetap gagal, biarkan (kotak gambar tetap berlatar motif).
+const RETRY_DELAY_MS = 1800;
+export function retryOnce(node, attribute = "src") {
+  if (node.dataset.retried) return;
+  node.dataset.retried = "1";
+  const url = node.getAttribute(attribute);
+  if (!url) return;
+  setTimeout(() => node.setAttribute(attribute, `${url}${url.includes("?") ? "&" : "?"}r=1`), RETRY_DELAY_MS);
+}
+
+export function installImageRetry() {
+  document.addEventListener("error", (e) => {
+    const target = e.target;
+    if (target instanceof HTMLImageElement) retryOnce(target);
+    else if (target instanceof SVGImageElement) retryOnce(target, "href");
+  }, true);
+}

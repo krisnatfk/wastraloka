@@ -20,7 +20,7 @@ export const CULTURE_PHOTOS = {
    "file": "Saman_dance.jpg",
    "license": "CC BY-SA 3.0",
    "artist": "Fajriboy",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Saman_dance.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Saman_dance.jpg/960px-Saman_dance.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Saman_dance.jpg"
   },
   "musik": null,
@@ -68,7 +68,7 @@ export const CULTURE_PHOTOS = {
    "file": "COLLECTIE_TROPENMUSEUM_Si_gale_gale_dans_TMnr_20025981.jpg",
    "license": "CC BY-SA 3.0",
    "artist": "Boy Lawson",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/f/f5/COLLECTIE_TROPENMUSEUM_Si_gale_gale_dans_TMnr_20025981.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/COLLECTIE_TROPENMUSEUM_Si_gale_gale_dans_TMnr_20025981.jpg/960px-COLLECTIE_TROPENMUSEUM_Si_gale_gale_dans_TMnr_20025981.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Si_gale_gale_dans_TMnr_20025981.jpg"
   }
  },
@@ -168,7 +168,7 @@ export const CULTURE_PHOTOS = {
    "file": "Stamp_of_Indonesia_-_1993_-_Colnect_252647_-_Tari_Gending_Sriwijaya.jpeg",
    "license": "Public domain",
    "artist": "Post of Indonesia",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/6/62/Stamp_of_Indonesia_-_1993_-_Colnect_252647_-_Tari_Gending_Sriwijaya.jpeg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Stamp_of_Indonesia_-_1993_-_Colnect_252647_-_Tari_Gending_Sriwijaya.jpeg/960px-Stamp_of_Indonesia_-_1993_-_Colnect_252647_-_Tari_Gending_Sriwijaya.jpeg",
    "page": "https://commons.wikimedia.org/wiki/File:Stamp_of_Indonesia_-_1993_-_Colnect_252647_-_Tari_Gending_Sriwijaya.jpeg"
   },
   "musik": {
@@ -186,7 +186,7 @@ export const CULTURE_PHOTOS = {
    "file": "Aesan_Gede_Songket_Palembang.jpg",
    "license": "CC BY-SA 3.0",
    "artist": "Gunkarta",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Aesan_Gede_Songket_Palembang.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Aesan_Gede_Songket_Palembang.jpg/960px-Aesan_Gede_Songket_Palembang.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Aesan_Gede_Songket_Palembang.jpg"
   }
  },
@@ -208,7 +208,7 @@ export const CULTURE_PHOTOS = {
    "file": "Batik_Besurek_Bengkulu.jpg",
    "license": "CC BY-SA 4.0",
    "artist": "Gunawan Kartapranata",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Batik_Besurek_Bengkulu.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Batik_Besurek_Bengkulu.jpg/960px-Batik_Besurek_Bengkulu.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Batik_Besurek_Bengkulu.jpg"
   }
  },
@@ -229,7 +229,7 @@ export const CULTURE_PHOTOS = {
    "file": "Stamp_of_Indonesia_-_2020_-_Colnect_947125_-_Cetik_Lampung.jpeg",
    "license": "Public domain",
    "artist": "Post of Indonesia",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/9/99/Stamp_of_Indonesia_-_2020_-_Colnect_947125_-_Cetik_Lampung.jpeg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Stamp_of_Indonesia_-_2020_-_Colnect_947125_-_Cetik_Lampung.jpeg/960px-Stamp_of_Indonesia_-_2020_-_Colnect_947125_-_Cetik_Lampung.jpeg",
    "page": "https://commons.wikimedia.org/wiki/File:Stamp_of_Indonesia_-_2020_-_Colnect_947125_-_Cetik_Lampung.jpeg"
   },
   "pakaian": {
@@ -243,15 +243,7 @@ export const CULTURE_PHOTOS = {
   }
  },
  "kepulauan-bangka-belitung": {
-  "rumah": {
-   "article": "Rumah Rakit",
-   "articleUrl": "https://id.wikipedia.org/wiki/Rumah_Rakit",
-   "file": "COLLECTIE_TROPENMUSEUM_Woonboot_op_de_Batang_Rawas_district_Rawas_Sumatra_TMnr_60002807.jpg",
-   "license": "CC BY-SA 3.0",
-   "artist": "Daniël David Veth",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/7/70/COLLECTIE_TROPENMUSEUM_Woonboot_op_de_Batang_Rawas_district_Rawas_Sumatra_TMnr_60002807.jpg",
-   "page": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Woonboot_op_de_Batang_Rawas_district_Rawas_Sumatra_TMnr_60002807.jpg"
-  },
+  "rumah": null,
   "tari": null,
   "musik": {
    "article": "Dambus",
@@ -259,7 +251,7 @@ export const CULTURE_PHOTOS = {
    "file": "Stamp_of_Indonesia_-_2015_-_Colnect_667023_-_Dambus_Kepulauan_Bangka_Belitung.jpeg",
    "license": "Public domain",
    "artist": "Post of Indonesia",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/d/d2/Stamp_of_Indonesia_-_2015_-_Colnect_667023_-_Dambus_Kepulauan_Bangka_Belitung.jpeg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Stamp_of_Indonesia_-_2015_-_Colnect_667023_-_Dambus_Kepulauan_Bangka_Belitung.jpeg/960px-Stamp_of_Indonesia_-_2015_-_Colnect_667023_-_Dambus_Kepulauan_Bangka_Belitung.jpeg",
    "page": "https://commons.wikimedia.org/wiki/File:Stamp_of_Indonesia_-_2015_-_Colnect_667023_-_Dambus_Kepulauan_Bangka_Belitung.jpeg"
   },
   "pakaian": null
@@ -271,7 +263,7 @@ export const CULTURE_PHOTOS = {
    "file": "Kanekes_village,_Banten.jpg",
    "license": "CC BY 2.0",
    "artist": "Paul Hessels",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Kanekes_village%2C_Banten.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Kanekes_village%2C_Banten.jpg/960px-Kanekes_village%2C_Banten.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Kanekes_village,_Banten.jpg"
   },
   "tari": {
@@ -280,7 +272,7 @@ export const CULTURE_PHOTOS = {
    "file": "Tari_cokek.jpg",
    "license": "CC BY-SA 4.0",
    "artist": "Fery Hartono",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/3/35/Tari_cokek.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tari_cokek.jpg/960px-Tari_cokek.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Tari_cokek.jpg"
   },
   "musik": {
@@ -289,7 +281,7 @@ export const CULTURE_PHOTOS = {
    "file": "Rampak_bedug.jpg",
    "license": "Public domain",
    "artist": "Tourism office of Banten province",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/7/77/Rampak_bedug.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Rampak_bedug.jpg/960px-Rampak_bedug.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Rampak_bedug.jpg"
   },
   "pakaian": {
@@ -331,7 +323,7 @@ export const CULTURE_PHOTOS = {
    "file": "COLLECTIE_TROPENMUSEUM_Kampong_Wanaradja_bij_de_vulkaan_Papandajan_op_West-Java._TMnr_60007645.jpg",
    "license": "CC BY-SA 3.0",
    "artist": "Unknown authorUnknown author",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/6/60/COLLECTIE_TROPENMUSEUM_Kampong_Wanaradja_bij_de_vulkaan_Papandajan_op_West-Java._TMnr_60007645.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/COLLECTIE_TROPENMUSEUM_Kampong_Wanaradja_bij_de_vulkaan_Papandajan_op_West-Java._TMnr_60007645.jpg/960px-COLLECTIE_TROPENMUSEUM_Kampong_Wanaradja_bij_de_vulkaan_Papandajan_op_West-Java._TMnr_60007645.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Kampong_Wanaradja_bij_de_vulkaan_Papandajan_op_West-Java._TMnr_60007645.jpg"
   },
   "tari": {
@@ -349,18 +341,10 @@ export const CULTURE_PHOTOS = {
    "file": "Indonesianbamboomusicangklung.jpg",
    "license": "CC BY-SA 4.0",
    "artist": "Putri siska",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/8/87/Indonesianbamboomusicangklung.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Indonesianbamboomusicangklung.jpg/960px-Indonesianbamboomusicangklung.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Indonesianbamboomusicangklung.jpg"
   },
-  "pakaian": {
-   "article": "Kebaya",
-   "articleUrl": "https://id.wikipedia.org/wiki/Kebaya",
-   "file": "GKR_Hayu_2.jpg",
-   "license": "Public domain",
-   "artist": "Tepas Tandha Yekti",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/6/63/GKR_Hayu_2.jpg",
-   "page": "https://commons.wikimedia.org/wiki/File:GKR_Hayu_2.jpg"
-  }
+  "pakaian": null
  },
  "jawa-tengah": {
   "rumah": {
@@ -378,7 +362,7 @@ export const CULTURE_PHOTOS = {
    "file": "Sacred_Dance_Bedhoyo_Ketawang_A.JPG",
    "license": "CC BY-SA 3.0",
    "artist": "ESCapade",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/6/68/Sacred_Dance_Bedhoyo_Ketawang_A.JPG",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Sacred_Dance_Bedhoyo_Ketawang_A.JPG/960px-Sacred_Dance_Bedhoyo_Ketawang_A.JPG",
    "page": "https://commons.wikimedia.org/wiki/File:Sacred_Dance_Bedhoyo_Ketawang_A.JPG"
   },
   "musik": {
@@ -430,22 +414,14 @@ export const CULTURE_PHOTOS = {
    "file": "Barongan_Reog_Ponorogo_Dadak_Merak_-_Boreg_Gresik.jpg",
    "license": "CC0",
    "artist": "Vstwkr",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/6/69/Barongan_Reog_Ponorogo_Dadak_Merak_-_Boreg_Gresik.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Barongan_Reog_Ponorogo_Dadak_Merak_-_Boreg_Gresik.jpg/960px-Barongan_Reog_Ponorogo_Dadak_Merak_-_Boreg_Gresik.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Barongan_Reog_Ponorogo_Dadak_Merak_-_Boreg_Gresik.jpg"
   },
   "musik": null,
   "pakaian": null
  },
  "bali": {
-  "rumah": {
-   "article": "Candi bentar",
-   "articleUrl": "https://id.wikipedia.org/wiki/Candi_bentar",
-   "file": "Wringin_Lawang,_Trowulan.jpg",
-   "license": "CC BY-SA 3.0",
-   "artist": "Original uploader was Gunawan Kartapranata at en.wikipedia",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/2/23/Wringin_Lawang%2C_Trowulan.jpg",
-   "page": "https://commons.wikimedia.org/wiki/File:Wringin_Lawang,_Trowulan.jpg"
-  },
+  "rumah": null,
   "tari": {
    "article": "Kecak",
    "articleUrl": "https://id.wikipedia.org/wiki/Kecak",
@@ -470,7 +446,7 @@ export const CULTURE_PHOTOS = {
    "file": "Geringsing_endek_weaving_106_cm_wide.JPG",
    "license": "CC BY-SA 3.0",
    "artist": "Chris Hazzard",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Geringsing_endek_weaving_106_cm_wide.JPG",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Geringsing_endek_weaving_106_cm_wide.JPG/960px-Geringsing_endek_weaving_106_cm_wide.JPG",
    "page": "https://commons.wikimedia.org/wiki/File:Geringsing_endek_weaving_106_cm_wide.JPG"
   }
  },
@@ -559,7 +535,7 @@ export const CULTURE_PHOTOS = {
    "file": "Sape_front_side_back.jpg",
    "license": "CC0",
    "artist": "Emma dusepo",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Sape_front_side_back.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Sape_front_side_back.jpg/960px-Sape_front_side_back.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Sape_front_side_back.jpg"
   },
   "pakaian": null
@@ -642,7 +618,7 @@ export const CULTURE_PHOTOS = {
    "file": "COLLECTIE_TROPENMUSEUM_Een_Kenyah_familie_Borneo_TMnr_10005528.jpg",
    "license": "CC BY-SA 3.0",
    "artist": "Unknown authorUnknown author",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/1/12/COLLECTIE_TROPENMUSEUM_Een_Kenyah_familie_Borneo_TMnr_10005528.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/COLLECTIE_TROPENMUSEUM_Een_Kenyah_familie_Borneo_TMnr_10005528.jpg/960px-COLLECTIE_TROPENMUSEUM_Een_Kenyah_familie_Borneo_TMnr_10005528.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Een_Kenyah_familie_Borneo_TMnr_10005528.jpg"
   }
  },
@@ -676,7 +652,7 @@ export const CULTURE_PHOTOS = {
    "file": "Maengket_Traditional_Dance.jpg",
    "license": "Public domain",
    "artist": "Government of North Sulawesi",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Maengket_Traditional_Dance.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Maengket_Traditional_Dance.jpg/960px-Maengket_Traditional_Dance.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Maengket_Traditional_Dance.jpg"
   },
   "musik": {
@@ -730,15 +706,7 @@ export const CULTURE_PHOTOS = {
    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Sou_Raja_or_Banua_Oge%2C_Palu%2C_Central_Sulawesi_2018-09-17_01.jpg/960px-Sou_Raja_or_Banua_Oge%2C_Palu%2C_Central_Sulawesi_2018-09-17_01.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Sou_Raja_or_Banua_Oge,_Palu,_Central_Sulawesi_2018-09-17_01.jpg"
   },
-  "tari": {
-   "article": "Modero",
-   "articleUrl": "https://id.wikipedia.org/wiki/Modero",
-   "file": "Iraqi_kurdish_dance.jpg",
-   "license": "CC BY-SA 4.0",
-   "artist": "Esam Wael",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Iraqi_kurdish_dance.jpg",
-   "page": "https://commons.wikimedia.org/wiki/File:Iraqi_kurdish_dance.jpg"
-  },
+  "tari": null,
   "musik": null,
   "pakaian": null
  },
@@ -800,7 +768,7 @@ export const CULTURE_PHOTOS = {
    "file": "Cakalele.jpg",
    "license": "CC0",
    "artist": "Jafkhairi",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Cakalele.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Cakalele.jpg/960px-Cakalele.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Cakalele.jpg"
   },
   "musik": {
@@ -809,7 +777,7 @@ export const CULTURE_PHOTOS = {
    "file": "COLLECTIE_TROPENMUSEUM_Enkelvellige_bekervormige_trom_TMnr_18-18.jpg",
    "license": "CC BY-SA 3.0",
    "artist": "Tropenmuseum",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/3/35/COLLECTIE_TROPENMUSEUM_Enkelvellige_bekervormige_trom_TMnr_18-18.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/COLLECTIE_TROPENMUSEUM_Enkelvellige_bekervormige_trom_TMnr_18-18.jpg/960px-COLLECTIE_TROPENMUSEUM_Enkelvellige_bekervormige_trom_TMnr_18-18.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Enkelvellige_bekervormige_trom_TMnr_18-18.jpg"
   },
   "pakaian": null
@@ -821,7 +789,7 @@ export const CULTURE_PHOTOS = {
    "file": "Rumah_adat_Sasadu_Desa_Gamtala.jpg",
    "license": "CC BY 2.0",
    "artist": "nugroho adhi",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Rumah_adat_Sasadu_Desa_Gamtala.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Rumah_adat_Sasadu_Desa_Gamtala.jpg/960px-Rumah_adat_Sasadu_Desa_Gamtala.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Rumah_adat_Sasadu_Desa_Gamtala.jpg"
   },
   "tari": null,
@@ -912,7 +880,7 @@ export const CULTURE_PHOTOS = {
    "file": "Koteka.jpg",
    "license": "CC BY-SA 3.0",
    "artist": "The original uploader was Billga at English Wikipedia.",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Koteka.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Koteka.jpg/960px-Koteka.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Koteka.jpg"
   }
  },
@@ -964,7 +932,7 @@ export const CULTURE_PHOTOS = {
    "file": "Orang_Asmat.jpg",
    "license": "CC BY-SA 3.0",
    "artist": "Edi Wibowo",
-   "src": "https://upload.wikimedia.org/wikipedia/commons/9/99/Orang_Asmat.jpg",
+   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Orang_Asmat.jpg/960px-Orang_Asmat.jpg",
    "page": "https://commons.wikimedia.org/wiki/File:Orang_Asmat.jpg"
   }
  }

@@ -721,7 +721,7 @@ function captureSnapshot() {
   ctx.save(); ctx.translate(width, 0); ctx.scale(-1, 1); ctx.drawImage(video, 0, 0, width, height); ctx.restore(); // sama seperti cermin di layar
   ctx.fillStyle = "#3b1f13"; ctx.fillRect(0, height, width, SNAPSHOT_BAND_PX);
   ctx.fillStyle = "#e8c77a"; ctx.font = "600 22px Fraunces, Georgia, serif"; ctx.textBaseline = "middle";
-  ctx.fillText(`Cermin Wastra · ${g ? g.name : "tanpa wastra"}`, 20, height + SNAPSHOT_BAND_PX / 2 - 9);
+  ctx.fillText(`Wastraloka · ${g ? g.name : "tanpa wastra"}`, 20, height + SNAPSHOT_BAND_PX / 2 - 9);
   ctx.fillStyle = "rgba(255,255,255,0.75)"; ctx.font = "500 13px 'Plus Jakarta Sans', sans-serif";
   const origin = g?.province ? `Asal: ${provinceById(g.province)?.name}. ` : "";
   ctx.fillText(`${origin}Gambar hasil AI (Decart Lucy VTON), bukan foto kain asli.`, 20, height + SNAPSHOT_BAND_PX / 2 + 14);
@@ -731,9 +731,9 @@ function captureSnapshot() {
 async function saveSnapshot() {
   try {
     const blob = await captureSnapshot();
-    const file = new File([blob], `cermin-wastra-${Date.now()}.jpg`, { type: "image/jpeg" });
+    const file = new File([blob], `wastraloka-${Date.now()}.jpg`, { type: "image/jpeg" });
     if (navigator.canShare?.({ files: [file] })) {
-      try { await navigator.share({ files: [file], title: "Cermin Wastra" }); return; }
+      try { await navigator.share({ files: [file], title: "Wastraloka" }); return; }
       catch (err) { if (err.name === "AbortError") return; console.warn("[SNAP] bagikan gagal, unduh saja", err); }
     }
     const url = URL.createObjectURL(blob);

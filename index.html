@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#3b1f13">
-<title>Cermin Wastra · Coba Wastra Nusantara</title>
+<title>Wastraloka · Coba Wastra Nusantara</title>
 <meta name="description" content="Jelajahi wastra dari 38 provinsi Indonesia lewat peta interaktif, lalu coba motifnya secara live di cermin AI. Prototipe BUDAYA GO! 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
     <span class="nav-glass" aria-hidden="true"></span>
     <a class="brand" href="/">
       <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="16" cy="8.5" rx="4" ry="6.5"/><ellipse cx="16" cy="23.5" rx="4" ry="6.5"/><ellipse cx="8.5" cy="16" rx="6.5" ry="4"/><ellipse cx="23.5" cy="16" rx="6.5" ry="4"/></g></svg>
-      Cermin Wastra
+      <span>Wastra<em>loka</em></span>
     </a>
     <ul class="nav-links">
       <li><a href="#peta">Peta</a></li>
@@ -93,12 +93,18 @@
   <section id="peta" aria-labelledby="peta-title">
     <p class="eyebrow">Peta wastra</p>
     <h2 id="peta-title" class="sec-title" data-reveal>Satu peta, <em>38 provinsi.</em></h2>
-    <p class="sec-sub">Klik provinsi untuk membuka halamannya: wastra, pakaian adat, rumah adat, dan tarian. Provinsi yang sudah kamu kunjungi berwarna kunyit.</p>
+    <p class="sec-sub" data-reveal>Tiap provinsi diisi foto rumah adat atau budayanya. Arahkan kursor untuk mengintip, klik untuk membuka kisah lengkapnya: sejarah, wastra, tari, musik, busana, senjata, dan kuliner.</p>
 
     <div class="map-card" data-reveal>
       <div class="map-tools"><div class="region-chips" id="regionChips" role="group" aria-label="Sorot wilayah"></div><button class="btn-line dice" id="randomProvince" type="button">🎲 Provinsi acak</button></div>
-      <div class="map-wrap" id="map"></div>
-      <p class="map-legend"><span><i style="background:#c9a37a"></i>Belum dikunjungi</span><span><i style="background:var(--kunyit)"></i>Sudah ada cap di paspor</span></p>
+      <div class="map-sea">
+        <div class="map-wrap" id="map"></div>
+        <svg class="compass" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="50" cy="50" r="36" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2 3"/><path d="M50 6 56 50 50 94 44 50Z" fill="currentColor" opacity=".9"/><path d="M6 50 50 44 94 50 50 56Z" fill="currentColor" opacity=".45"/><text x="50" y="4" font-size="9" text-anchor="middle" fill="currentColor">U</text></svg>
+        <p class="sea-label sea-1" aria-hidden="true">Samudra Hindia</p>
+        <p class="sea-label sea-2" aria-hidden="true">Laut Jawa</p>
+        <p class="sea-label sea-3" aria-hidden="true">Samudra Pasifik</p>
+      </div>
+      <p class="map-legend"><span>Isi tiap provinsi: foto rumah adat atau budayanya</span><span><i class="lg-region"></i>Gradasi warna = wilayah</span><span><i class="lg-visited"></i>Sudah ada cap paspor</span></p>
       <div class="prov-index" id="provIndex" aria-label="Daftar provinsi per wilayah"></div>
     </div>
   </section>
@@ -265,7 +271,7 @@
     <h3 class="sub-title" data-reveal>Sentra wastra yang bisa kamu kunjungi</h3>
     <p class="sec-sub" data-reveal>Kampung dan desa perajin yang dikenal luas. Ini tempat umum, bukan mitra kami. Tiap halaman provinsi juga punya tautan pencarian toko di Google Maps, Tokopedia, dan Shopee.</p>
     <div class="sentra-grid" id="sentraGrid" data-reveal-group></div>
-    <p class="honest">Belum ada perajin yang mendaftar langsung ke Cermin Wastra, jadi tombol "Pesan via WhatsApp" belum tampil. Kami tidak menampilkan toko, nomor, atau ulasan karangan.</p>
+    <p class="honest">Belum ada perajin yang mendaftar langsung ke Wastraloka, jadi tombol "Pesan via WhatsApp" belum tampil. Kami tidak menampilkan toko, nomor, atau ulasan karangan.</p>
   </section>
 
   <section id="sumber" aria-labelledby="sumber-title">
@@ -279,7 +285,7 @@
       </article>
       <article>
         <h3>Foto &amp; AI</h3>
-        <p>Foto provinsi dan katalog berasal dari Wikimedia Commons (CC BY, CC BY-SA, CC0, domain publik) dan ditampilkan langsung dari sana; nama fotografer tercantum di tiap foto. Video cermin dibuat oleh model Lucy VTON dari Decart dan merupakan tafsiran AI. Video kamera diproses Decart dan tidak disimpan di server Cermin Wastra.</p>
+        <p>Foto provinsi dan katalog berasal dari Wikimedia Commons (CC BY, CC BY-SA, CC0, domain publik) dan ditampilkan langsung dari sana; nama fotografer tercantum di tiap foto. Video cermin dibuat oleh model Lucy VTON dari Decart dan merupakan tafsiran AI. Video kamera diproses Decart dan tidak disimpan di server Wastraloka.</p>
       </article>
     </div>
   </section>
@@ -300,7 +306,7 @@
   <div class="lurik" aria-hidden="true"></div>
   <div class="foot-inner">
     <div>
-      <a class="brand" href="/">Cermin Wastra</a>
+      <a class="brand" href="/"><span>Wastra<em>loka</em></span></a>
       <p>Prototipe BUDAYA GO! 2026: mengenalkan wastra Nusantara lewat peta dan cermin AI.</p>
     </div>
     <div>
@@ -328,7 +334,7 @@
     </div>
   </div>
   <div class="foot-bottom">
-    <span>© 2026 Cermin Wastra</span>
+    <span>© 2026 Wastraloka</span>
     <span>Video kamera diproses oleh Decart dan tidak disimpan di server kami.</span>
   </div>
 </footer>

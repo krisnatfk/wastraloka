@@ -1,6 +1,6 @@
 # Sumber & Hak Penggunaan Aset
 
-Dokumen ini mencantumkan semua aset dan data pihak ketiga yang dipakai Cermin Wastra,
+Dokumen ini mencantumkan semua aset dan data pihak ketiga yang dipakai Wastraloka,
 sesuai syarat "Sumber dan hak penggunaan" BUDAYA GO! 2026.
 
 ## Foto (Wikimedia Commons, ditampilkan langsung, tidak diunduh)
@@ -65,9 +65,9 @@ Hasil cermin adalah tafsiran AI (Decart Lucy VTON) dari foto di atas, bukan repr
 | Papua Selatan | Marwan Mohamad | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Taman_0_Kilometer_Merauke_-_Sabang.jpg |
 
 
-### Galeri budaya (rumah adat, tarian, alat musik, pakaian)
+### Galeri budaya, isi peta, dan kartu provinsi (rumah adat, tarian, alat musik, pakaian)
 
-Gambar utama artikel Wikipedia bahasa Indonesia yang paling relevan, dicek manual satu per satu; foto yang tidak cocok tidak dipakai.
+Gambar utama artikel Wikipedia bahasa Indonesia yang paling relevan, dicek manual satu per satu; foto yang salah konteks tidak dipakai. Foto yang sama juga mengisi bentuk provinsi di peta.
 
 | Provinsi | Jenis | Artikel | Fotografer / pemilik | Lisensi | Sumber |
 |---|---|---|---|---|---|
@@ -94,7 +94,6 @@ Gambar utama artikel Wikipedia bahasa Indonesia yang paling relevan, dicek manua
 | Lampung | Tarian | Tari Sigeh Penguten | Xiangliangzai | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:WikiNgigel_%E2%80%93_Tari_Sigeh_Pengunten_%E2%80%93_Tulang_Bawang_Barat_(12_July_2026)_%E2%80%93_26.jpg |
 | Lampung | Alat musik | Cetik Lampung | Post of Indonesia | Public domain | https://commons.wikimedia.org/wiki/File:Stamp_of_Indonesia_-_2020_-_Colnect_947125_-_Cetik_Lampung.jpeg |
 | Lampung | Pakaian & kain | Kain tapis | Midori | CC BY 2.5 | https://commons.wikimedia.org/wiki/File:Kain_tapis.JPG |
-| Kepulauan Bangka Belitung | Rumah adat | Rumah Rakit | Daniël David Veth | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Woonboot_op_de_Batang_Rawas_district_Rawas_Sumatra_TMnr_60002807.jpg |
 | Kepulauan Bangka Belitung | Alat musik | Dambus | Post of Indonesia | Public domain | https://commons.wikimedia.org/wiki/File:Stamp_of_Indonesia_-_2015_-_Colnect_667023_-_Dambus_Kepulauan_Bangka_Belitung.jpeg |
 | Banten | Rumah adat | Rumah adat Baduy | Paul Hessels | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Kanekes_village,_Banten.jpg |
 | Banten | Tarian | Cokek | Fery Hartono | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Tari_cokek.jpg |
@@ -105,7 +104,6 @@ Gambar utama artikel Wikipedia bahasa Indonesia yang paling relevan, dicek manua
 | Jawa Barat | Rumah adat | Rumah tradisional Sunda | Unknown authorUnknown author | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Kampong_Wanaradja_bij_de_vulkaan_Papandajan_op_West-Java._TMnr_60007645.jpg |
 | Jawa Barat | Tarian | Jaipongan | Herusutimbul | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Jaipong.jpg |
 | Jawa Barat | Alat musik | Angklung | Putri siska | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Indonesianbamboomusicangklung.jpg |
-| Jawa Barat | Pakaian & kain | Kebaya | Tepas Tandha Yekti | Public domain | https://commons.wikimedia.org/wiki/File:GKR_Hayu_2.jpg |
 | Jawa Tengah | Rumah adat | Joglo | Herusutimbul | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Joglo_Pencu,_Rumah_Tradisional_Kudus.jpg |
 | Jawa Tengah | Tarian | Tari Bedaya Ketawang | ESCapade | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Sacred_Dance_Bedhoyo_Ketawang_A.JPG |
 | Jawa Tengah | Alat musik | Gamelan sekaten | Pandjisaputra94 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Gamelan_Sekaten_Kanjeng_Kiai_Guntur_Madu_dalam_Acara_Sekaten_di_Yogyakarta.jpg |
@@ -113,7 +111,6 @@ Gambar utama artikel Wikipedia bahasa Indonesia yang paling relevan, dicek manua
 | Daerah Istimewa Yogyakarta | Tarian | Srimpi | Ziko | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Srimpi_dancer_at_Tong_Tong_Fair_2011.jpg |
 | Daerah Istimewa Yogyakarta | Pakaian & kain | Surjan | Bangbangpur | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Pakaian_Budaya_Indonesia_Batik_Dan_Sunan_Kali_Jaga.jpg |
 | Jawa Timur | Tarian | Reog | Vstwkr | CC0 | https://commons.wikimedia.org/wiki/File:Barongan_Reog_Ponorogo_Dadak_Merak_-_Boreg_Gresik.jpg |
-| Bali | Rumah adat | Candi bentar | Original uploader was Gunawan Kartapranata at en.wikipedia | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Wringin_Lawang,_Trowulan.jpg |
 | Bali | Tarian | Kecak | Mr Aaron from (optional) | CC BY-SA 2.0 | https://commons.wikimedia.org/wiki/File:Kecak_Dance_1.jpg |
 | Bali | Alat musik | Gamelan Bali | Andika Panendra | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Lestarikan_budaya_tari_dan_seni_gamelan_bali.jpg |
 | Bali | Pakaian & kain | Endek | Chris Hazzard | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Geringsing_endek_weaving_106_cm_wide.JPG |
@@ -142,7 +139,6 @@ Gambar utama artikel Wikipedia bahasa Indonesia yang paling relevan, dicek manua
 | Gorontalo | Alat musik | Polopalo | Supardisahabu | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Alat_Musik_Polopalo.jpg |
 | Gorontalo | Pakaian & kain | Karawo | Rosydi A Azhar | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Sulaman_Karawo.jpg |
 | Sulawesi Tengah | Rumah adat | Souraja | Crisco 1492 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Sou_Raja_or_Banua_Oge,_Palu,_Central_Sulawesi_2018-09-17_01.jpg |
-| Sulawesi Tengah | Tarian | Modero | Esam Wael | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Iraqi_kurdish_dance.jpg |
 | Sulawesi Selatan | Tarian | Tari Pakarena | Ali Froghi | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Performing_pakarena_dance.jpg |
 | Sulawesi Selatan | Pakaian & kain | Baju bodo | Meyer, Adolf Bernhard (1840-1911). Photographe | Public domain | https://commons.wikimedia.org/wiki/File:Album_von_Cel%C3%A8bes-Typen._Circa_250_Abbildungen_auf_37_Tafeln_in_Lichtdruck._Herausgegeben_von_Dr_A.B._Meyer._Dresden,_Stengel_und_Markert,_1889._Album_de_105_phot._des_C%C3%A9l%C3%A8bes_par_A.B._Meyer._Des..._-_btv1b53281340c_(53_of_61).jpg |
 | Sulawesi Tenggara | Pakaian & kain | Suku Buton | Miunsrv | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Gadis_Buton_dalam_tradisi_Posuo.jpg |
@@ -164,12 +160,27 @@ Gambar utama artikel Wikipedia bahasa Indonesia yang paling relevan, dicek manua
 | Papua Pegunungan | Pakaian & kain | Suku Dani | RaiyaniM | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Raiyani_Muharramah_Pria_suku_dani_DSC_5025.jpg |
 | Papua Selatan | Pakaian & kain | Suku Asmat | Edi Wibowo | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Orang_Asmat.jpg |
 
+### Foto sentra wastra
+
+| Sentra | Foto | Fotografer / pemilik | Lisensi | Sumber |
+|---|---|---|---|---|
+| Nagari Pandai Sikek | Songket Pandai Sikek | Della havilda | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Tenun_Pandai_Sikek.jpg |
+| Kampung Batik Laweyan | Laweyan, Surakarta | Risanprasetyo/Febri Ady Prasetyo | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Langgar_Merdeka_di_Laweyan_Solo.jpg |
+| Kampung Batik Kauman | Kota Pekalongan | Widyawan1622 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Museum_Batik_Pekalongan_-_Jawa_Tengah.jpg |
+| Kampung Sasirangan | Kampoeng Sasirangan Banjarmasin | Mia Sulisnawati | CC0 | https://commons.wikimedia.org/wiki/File:Kampoeng_Sasirangan_Banjarmasin.jpg |
+| Kampung Tenun Samarinda | Sarung Samarinda | Franco Pecchio from Milano, Italy | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Samarinda_Sarong.jpg |
+
+Sentra lain memakai foto kain atau busana provinsinya; keterangan foto selalu menyebut subjek aslinya.
+
 ### Data tambahan
 
 | Data | Sumber | Catatan |
 |---|---|---|
-| Alat musik & cara memainkan | [detikJogja, alat musik tradisional 38 provinsi (2025)](https://www.detik.com/jogja/budaya/d-7761408/daftar-alat-musik-tradisional-38-provinsi-di-indonesia-dan-cara-memainkannya) | Artikel merangkum buku *Alat Musik Tradisional Nusantara* (Akhmalul Khuluq) dan *Ensiklopedia Mini Alat Musik Tradisional* (Tegar Utama). |
-| Sentra wastra (13 tempat) | Artikel Wikipedia tiap desa/kampung (tautan di situs) | Tempat umum, bukan mitra. Tautan toko berupa pencarian Google Maps/Tokopedia/Shopee, bukan toko pilihan. |
+| Sejarah singkat 38 provinsi | Wikipedia bahasa Indonesia (bagian Sejarah tiap provinsi) dan undang-undang pembentukan provinsi | Ditulis ulang dengan kata-kata sendiri, 3 babak per provinsi. |
+| Alat musik & cara memainkan | [detikJogja, alat musik tradisional 38 provinsi (2025)](https://www.detik.com/jogja/budaya/d-7761408/daftar-alat-musik-tradisional-38-provinsi-di-indonesia-dan-cara-memainkannya) | Merangkum buku *Alat Musik Tradisional Nusantara* (Akhmalul Khuluq) dan *Ensiklopedia Mini Alat Musik Tradisional* (Tegar Utama). |
+| Senjata tradisional | [detikJogja, 38 senjata tradisional tiap provinsi](https://www.detik.com/jogja/budaya/d-7668676/38-senjata-tradisional-dan-asalnya-dari-tiap-provinsi-di-indonesia) | |
+| Makanan khas | [detikEdu, makanan khas 38 provinsi](https://www.detik.com/edu/detikpedia/d-6476079/lengkap-makanan-khas-indonesia-dari-38-provinsi-bisa-dicoba-saat-libur-nataru) | Tiga provinsi Papua baru belum disebut khusus oleh sumber, ditandai belum terverifikasi. |
+| Sentra wastra (13 tempat) | Artikel Wikipedia tiap desa/kampung (tautan di situs) | Tempat umum, bukan mitra. Tautan toko berupa pencarian Google Maps/Tokopedia/Shopee. |
 
 ## Data
 
@@ -195,5 +206,5 @@ Gambar utama artikel Wikipedia bahasa Indonesia yang paling relevan, dicek manua
 ## Aset buatan sendiri
 
 Desain antarmuka, pola kawung dan garis lurik (digambar ulang dengan SVG/CSS), ikon SVG,
-teks, dan kode aplikasi dibuat oleh tim Cermin Wastra.
+teks, dan kode aplikasi dibuat oleh tim Wastraloka.
 

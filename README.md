@@ -1,12 +1,12 @@
-# Cermin Wastra · BUDAYA GO! 2026
+# Wastraloka · BUDAYA GO! 2026
 
 > Turunan dari VirtualFit untuk lomba BUDAYA GO! 2026 (Inovasi Digital).
 
 Kenali wastra Nusantara, lalu kenakan. Pengunjung memilih provinsi di **peta interaktif 38 provinsi**, membaca wastra, pakaian adat, rumah adat, dan tariannya, lalu mencoba motif wastra di badannya sendiri lewat **cermin AI live** (Decart **Lucy VTON**).
 
 Fitur:
-- **Peta 38 provinsi** (`/#peta`): klik provinsi, sorot per wilayah, daftar teks untuk provinsi kecil dan pembaca layar.
-- **Halaman provinsi** (`/provinsi/?p=<id>`): foto, warna aksen per wilayah, wastra (berlabel "perlu verifikasi" bila belum pasti), pakaian adat, rumah adat, tarian, sumber, peta mini, provinsi tetangga.
+- **Peta 38 provinsi** (`/#peta`): tiap provinsi diisi foto rumah adat/budayanya dengan gradasi warna wilayah, di atas laut bermotif. Intip lewat hover, klik untuk membuka halamannya. Di HP peta bisa digeser.
+- **Halaman provinsi** (`/provinsi/?p=<id>`): disusun per bab dengan navigasi bab yang menempel: sejarah (timeline 3 babak), wastra, rumah adat, tari, alat musik, busana, senjata, kuliner, belanja & sentra, lalu peta. Warna aksen mengikuti wilayah.
 - **Cermin**: katalog wastra (foto Wikimedia Commons), "Kenali dulu, baru coba", foto asli di pojok cermin untuk membandingkan motif, **Simpan foto** (bagikan di HP, unduh di laptop), link langsung `/?coba=<id>#cermin`.
 - **Galeri budaya** (`/#galeri`): 92 foto rumah adat, tarian, alat musik, dan pakaian dari Wikimedia Commons, filter per jenis, acak, lightbox dengan kredit.
 - **Kuis "Tebak asalnya"** (`/#kuis`): tebak provinsi dari foto; jawaban benar memberi cap paspor.
