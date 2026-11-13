@@ -1052,3 +1052,75 @@ body.is-province-open #beranda, body.is-province-open .marquee, body.is-province
   .chapter.reveal .timeline::before { transform: none; transition: none; }
   .sentra-img img { transition: none; }
 }
+
+/* ---- Menu hamburger di HP: pulau kaca melebar ke bawah berisi menu ---- */
+.nav-toggle { display: none; }
+@media (max-width: 920px) {
+  .nav-shell { flex-wrap: wrap; height: auto; min-height: 54px; padding-block: 5px; row-gap: 0; }
+  .brand { margin-right: auto; }
+  .nav-toggle {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    margin-left: 6px;
+    padding: 0;
+    border: 1px solid rgba(232, 199, 122, 0.35);
+    border-radius: 50%;
+    background: rgba(25, 12, 5, 0.35);
+    color: #fff;
+  }
+  .nav-toggle-bars { position: relative; display: block; width: 20px; height: 14px; }
+  .nav-toggle-bars i { position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px; background: currentColor; transition: transform 0.35s var(--nav-ease), opacity 0.2s ease; }
+  .nav-toggle-bars i:nth-child(1) { top: 0; }
+  .nav-toggle-bars i:nth-child(2) { top: 6px; }
+  .nav-toggle-bars i:nth-child(3) { top: 12px; }
+  .site-nav.is-open .nav-toggle { background: var(--kunyit); color: var(--tinta); border-color: transparent; }
+  .site-nav.is-open .nav-toggle-bars i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .site-nav.is-open .nav-toggle-bars i:nth-child(2) { opacity: 0; }
+  .site-nav.is-open .nav-toggle-bars i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .site-nav .nav-links {
+    display: grid;
+    order: 5;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 2px;
+    transition: max-height 0.5s var(--nav-ease), opacity 0.3s ease, padding 0.5s var(--nav-ease);
+  }
+  .site-nav.is-open .nav-links { max-height: 360px; opacity: 1; padding: 10px 2px 12px; }
+  .site-nav .nav-links a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.07);
+    font-size: 15px;
+    opacity: 1;
+  }
+  .site-nav .nav-links a:hover, .site-nav .nav-links a:focus-visible { background: rgba(232, 199, 122, 0.18); text-decoration: none; }
+  .site-nav.is-open .nav-links li { animation: menuItem 0.4s var(--nav-ease) backwards; }
+  .site-nav.is-open .nav-links li:nth-child(2) { animation-delay: 30ms; }
+  .site-nav.is-open .nav-links li:nth-child(3) { animation-delay: 60ms; }
+  .site-nav.is-open .nav-links li:nth-child(4) { animation-delay: 90ms; }
+  .site-nav.is-open .nav-links li:nth-child(5) { animation-delay: 120ms; }
+  .site-nav.is-open .nav-links li:nth-child(6) { animation-delay: 150ms; }
+  .site-nav.is-open .nav-links li:nth-child(7) { animation-delay: 180ms; }
+  .site-nav.is-open .nav-links li:nth-child(8) { animation-delay: 210ms; }
+  @keyframes menuItem { from { opacity: 0; transform: translateY(-6px); } }
+
+  /* saat menu terbuka, pulau kaca selalu tampil (juga di puncak halaman) dan sudutnya melunak */
+  .site-nav.is-open { padding: 10px 12px 0; }
+  .site-nav.is-open .nav-shell { padding: 5px 8px 5px 18px; }
+  .site-nav.is-open .nav-glass { opacity: 1; transform: none; border-radius: 26px; }
+  .nav-glass { transition: opacity 0.45s var(--nav-ease), transform var(--nav-duration) var(--nav-ease), border-radius 0.4s var(--nav-ease); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-nav .nav-links, .nav-toggle-bars i, .site-nav.is-open .nav-links li { transition: none; animation: none; }
+}
