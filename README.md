@@ -99,6 +99,7 @@ Supaya kredit Decart tidak habis dipakai pengunjung, cermin di situs publik diba
 | Masa tenggang token ulang = percobaan yang sama | 15 detik | `TRIAL_GRACE_SECONDS` |
 
 - Aktif otomatis di Vercel. Lokal mati; nyalakan dengan `TRIAL_ENABLED=1` (matikan di Vercel dengan `TRIAL_ENABLED=0`).
+- **Status Wastraloka saat ini: dimatikan** (`TRIAL_ENABLED=0` di Vercel, permintaan pemilik). Pengunjung bisa memakai cermin tanpa batas percobaan; kredit Decart hanya dijaga oleh cermin yang mati otomatis 20 detik setelah tab ditinggal. Nyalakan lagi dengan menghapus variabel itu lalu deploy ulang.
 - Hari dihitung dengan zona waktu WIB (UTC+7). Jatah per tamu berlaku seumur cookie.
 - Admin yang sudah login ke `/admin` tidak kena batas. Pemakaian hari ini tampil di dashboard admin.
 - Token tamu berumur 45 detik dan hanya boleh dipakai untuk model `lucy-vton-3.6` / `3.5`.
