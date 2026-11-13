@@ -1,7 +1,7 @@
 # Sumber & Hak Penggunaan Aset
 
 Dokumen ini mencantumkan semua aset dan data pihak ketiga yang dipakai Wastraloka,
-sesuai syarat "Sumber dan hak penggunaan" BUDAYA GO! 2026.
+agar setiap aset dan data dapat ditelusuri sumber dan hak penggunaannya.
 
 ## Foto (Wikimedia Commons, ditampilkan langsung, tidak diunduh)
 

@@ -1,6 +1,6 @@
-# Wastraloka · BUDAYA GO! 2026
+# Wastraloka
 
-> Turunan dari VirtualFit untuk lomba BUDAYA GO! 2026 (Inovasi Digital).
+> Peta budaya interaktif dan cermin AI untuk mengenal, mengenakan, dan melestarikan wastra Nusantara. Turunan dari VirtualFit.
 
 Kenali wastra Nusantara, lalu kenakan. Pengunjung memilih provinsi di **peta interaktif 38 provinsi**, membaca wastra, pakaian adat, rumah adat, dan tariannya, lalu mencoba motif wastra di badannya sendiri lewat **cermin AI live** (Decart **Lucy VTON**).
 
@@ -106,7 +106,7 @@ Supaya kredit Decart tidak habis dipakai pengunjung, cermin di situs publik diba
 - Token tamu berumur 45 detik dan hanya boleh dipakai untuk model `lucy-vton-3.6` / `3.5`.
 - Plafon harian dihitung dengan asumsi terburuk (tiap token dianggap terpakai penuh), jadi angkanya cenderung lebih besar dari pemakaian sebenarnya.
 - Batas per IP dihitung per alamat: ganti browser di jaringan yang sama **tidak** menambah jatah. IPv6 dikelompokkan per /64 (satu perangkat memakai banyak alamat sementara), dan `::ffff:1.2.3.4` dianggap IPv4 yang sama.
-- Konsekuensinya, orang di **jaringan yang sama berbagi jatah IP** (kantor, kampus, lokasi penjurian, sebagian paket seluler). Naikkan `TRIAL_IP_DAILY_TRIES` untuk hari penjurian.
+- Konsekuensinya, orang di **jaringan yang sama berbagi jatah IP** (kantor, kampus, lokasi acara, sebagian paket seluler). Naikkan `TRIAL_IP_DAILY_TRIES` untuk hari acara.
 - Batas tanpa login **tidak bisa dibuat kedap**: **VPN atau pindah jaringan memberi IP baru, dan browser baru tidak punya cookie lama**, jadi jatah baru. Yang benar-benar menutupnya cuma akun (login). Kerugian terburuknya dibatasi oleh plafon harian.
 
 ## Struktur
