@@ -197,16 +197,6 @@ function renderMapSection() {
   const region = new URLSearchParams(location.search).get("wilayah");
   if (REGIONS.some((r) => r.id === region)) mapApi.setRegion(region);
 
-  // daftar teks per wilayah: cara cepat ke provinsi kecil (DKI, DIY, Bali) dan untuk pembaca layar
-  document.getElementById("provIndex").replaceChildren(...REGIONS.map((r) => {
-    const items = PROVINCES.filter((p) => p.region === r.id).map((p) => {
-      const a = el("a", { href: provinceUrl(p.id), textContent: p.name });
-      if (visited.has(p.id)) a.classList.add("is-visited");
-      return el("li", {}, [a]);
-    });
-    return el("div", {}, [el("h3", { textContent: r.name }), el("ul", {}, items)]);
-  }));
-
   document.getElementById("footRegions").replaceChildren(...REGIONS.map((r) => el("li", {}, [el("a", { href: `/?wilayah=${r.id}#peta`, textContent: r.name })])));
 }
 

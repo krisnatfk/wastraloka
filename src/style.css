@@ -822,10 +822,10 @@ html { scrollbar-color: var(--sogan) var(--kertas-deep); }
   animation: waves 18s linear infinite;
 }
 @keyframes waves { to { background-position: 64px 0; } }
-.compass { position: absolute; right: 18px; bottom: 16px; width: clamp(54px, 7vw, 84px); color: #fff; opacity: 0.7; }
+.compass { position: absolute; left: 31%; top: 4%; width: clamp(44px, 5.5vw, 70px); color: #fff; opacity: 0.7; }
 .compass text { font-family: var(--font); font-weight: 700; }
 .sea-label { position: absolute; margin: 0; font-family: var(--display); font-style: italic; font-size: clamp(11px, 1.3vw, 15px); letter-spacing: 0.2em; color: rgba(255, 255, 255, 0.55); pointer-events: none; }
-.sea-1 { left: 18%; bottom: 10%; }
+.sea-1 { left: 3%; bottom: 6%; }
 .sea-2 { left: 34%; top: 58%; }
 .sea-3 { right: 8%; top: 8%; }
 
@@ -852,6 +852,8 @@ html { scrollbar-color: var(--sogan) var(--kertas-deep); }
 .map-figure:hover svg { transform: scale(1.35) translateY(-1px); }
 .map-figure.is-selected svg { transform: scale(1.7) translateY(-2px); filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.5)); }
 .map-figure.is-dim { opacity: 0.2; }
+.map-label { font-family: var(--font); font-weight: 800; letter-spacing: 0.01em; fill: #fff; stroke: rgba(16, 40, 64, 0.85); stroke-width: 3px; stroke-linejoin: round; paint-order: stroke; pointer-events: none; transition: fill 0.2s ease; }
+.map-figure:hover .map-label, .map-figure.is-selected .map-label { fill: var(--kunyit-soft); }
 .map-leader { stroke: rgba(255, 255, 255, 0.75); stroke-width: 0.6; stroke-dasharray: 1.5 1.5; }
 .map-pin { fill: #fff; }
 #map:not(.is-drawn) .map-figure { opacity: 0; }
@@ -1019,7 +1021,7 @@ body.is-province-open #beranda, body.is-province-open .marquee, body.is-province
 @media (max-width: 600px) {
   .culture-3, .mini-grid { grid-template-columns: minmax(0, 1fr); }
   .chapter-head { gap: 12px; }
-  .compass { width: 40px; right: 10px; bottom: 8px; }
+  .compass { width: 40px; }
   /* HP: peta diperbesar dan bisa digeser ke samping supaya provinsi kecil tetap bisa disentuh */
   .map-card .map-sea { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
   .map-card .map-sea .map-wrap { width: 900px; }

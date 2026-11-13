@@ -38,8 +38,25 @@ const FIGURE_FEET = {
   "kalimantan-utara": [470, 72], "sulawesi-utara": [652, 98], "gorontalo": [598, 120], "sulawesi-tengah": [560, 152],
   "sulawesi-barat": [512, 196], "sulawesi-selatan": [546, 240], "sulawesi-tenggara": [602, 240], "maluku": [756, 238],
   "maluku-utara": [716, 128], "papua-barat-daya": [806, 152], "papua-barat": [846, 210], "papua-tengah": [896, 246],
-  "papua": [956, 178], "papua-pegunungan": [986, 228], "papua-selatan": [956, 304],
+  "papua": [952, 170], "papua-pegunungan": [986, 228], "papua-selatan": [956, 304],
 };
+
+// Nama provinsi di peta: singkatan yang lazim dipakai (seperti peta pakaian adat di buku sekolah);
+// nama lengkap tetap ada di tooltip, label tautan, dan halaman provinsinya.
+const MAP_LABELS = {
+  "aceh": "Aceh", "sumatera-utara": "Sumut", "sumatera-barat": "Sumbar", "riau": "Riau", "kepulauan-riau": "Kepri",
+  "jambi": "Jambi", "sumatera-selatan": "Sumsel", "bengkulu": "Bengkulu", "lampung": "Lampung",
+  "kepulauan-bangka-belitung": "Babel", "banten": "Banten", "dki-jakarta": "DKI Jakarta", "jawa-barat": "Jabar",
+  "jawa-tengah": "Jateng", "daerah-istimewa-yogyakarta": "DIY", "jawa-timur": "Jatim", "bali": "Bali",
+  "nusa-tenggara-barat": "NTB", "nusa-tenggara-timur": "NTT", "kalimantan-barat": "Kalbar", "kalimantan-tengah": "Kalteng",
+  "kalimantan-selatan": "Kalsel", "kalimantan-timur": "Kaltim", "kalimantan-utara": "Kaltara", "sulawesi-utara": "Sulut",
+  "gorontalo": "Gorontalo", "sulawesi-tengah": "Sulteng", "sulawesi-barat": "Sulbar", "sulawesi-selatan": "Sulsel",
+  "sulawesi-tenggara": "Sultra", "maluku": "Maluku", "maluku-utara": "Malut", "papua": "Papua", "papua-barat": "Papua Barat",
+  "papua-barat-daya": "Papua B. Daya", "papua-tengah": "Papua Tengah", "papua-pegunungan": "Papua Peg.", "papua-selatan": "Papua Selatan",
+};
+const LABEL_FONT = 10.5;
+const LABEL_GAP = 9; // jarak dari kaki figur ke garis dasar teks
+const LABEL_CHAR_WIDTH = 0.6; // perkiraan lebar huruf relatif terhadap ukuran font, untuk menjaga label di dalam peta
 
 // foto untuk isi provinsi: rumah adat dulu, lalu foto budaya lain, terakhir foto utama provinsi
 export function fillPhotoOf(id) {
@@ -79,6 +96,13 @@ function figuresLayer(svg, shapesById) {
     const art = svgEl("svg", { x: String(fx - FIGURE_WIDTH / 2), y: String(fy - FIGURE_HEIGHT), width: String(FIGURE_WIDTH), height: String(FIGURE_HEIGHT), viewBox: "0 -10 88 122" });
     art.innerHTML = coupleMarkup(id); // markup buatan sendiri dari data tetap, bukan input pengguna
     group.append(art);
+    const text = MAP_LABELS[id] || shape.name;
+    const halfWidth = (text.length * LABEL_FONT * LABEL_CHAR_WIDTH) / 2;
+    const [, , mapWidth] = MAP_VIEWBOX.split(" ").map(Number);
+    const labelX = Math.min(Math.max(fx, halfWidth + 2), mapWidth - halfWidth - 2);
+    const label = svgEl("text", { x: String(labelX), y: String(fy + LABEL_GAP), class: "map-label", "text-anchor": "middle", "font-size": String(LABEL_FONT) });
+    label.textContent = text;
+    group.append(label);
     layer.append(group);
   }
   svg.append(layer);
