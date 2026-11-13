@@ -16,7 +16,6 @@ import { initQuiz } from "./quiz.js";
 import { initReveal } from "./reveal.js";
 import { sentraCard } from "./sentra.js";
 import { initSiteNav } from "./site-nav.js";
-import { initTabBar } from "./tab-bar.js";
 import { renderProvinceView } from "./province-view.js";
 
 const COUNT_UP_MS = 900;
@@ -283,7 +282,6 @@ function renderStats() {
 function initHome() {
   installImageRetry();
   initSiteNav({ nav: document.getElementById("siteNav"), sentinel: document.getElementById("navSentinel") });
-  initTabBar();
   initMarquee(document.querySelector(".marquee"));
   initHero();
   renderStats();
