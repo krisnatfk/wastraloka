@@ -2,13 +2,14 @@
 // Dimuat sebagai script sendiri (terpisah dari cermin AI), jadi kalau cermin gagal dimuat, isi beranda tetap tampil.
 
 import { CULTURE_PHOTOS } from "./content/culture-photos.js";
-import { MUSIC, MUSIC_SOURCE, SENTRA } from "./content/culture.js";
+import { FOODS, MUSIC, MUSIC_SOURCE, SENTRA } from "./content/culture.js";
 import { PROVINCES, REGIONS, SOURCES, provinceById } from "./content/provinces.js";
-import { WASTRA_CATALOG } from "./content/wastra-catalog.js";
-import { el, installImageRetry } from "./dom.js";
+import { WASTRA_CATALOG, catalogForProvince, wikimediaSized } from "./content/wastra-catalog.js";
+import { el, installImageRetry, prefersReducedMotion } from "./dom.js";
+import { coupleSvg } from "./figures.js";
 import { initGallery } from "./gallery.js";
 import { initHero } from "./hero.js";
-import { provinceUrl, renderMap } from "./map.js";
+import { fillPhotoOf, provinceUrl, renderMap } from "./map.js";
 import { initMarquee } from "./marquee.js";
 import { clearPassport, formatStampDate, readPassport, stampVisited } from "./paspor.js";
 import { initQuiz } from "./quiz.js";
@@ -22,14 +23,53 @@ let mapApi = null;
 
 const stampedIds = (passport) => new Set([...Object.keys(passport.visited), ...Object.keys(passport.tried)]);
 
+const PANEL_PHOTO_WIDTH = 960;
+
+// Panel samping peta: busana adat (ilustrasi), foto rumah adat sebagai latar, dan ringkasan budaya.
+function renderMapPanel(id) {
+  const province = provinceById(id);
+  if (!province) return;
+  const region = REGIONS.find((r) => r.id === province.region);
+  const photo = fillPhotoOf(id);
+  const panel = document.getElementById("mapPanel");
+  const rumah = province.rumah ? (/^(Rumah|Gapura)/.test(province.rumah) ? province.rumah : `Rumah ${province.rumah}`) : null;
+  const facts = [
+    ["Ibu kota", province.capital], ["Wastra", province.wastra.map((w) => w.name).slice(0, 2).join(", ")], ["Rumah adat", rumah],
+    ["Tarian", province.tarian], ["Alat musik", MUSIC[id]?.[0]?.name], ["Kuliner", FOODS[id]], ["Busana", province.pakaian],
+  ].filter(([, value]) => value);
+  const figure = el("div", { className: "panel-couple" });
+  figure.innerHTML = coupleSvg(id, { label: `Ilustrasi pasangan berbusana adat ${province.name}` }); // markup dari data tetap kita sendiri
+  const [garment] = catalogForProvince(id);
+  panel.style.setProperty("--accent", region?.accent ?? "#5a3220");
+  panel.replaceChildren(
+    el("div", { className: "panel-hero" }, [
+      el("img", { className: "panel-bg", src: wikimediaSized(photo.src, PANEL_PHOTO_WIDTH), alt: "" }),
+      figure,
+      el("div", { className: "panel-title" }, [el("small", { textContent: region?.name ?? "" }), el("h3", { textContent: province.name })]),
+    ]),
+    el("dl", { className: "panel-facts" }, facts.map(([k, v]) => el("div", {}, [el("dt", { textContent: k }), el("dd", { textContent: v })]))),
+    el("div", { className: "panel-actions" }, [
+      el("a", { className: "pill pill-sogan", href: provinceUrl(id), textContent: "Buka kisah lengkap →" }),
+      garment ? el("a", { className: "pill pill-line", href: `/?coba=${garment.id}#cermin`, textContent: "Coba wastranya" }) : null,
+    ]),
+    el("p", { className: "panel-credit" }, [`${photo.label}: `, el("a", { href: photo.page, rel: "noopener", target: "_blank", textContent: `${photo.artist} · ${photo.license}` }), ". Ilustrasi busana: gambar sederhana Wastraloka."]),
+  );
+  panel.classList.remove("is-fresh");
+  void panel.offsetWidth; // ulang animasi masuk
+  panel.classList.add("is-fresh");
+  // di layar sempit panel ada di bawah peta: gulir ke sana supaya terlihat
+  if (window.matchMedia("(max-width: 920px)").matches) panel.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "nearest" });
+}
+
 function renderMapSection() {
   const visited = stampedIds(readPassport());
   const host = document.getElementById("map");
-  mapApi = renderMap(host, { visited });
+  mapApi = renderMap(host, { visited, figures: true, onSelect: renderMapPanel });
 
   // provinsi muncul bergantian saat peta pertama kali terlihat
   const paths = host.querySelectorAll(".map-prov");
   paths.forEach((p, i) => p.style.setProperty("--i", i));
+  host.querySelectorAll(".map-figure").forEach((f, i) => f.style.setProperty("--i", i));
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;

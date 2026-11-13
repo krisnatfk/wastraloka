@@ -8,6 +8,7 @@ import { PROVINCE_PHOTOS } from "./content/province-photos.js";
 import { PROVINCES, REGIONS, SOURCES, provinceById, regionOf } from "./content/provinces.js";
 import { catalogForProvince, wikimediaSized } from "./content/wastra-catalog.js";
 import { el, installImageRetry } from "./dom.js";
+import { coupleSvg } from "./figures.js";
 import { provinceUrl, renderMap } from "./map.js";
 import { readPassport, stampVisited } from "./paspor.js";
 import { initReveal } from "./reveal.js";
@@ -133,6 +134,13 @@ function cultureChapter(province) {
   return chapter("budaya", "03", "Rumah adat, tarian & musik", "Ruang, gerak, dan bunyi", [grid]);
 }
 
+// ilustrasi pasangan berbusana adat (gambar sederhana buatan sendiri, dari data tetap)
+function coupleFigure(province) {
+  const box = el("div", { className: "costume-couple" });
+  box.innerHTML = coupleSvg(province.id, { label: `Ilustrasi pasangan berbusana adat ${province.name}` });
+  return box;
+}
+
 function costumeChapter(province) {
   const photo = CULTURE_PHOTOS[province.id]?.pakaian;
   return chapter("busana", "04", "Pakaian adat", province.pakaian, [
@@ -144,7 +152,8 @@ function costumeChapter(province) {
         ])
         : el("div", { className: "ph", textContent: "Foto busana berlisensi bebas belum kami temukan" }),
       el("div", { className: "costume-text" }, [
-        el("p", { textContent: `Pakaian adat ${province.name} yang tercatat di sumber kami adalah ${province.pakaian}. Busana adat biasanya dikenakan pada upacara, pernikahan, dan hari besar daerah.` }),
+        coupleFigure(province),
+        el("p", { textContent: `Pakaian adat ${province.name} yang tercatat di sumber kami adalah ${province.pakaian}. Busana adat biasanya dikenakan pada upacara, pernikahan, dan hari besar daerah. Ilustrasi di atas adalah gambar sederhana, bukan reproduksi detail busananya.` }),
         sourceNote(SOURCES.pakaian),
       ]),
     ]),

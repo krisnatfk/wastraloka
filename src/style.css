@@ -827,10 +827,10 @@ html { scrollbar-color: var(--sogan) var(--kertas-deep); }
   padding: clamp(18px, 4vw, 44px) clamp(10px, 3vw, 34px);
   border-radius: var(--r-lg);
   background:
-    radial-gradient(120% 90% at 50% 40%, rgba(46, 70, 112, 0.9), rgba(16, 24, 42, 0.98)),
+    radial-gradient(120% 90% at 50% 40%, rgba(84, 160, 206, 0.95), rgba(32, 92, 140, 0.98)),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='22' viewBox='0 0 64 22'%3E%3Cpath d='M0 11c8 0 8-6 16-6s8 6 16 6 8-6 16-6 8 6 16 6' fill='none' stroke='%23E8C77A' stroke-opacity='.16' stroke-width='1.2'/%3E%3C/svg%3E"),
-    #16203a;
-  box-shadow: inset 0 0 0 1px rgba(232, 199, 122, 0.25), inset 0 0 80px rgba(0, 0, 0, 0.45);
+    #2a6f9e;
+  box-shadow: inset 0 0 0 1px rgba(232, 199, 122, 0.3), inset 0 0 70px rgba(0, 30, 60, 0.35);
 }
 .map-sea::before {
   content: "";
@@ -841,27 +841,80 @@ html { scrollbar-color: var(--sogan) var(--kertas-deep); }
   animation: waves 18s linear infinite;
 }
 @keyframes waves { to { background-position: 64px 0; } }
-.compass { position: absolute; right: 18px; bottom: 16px; width: clamp(54px, 7vw, 84px); color: var(--kunyit-soft); opacity: 0.75; }
+.compass { position: absolute; right: 18px; bottom: 16px; width: clamp(54px, 7vw, 84px); color: #fff; opacity: 0.7; }
 .compass text { font-family: var(--font); font-weight: 700; }
-.sea-label { position: absolute; margin: 0; font-family: var(--display); font-style: italic; font-size: clamp(11px, 1.3vw, 15px); letter-spacing: 0.2em; color: rgba(232, 199, 122, 0.5); pointer-events: none; }
+.sea-label { position: absolute; margin: 0; font-family: var(--display); font-style: italic; font-size: clamp(11px, 1.3vw, 15px); letter-spacing: 0.2em; color: rgba(255, 255, 255, 0.55); pointer-events: none; }
 .sea-1 { left: 18%; bottom: 10%; }
 .sea-2 { left: 34%; top: 58%; }
 .sea-3 { right: 8%; top: 8%; }
 
-.map-prov .prov-photo, .map-prov .prov-tint { stroke: rgba(246, 238, 223, 0.85); stroke-width: 0.7; stroke-linejoin: round; transition: opacity 0.3s ease, stroke 0.2s ease, stroke-width 0.2s ease; }
-.map-prov .prov-photo { fill-opacity: 1; }
-.map-prov .prov-tint { opacity: 0.78; mix-blend-mode: multiply; }
-.map-prov[data-region] path { fill-opacity: 1; }
-.map-prov:hover .prov-tint, .map-prov:focus-visible .prov-tint { opacity: 0.12; }
-.map-prov:hover .prov-photo, .map-prov:focus-visible .prov-photo { stroke: var(--kunyit-soft); stroke-width: 1.8; }
+/* daratan hijau; provinsi terpilih berganti isi menjadi foto rumah adat */
+.map-prov .prov-photo, .map-prov .prov-land { transition: opacity 0.45s ease, filter 0.2s ease; }
+.map-prov .prov-land { stroke: none; }
+.map-prov .prov-outline { fill: none; stroke: rgba(255, 255, 255, 0.9); stroke-width: 0.6; stroke-linejoin: round; pointer-events: none; transition: stroke 0.2s ease, stroke-width 0.2s ease; }
+.map-prov .prov-photo { opacity: 0; }
+.map-prov.is-selected .prov-photo { opacity: 1; }
+.map-prov.is-selected .prov-outline { stroke: #fff; stroke-width: 2.2; }
+.map-prov.is-selected .prov-land { opacity: 0; }
+.map-prov:hover .prov-land, .map-prov:focus-visible .prov-land { filter: brightness(1.15) saturate(1.2); }
+.map-prov:hover .prov-outline, .map-prov:focus-visible .prov-outline { stroke: #fff6d8; stroke-width: 1.4; }
 .map-prov:hover path, .map-prov:focus-visible path { filter: none; }
-.map-prov:hover { filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.55)); }
-.map-prov.is-visited .prov-photo { stroke: var(--kunyit); stroke-width: 1.6; }
-.map-prov.is-dim .prov-photo, .map-prov.is-dim .prov-tint { opacity: 0.18; }
-.map-prov.is-current .prov-tint { opacity: 0.05; }
-.map-prov.is-current .prov-photo { stroke: #fff; stroke-width: 2; }
-.map-svg.has-current .map-prov:not(.is-current) { filter: grayscale(1) brightness(0.8); opacity: 0.55; }
-.map-svg.has-current .map-prov:not(.is-current):hover { filter: none; opacity: 1; }
+.map-prov.is-selected { filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5)); }
+.map-prov.is-visited .prov-outline { stroke: var(--kunyit); stroke-width: 1.3; }
+.map-prov.is-dim .prov-land, .map-prov.is-dim .prov-photo { opacity: 0.25; }
+.map-svg.has-current .map-prov:not(.is-current) .prov-land { filter: saturate(0.35) brightness(0.9); }
+.map-svg.has-current .map-prov:not(.is-current):hover .prov-land { filter: none; }
+
+/* pasangan berbusana adat di atas peta */
+.map-figure { cursor: pointer; }
+.map-figure svg { overflow: visible; transform-box: fill-box; transform-origin: 50% 100%; transition: transform 0.35s var(--nav-ease), filter 0.3s ease; filter: drop-shadow(0 1.5px 1.5px rgba(0, 0, 0, 0.35)); }
+.map-figure:hover svg { transform: scale(1.35) translateY(-1px); }
+.map-figure.is-selected svg { transform: scale(1.7) translateY(-2px); filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.5)); }
+.map-figure.is-dim { opacity: 0.2; }
+.map-leader { stroke: rgba(255, 255, 255, 0.75); stroke-width: 0.6; stroke-dasharray: 1.5 1.5; }
+.map-pin { fill: #fff; }
+#map:not(.is-drawn) .map-figure { opacity: 0; }
+#map.is-drawn .map-figure { animation: figIn 0.55s var(--nav-ease) backwards; animation-delay: calc(400ms + var(--i, 0) * 35ms); }
+@keyframes figIn { from { opacity: 0; transform: translateY(-8px); } }
+
+/* peta + panel provinsi terpilih */
+.map-layout { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 16px; align-items: stretch; }
+.map-layout .map-sea { display: flex; flex-direction: column; justify-content: center; }
+main > #peta { max-width: 1520px; }
+#peta .map-sea { padding: clamp(10px, 2vw, 22px) clamp(6px, 1.5vw, 18px); }
+@media (max-width: 1280px) {
+  .map-layout { grid-template-columns: minmax(0, 1fr); }
+  .map-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+  .map-panel .panel-hero { grid-row: span 3; height: auto; min-height: 260px; }
+  .map-panel-intro { grid-column: 1 / -1; }
+}
+.map-panel { position: relative; display: flex; flex-direction: column; min-height: 100%; border-radius: var(--r-lg); overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+.map-panel.is-fresh { animation: panelIn 0.45s var(--nav-ease); }
+@keyframes panelIn { from { opacity: 0; transform: translateX(14px); } }
+.map-panel-intro { display: flex; flex-direction: column; justify-content: center; gap: 10px; height: 100%; padding: 26px; background: linear-gradient(rgba(251, 246, 236, 0.9), rgba(251, 246, 236, 0.9)), var(--kawung); }
+.map-panel-intro h3 { margin: 0; font-family: var(--display); font-size: 24px; font-weight: 600; line-height: 1.15; }
+.map-panel-intro p:not(.eyebrow) { margin: 0; font-size: 13.5px; color: #47382b; }
+.panel-hero { position: relative; height: 230px; overflow: hidden; background: var(--sogan-deep); }
+.panel-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(1.05); }
+.panel-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20, 10, 4, 0.05) 30%, rgba(20, 10, 4, 0.85)); }
+.panel-couple { position: absolute; z-index: 1; right: 10px; bottom: 4px; width: 132px; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.5)); animation: coupleIn 0.6s var(--nav-ease) 0.1s backwards; }
+.panel-couple svg { display: block; width: 100%; height: auto; }
+@keyframes coupleIn { from { opacity: 0; transform: translateY(18px) scale(0.92); } }
+.panel-title { position: absolute; z-index: 1; left: 16px; bottom: 14px; right: 150px; color: #fff; }
+.panel-title small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--kunyit-soft); }
+.panel-title h3 { margin: 2px 0 0; font-family: var(--display); font-size: 26px; font-weight: 600; line-height: 1.05; }
+.panel-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; margin: 0; padding: 16px 16px 4px; }
+.panel-facts div { min-width: 0; border-left: 3px solid var(--accent); padding-left: 9px; }
+.panel-facts dt { font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.panel-facts dd { margin: 1px 0 0; font-size: 13.5px; font-weight: 600; line-height: 1.3; }
+.panel-facts div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.panel-actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 16px 6px; }
+.panel-actions .pill { min-height: 44px; font-size: 13px; padding: 0 16px; }
+.panel-actions .pill-sogan { background: var(--accent); }
+.panel-credit { margin: auto 0 0; padding: 8px 16px 12px; font-size: 10.5px; color: var(--muted); }
+.panel-credit a { color: inherit; }
+.map-legend i.lg-land { background: linear-gradient(135deg, #a8d08d, #5e9150); }
+.map-legend i.lg-photo { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Crect width='12' height='12' fill='%238a5a3a'/%3E%3Cpath d='M1 9 6 3l5 6Z' fill='%23e8c77a'/%3E%3C/svg%3E") center / cover; }
 
 .map-tip { display: flex; gap: 10px; align-items: center; padding: 8px 14px 8px 8px; border: 1px solid rgba(232, 199, 122, 0.4); border-radius: 16px; background: rgba(33, 22, 15, 0.94); white-space: normal; width: max-content; max-width: 280px; }
 .map-tip img { flex: none; width: 64px; height: 64px; border-radius: 10px; object-fit: cover; }
@@ -933,6 +986,8 @@ html { scrollbar-color: var(--sogan) var(--kertas-deep); }
 .costume figcaption a { color: inherit; }
 .costume .ph { display: grid; place-items: center; aspect-ratio: 4 / 3; border-radius: var(--r-xl); background: var(--kawung), var(--kertas-deep); color: var(--muted); padding: 20px; text-align: center; }
 .costume-text p { margin: 0; font-size: 16px; color: #3a2c20; }
+.costume-couple { width: 170px; margin: 0 0 14px; filter: drop-shadow(0 10px 12px rgba(60, 30, 10, 0.35)); }
+.costume-couple svg { display: block; width: 100%; height: auto; }
 
 .mini-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .mini-card { position: relative; padding: 26px; border-radius: var(--r-xl); background: var(--nila); color: #fff; overflow: hidden; background-image: linear-gradient(rgba(30, 42, 68, 0.92), rgba(30, 42, 68, 0.92)), var(--kawung); }
@@ -958,6 +1013,8 @@ html { scrollbar-color: var(--sogan) var(--kertas-deep); }
   .chapter-nav a[aria-current] { background: var(--accent); border-color: var(--accent); color: #fff; }
   .chapter-nav a[aria-current] span { color: var(--kunyit-soft); }
   .chapter { scroll-margin-top: 130px; }
+  .map-layout { grid-template-columns: minmax(0, 1fr); }
+  .map-panel { scroll-margin-top: 90px; }
   .costume { grid-template-columns: minmax(0, 1fr); }
   .sea-label { display: none; }
 }
@@ -967,11 +1024,13 @@ html { scrollbar-color: var(--sogan) var(--kertas-deep); }
   .compass { width: 40px; right: 10px; bottom: 8px; }
   /* HP: peta diperbesar dan bisa digeser ke samping supaya provinsi kecil tetap bisa disentuh */
   .map-card .map-sea { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
-  .map-card .map-sea .map-wrap { width: 760px; }
+  .map-card .map-sea .map-wrap { width: 900px; }
   .map-card .map-sea::after { content: "94  geser peta"; position: sticky; left: 8px; display: inline-block; margin-top: 8px; padding: 3px 10px; border-radius: 999px; background: rgba(232, 199, 122, 0.18); color: var(--kunyit-soft); font-size: 11px; font-weight: 700; }
 }
 @media (prefers-reduced-motion: reduce) {
   .map-sea::before { animation: none; }
+  #map.is-drawn .map-figure, .map-panel.is-fresh, .panel-couple { animation: none; }
+  .map-figure svg { transition: none; }
   .chapter.reveal .timeline::before { transform: none; transition: none; }
   .sentra-img img { transition: none; }
 }
