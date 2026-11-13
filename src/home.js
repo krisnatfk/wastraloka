@@ -17,9 +17,11 @@ import { initReveal } from "./reveal.js";
 import { sentraCard } from "./sentra.js";
 import { initSiteNav } from "./site-nav.js";
 import { initTabBar } from "./tab-bar.js";
+import { renderProvinceView } from "./province-view.js";
 
 const COUNT_UP_MS = 900;
 let mapApi = null;
+let reveal = null;
 
 const stampedIds = (passport) => new Set([...Object.keys(passport.visited), ...Object.keys(passport.tried)]);
 
@@ -57,14 +59,115 @@ function renderMapPanel(id) {
   panel.classList.remove("is-fresh");
   void panel.offsetWidth; // ulang animasi masuk
   panel.classList.add("is-fresh");
-  // di layar sempit panel ada di bawah peta: gulir ke sana supaya terlihat
-  if (window.matchMedia("(max-width: 920px)").matches) panel.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "nearest" });
+}
+
+// ---- Masuk ke provinsi tanpa muat ulang: zoom peta -> tampilan provinsi di halaman ini (URL ikut berganti)
+const HOVER_PREVIEW_MS = 120;
+const homeTitle = document.title;
+let hoverTimer = 0;
+let isEntering = false;
+let activeView = null;
+
+function previewProvince(id) {
+  clearTimeout(hoverTimer);
+  hoverTimer = setTimeout(() => renderMapPanel(id), HOVER_PREVIEW_MS);
+}
+
+function showProvinceView(id) {
+  const province = provinceById(id);
+  if (!province) return false;
+  const root = document.getElementById("provinceView");
+  activeView?.destroy();
+  activeView = renderProvinceView(root, province);
+  root.hidden = false;
+  document.body.classList.add("is-province-open");
+  root.classList.remove("is-entering");
+  void root.offsetWidth; // ulang animasi masuk
+  root.classList.add("is-entering");
+  window.scrollTo({ top: 0, behavior: "auto" });
+  reveal?.observe(root);
+  return true;
+}
+
+async function enterProvince(id) {
+  if (isEntering || !provinceById(id)) return;
+  isEntering = true;
+  clearTimeout(hoverTimer);
+  const mapCard = document.querySelector("#peta .map-card");
+  try {
+    // di HP peta bisa digeser: tengahkan dulu, karena zoom selalu berpusat di tengah peta
+    const sea = mapCard.querySelector(".map-sea");
+    if (sea && sea.scrollWidth > sea.clientWidth) sea.scrollTo({ left: (sea.scrollWidth - sea.clientWidth) / 2, behavior: "auto" });
+    await mapApi.zoomTo(id);
+    mapCard.classList.add("is-diving");
+    await new Promise((resolve) => setTimeout(resolve, prefersReducedMotion() ? 0 : 280));
+    if (showProvinceView(id)) history.pushState({ province: id }, "", provinceUrl(id));
+  } finally {
+    mapCard.classList.remove("is-diving");
+    isEntering = false;
+  }
+}
+
+function closeProvinceView({ toHash = "#peta" } = {}) {
+  if (!document.body.classList.contains("is-province-open")) return;
+  activeView?.destroy();
+  activeView = null;
+  const root = document.getElementById("provinceView");
+  root.hidden = true;
+  root.replaceChildren();
+  document.body.classList.remove("is-province-open");
+  document.title = homeTitle;
+  renderPassport(); // cap kunjungan baru dari halaman provinsi
+  const target = (toHash === "#peta" && document.querySelector("#peta .map-card")) || document.querySelector(toHash) || document.getElementById("peta");
+  const scrollToTarget = () => target.scrollIntoView({ behavior: "auto", block: toHash === "#peta" ? "center" : "start" });
+  scrollToTarget();
+  requestAnimationFrame(scrollToTarget); // ulangi setelah tata letak beranda kembali tampil
+  if (toHash === "#peta") mapApi.resetZoom();
+  else mapApi.resetZoom(0);
+}
+
+function initProvinceRouting() {
+  // posisi gulir diatur sendiri (kembali ke peta setelah Back), bukan dipulihkan browser
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.addEventListener("popstate", (e) => {
+    const id = e.state?.province;
+    if (id) showProvinceView(id);
+    else closeProvinceView();
+  });
+  // selama tampilan provinsi terbuka: tautan provinsi lain dibuka di tempat, tautan beranda menutupnya
+  document.addEventListener("click", (e) => {
+    const isOpen = document.body.classList.contains("is-province-open");
+    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    const link = e.target.closest?.("a[href]");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#bab-")) return; // navigasi bab di dalam tampilan provinsi
+    if (isOpen && href.startsWith("#")) { // menu beranda (#peta, #galeri, ...) saat kisah provinsi terbuka
+      e.preventDefault();
+      history.pushState(null, "", `/${href}`);
+      closeProvinceView({ toHash: href.length > 1 ? href : "#beranda" });
+      return;
+    }
+    const url = new URL(link.href, location.href);
+    if (url.origin !== location.origin) return;
+    const id = url.pathname.startsWith("/provinsi") ? url.searchParams.get("p") : null;
+    if (id && provinceById(id)) {
+      e.preventDefault();
+      if (showProvinceView(id)) history.pushState({ province: id }, "", provinceUrl(id));
+      return;
+    }
+    if (isOpen && url.pathname === "/" && !url.search) {
+      e.preventDefault();
+      history.pushState(null, "", `/${url.hash}`);
+      closeProvinceView({ toHash: url.hash || "#beranda" });
+    }
+  });
 }
 
 function renderMapSection() {
   const visited = stampedIds(readPassport());
   const host = document.getElementById("map");
-  mapApi = renderMap(host, { visited, figures: true, onSelect: renderMapPanel });
+  mapApi = renderMap(host, { visited, figures: true, onActivate: enterProvince, onHover: previewProvince });
 
   // provinsi muncul bergantian saat peta pertama kali terlihat
   const paths = host.querySelectorAll(".map-prov");
@@ -83,31 +186,9 @@ function renderMapSection() {
     mapApi.loadImages();
   }
 
-  const chips = document.getElementById("regionChips");
-  const params = new URLSearchParams(location.search);
-  let activeRegion = REGIONS.some((r) => r.id === params.get("wilayah")) ? params.get("wilayah") : "";
-  const buttons = [{ id: "", name: "Semua" }, ...REGIONS].map((r) => {
-    const b = el("button", { type: "button", textContent: r.name });
-    b.dataset.region = r.id;
-    return b;
-  });
-  const sync = () => {
-    for (const b of buttons) b.setAttribute("aria-pressed", String(b.dataset.region === activeRegion));
-    mapApi.setRegion(activeRegion);
-  };
-  chips.replaceChildren(...buttons);
-  chips.addEventListener("click", (e) => {
-    const b = e.target.closest("button");
-    if (!b) return;
-    activeRegion = b.dataset.region;
-    sync();
-  });
-  sync();
-
-  document.getElementById("randomProvince").addEventListener("click", () => {
-    const pick = PROVINCES[Math.floor(Math.random() * PROVINCES.length)];
-    location.href = provinceUrl(pick.id);
-  });
+  // tautan footer "?wilayah=..." tetap menyorot pulau terkait, tanpa tombol wilayah di atas peta
+  const region = new URLSearchParams(location.search).get("wilayah");
+  if (REGIONS.some((r) => r.id === region)) mapApi.setRegion(region);
 
   // daftar teks per wilayah: cara cepat ke provinsi kecil (DKI, DIY, Bali) dan untuk pembaca layar
   document.getElementById("provIndex").replaceChildren(...REGIONS.map((r) => {
@@ -203,7 +284,8 @@ function initHome() {
   renderSentra();
   renderSources();
   renderPassport();
-  const reveal = initReveal();
+  reveal = initReveal();
+  initProvinceRouting();
   initGallery({ onRender: (grid) => reveal.observe(grid.parentElement) });
   initQuiz({ onCorrect: (id) => { if (stampVisited(id)) renderPassport(); } });
 

@@ -18,6 +18,10 @@ const FIGURE_WIDTH = 30;
 const FIGURE_HEIGHT = 41;
 const LEADER_MIN_DISTANCE = 8;
 export const provinceUrl = (id) => `/provinsi/?p=${encodeURIComponent(id)}`;
+const ZOOM_MS = 950;
+const ZOOM_PADDING = 0.6; // ruang di sekitar provinsi saat diperbesar, relatif terhadap ukurannya
+const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const dataById = new Map(PROVINCES.map((p) => [p.id, p]));
 const regionById = new Map(REGIONS.map((r) => [r.id, r]));
@@ -83,10 +87,12 @@ function figuresLayer(svg, shapesById) {
 
 /**
  * @param {HTMLElement} container
- * @param {{ current?: string, visited?: Set<string>, label?: string, figures?: boolean, onSelect?: (id: string) => void }} options
- *   onSelect: bila diisi, klik pertama pada provinsi memilihnya (tidak pindah halaman); klik kedua membuka halamannya.
+ * @param {{ current?: string, visited?: Set<string>, label?: string, figures?: boolean, onSelect?: (id: string) => void,
+ *   onActivate?: (id: string) => void, onHover?: (id: string) => void }} options
+ *   onActivate: bila diisi, klik pada provinsi/figur memanggilnya (tidak pindah halaman lewat link).
+ *   onSelect: dipanggil setiap provinsi dipilih. onHover: dipanggil saat kursor/fokus masuk provinsi.
  */
-export function renderMap(container, { current = "", visited = new Set(), label = "Peta Indonesia, 38 provinsi", figures = false, onSelect = null } = {}) {
+export function renderMap(container, { current = "", visited = new Set(), label = "Peta Indonesia, 38 provinsi", figures = false, onSelect = null, onActivate = null, onHover = null } = {}) {
   const svg = svgEl("svg", { viewBox: MAP_VIEWBOX, class: "map-svg", "aria-label": label, role: "group" });
   if (current) svg.classList.add("has-current");
   const defs = svgEl("defs");
@@ -164,13 +170,14 @@ export function renderMap(container, { current = "", visited = new Set(), label 
     }
   }
 
-  if (onSelect) {
+  if (onSelect || onActivate) {
     svg.addEventListener("click", (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey) return; // buka di tab baru tetap boleh
       const link = e.target.closest?.(".map-prov");
       const fig = e.target.closest?.(".map-figure");
       const id = link?.dataset.id || fig?.dataset.id;
       if (!id) return;
+      if (onActivate) { e.preventDefault(); onActivate(id); return; }
       if (id === selected && link) return; // klik kedua: biarkan link membuka halaman provinsi
       e.preventDefault();
       select(id);
@@ -191,7 +198,7 @@ export function renderMap(container, { current = "", visited = new Set(), label 
     const name = document.createElement("b");
     name.textContent = data.name;
     const sub = document.createElement("span");
-    sub.textContent = onSelect ? (id === selected ? "Klik lagi untuk membuka kisahnya" : "Klik untuk melihat budayanya") : (data.wastra[0]?.name ?? "");
+    sub.textContent = onActivate ? "Klik untuk masuk ke provinsinya" : onSelect ? (id === selected ? "Klik lagi untuk membuka kisahnya" : "Klik untuk melihat budayanya") : (data.wastra[0]?.name ?? "");
     body.append(kicker, name, sub);
     tip.replaceChildren(img, body);
     const [, , vbWidth, vbHeight] = MAP_VIEWBOX.split(" ").map(Number);
@@ -206,17 +213,66 @@ export function renderMap(container, { current = "", visited = new Set(), label 
 
   svg.addEventListener("pointerover", (e) => {
     const link = e.target.closest?.(".map-prov");
+    const fig = e.target.closest?.(".map-figure");
     if (link) showTip(link.dataset.id);
+    const id = link?.dataset.id || fig?.dataset.id;
+    if (id) onHover?.(id);
   });
   svg.addEventListener("pointerleave", hideTip);
   svg.addEventListener("focusin", (e) => {
     const link = e.target.closest?.(".map-prov");
-    if (link) showTip(link.dataset.id);
+    if (link) { showTip(link.dataset.id); onHover?.(link.dataset.id); }
   });
   svg.addEventListener("focusout", hideTip);
 
+  // ---- Zoom: viewBox dianimasikan dari seluruh Indonesia ke kotak provinsi (rasio peta dipertahankan)
+  const [baseX, baseY, baseW, baseH] = MAP_VIEWBOX.split(" ").map(Number);
+  let viewBox = [baseX, baseY, baseW, baseH];
+  let zoomFrame = 0;
+  const applyViewBox = (vb) => { viewBox = vb; svg.setAttribute("viewBox", vb.map((n) => n.toFixed(2)).join(" ")); };
+  function animateViewBox(target, duration) {
+    cancelAnimationFrame(zoomFrame);
+    if (reduceMotion() || duration <= 0) { applyViewBox(target); return Promise.resolve(); }
+    const from = [...viewBox];
+    const start = performance.now();
+    return new Promise((resolve) => {
+      const step = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        const k = easeInOut(t);
+        applyViewBox(from.map((v, i) => v + (target[i] - v) * k));
+        if (t < 1) zoomFrame = requestAnimationFrame(step);
+        else resolve();
+      };
+      zoomFrame = requestAnimationFrame(step);
+    });
+  }
+  function boxFor(id) {
+    const box = links.get(id).landPath.getBBox();
+    const ratio = baseW / baseH;
+    let w = box.width * (1 + ZOOM_PADDING * 2);
+    let h = box.height * (1 + ZOOM_PADDING * 2);
+    if (w / h > ratio) h = w / ratio; else w = h * ratio;
+    const minW = 110; // provinsi kecil (DKI, DIY) jangan diperbesar berlebihan
+    if (w < minW) { w = minW; h = minW / ratio; }
+    return [box.x + box.width / 2 - w / 2, box.y + box.height / 2 - h / 2, w, h];
+  }
+
   return {
     select,
+    /** Perbesar peta ke satu provinsi. Selesai saat animasi selesai. */
+    hideTip,
+    zoomTo(id, duration = ZOOM_MS) {
+      if (!links.has(id)) return Promise.resolve();
+      hideTip();
+      select(id);
+      svg.classList.add("is-zooming");
+      return animateViewBox(boxFor(id), duration);
+    },
+    /** Kembalikan peta ke seluruh Indonesia. */
+    resetZoom(duration = ZOOM_MS * 0.8) {
+      svg.classList.remove("is-zooming");
+      return animateViewBox([baseX, baseY, baseW, baseH], duration);
+    },
     /** Dipertahankan untuk kompatibilitas: foto kini dimuat saat provinsi dipilih. */
     loadImages() {},
     /** Sorot satu wilayah (pulau besar); string kosong = semua */

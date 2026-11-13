@@ -913,6 +913,23 @@ main > #peta { max-width: 1520px; }
 .panel-actions .pill-sogan { background: var(--accent); }
 .panel-credit { margin: auto 0 0; padding: 8px 16px 12px; font-size: 10.5px; color: var(--muted); }
 .panel-credit a { color: inherit; }
+/* ---- zoom ke provinsi lalu masuk ke kisahnya (tanpa muat ulang) ---- */
+.map-svg.is-zooming .map-figure:not(.is-selected) { opacity: 0; transition: opacity 0.35s ease; }
+.map-svg.is-zooming .map-prov:not(.is-selected) .prov-land { filter: saturate(0.6) brightness(0.92); }
+.map-svg.is-zooming .map-prov.is-selected { filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55)); }
+.map-svg.is-zooming .map-figure.is-selected svg { transform: scale(1.15); }
+.map-svg.is-zooming .map-leader, .map-svg.is-zooming .map-pin { opacity: 0; }
+.map-card.is-diving .map-sea { animation: dive 0.3s ease-in forwards; }
+@keyframes dive { to { transform: scale(1.12); opacity: 0; filter: blur(4px); } }
+body.is-province-open #beranda, body.is-province-open .marquee, body.is-province-open main { display: none; }
+.province-view[hidden] { display: none; }
+.province-view.is-entering .prov-hero { animation: viewHero 0.8s var(--nav-ease); }
+.province-view.is-entering .prov-hero h1 { animation: viewTitle 0.9s var(--nav-ease) 0.1s backwards; }
+.province-view.is-entering .prov-main { animation: viewBody 0.7s var(--nav-ease) 0.25s backwards; }
+@keyframes viewHero { from { clip-path: circle(12% at 50% 55%); filter: saturate(1.4); } to { clip-path: circle(150% at 50% 55%); } }
+@keyframes viewTitle { from { opacity: 0; transform: translateY(30px); letter-spacing: 0.08em; } }
+@keyframes viewBody { from { opacity: 0; transform: translateY(30px); } }
+
 .map-legend i.lg-land { background: linear-gradient(135deg, #a8d08d, #5e9150); }
 .map-legend i.lg-photo { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Crect width='12' height='12' fill='%238a5a3a'/%3E%3Cpath d='M1 9 6 3l5 6Z' fill='%23e8c77a'/%3E%3C/svg%3E") center / cover; }
 
@@ -1014,7 +1031,7 @@ main > #peta { max-width: 1520px; }
   .chapter-nav a[aria-current] span { color: var(--kunyit-soft); }
   .chapter { scroll-margin-top: 130px; }
   .map-layout { grid-template-columns: minmax(0, 1fr); }
-  .map-panel { scroll-margin-top: 90px; }
+  .map-panel { display: none; } /* di layar sentuh tidak ada "intip" lewat kursor: ketuk langsung masuk */
   .costume { grid-template-columns: minmax(0, 1fr); }
   .sea-label { display: none; }
 }
@@ -1030,6 +1047,7 @@ main > #peta { max-width: 1520px; }
 @media (prefers-reduced-motion: reduce) {
   .map-sea::before { animation: none; }
   #map.is-drawn .map-figure, .map-panel.is-fresh, .panel-couple { animation: none; }
+  .map-card.is-diving .map-sea, .province-view.is-entering .prov-hero, .province-view.is-entering .prov-hero h1, .province-view.is-entering .prov-main { animation: none; }
   .map-figure svg { transition: none; }
   .chapter.reveal .timeline::before { transform: none; transition: none; }
   .sentra-img img { transition: none; }

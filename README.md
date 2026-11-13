@@ -6,6 +6,7 @@ Kenali wastra Nusantara, lalu kenakan. Pengunjung memilih provinsi di **peta int
 
 Fitur:
 - **Peta 38 provinsi** (`/#peta`): tiap provinsi diisi foto rumah adat/budayanya dengan gradasi warna wilayah, di atas laut bermotif. Intip lewat hover, klik untuk membuka halamannya. Di HP peta bisa digeser.
+- **Zoom & masuk tanpa muat ulang**: di beranda, klik provinsi membuat peta zoom ke provinsi itu lalu kisahnya tampil di halaman yang sama (URL berganti ke `/provinsi/?p=<id>`, tombol Back kembali ke peta dengan zoom-out). Link langsung ke URL itu tetap dibuka oleh halaman provinsi tersendiri.
 - **Halaman provinsi** (`/provinsi/?p=<id>`): disusun per bab dengan navigasi bab yang menempel: sejarah (timeline 3 babak), wastra, rumah adat, tari, alat musik, busana, senjata, kuliner, belanja & sentra, lalu peta. Warna aksen mengikuti wilayah.
 - **Cermin**: katalog wastra (foto Wikimedia Commons), "Kenali dulu, baru coba", foto asli di pojok cermin untuk membandingkan motif, **Simpan foto** (bagikan di HP, unduh di laptop), link langsung `/?coba=<id>#cermin`.
 - **Galeri budaya** (`/#galeri`): 92 foto rumah adat, tarian, alat musik, dan pakaian dari Wikimedia Commons, filter per jenis, acak, lightbox dengan kredit.

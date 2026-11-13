@@ -96,7 +96,6 @@
     <p class="sec-sub" data-reveal>Tiap provinsi punya pasangan berbusana adatnya. Klik sebuah provinsi untuk melihat rumah adat dan budayanya, lalu klik lagi untuk membaca kisah lengkapnya: sejarah, wastra, tari, musik, busana, senjata, dan kuliner.</p>
 
     <div class="map-card" data-reveal>
-      <div class="map-tools"><div class="region-chips" id="regionChips" role="group" aria-label="Sorot wilayah"></div><button class="btn-line dice" id="randomProvince" type="button">🎲 Provinsi acak</button></div>
       <div class="map-layout">
         <div class="map-sea">
           <div class="map-wrap" id="map"></div>
@@ -108,12 +107,12 @@
         <aside class="map-panel" id="mapPanel" aria-live="polite">
           <div class="map-panel-intro">
             <p class="eyebrow eyebrow-left">Pilih provinsi</p>
-            <h3>Klik provinsi atau pasangan berbaju adat di peta.</h3>
-            <p>Provinsinya akan berubah menjadi foto rumah adat, dan di sini muncul busana adat, wastra, tari, musik, serta kulinernya. Klik sekali lagi untuk membuka kisah lengkapnya.</p>
+            <h3>Arahkan kursor ke provinsi untuk mengintip.</h3>
+            <p>Busana adat, rumah adat, wastra, tari, musik, dan kulinernya muncul di sini. Klik provinsinya untuk terbang masuk ke kisah lengkapnya.</p>
           </div>
         </aside>
       </div>
-      <p class="map-legend"><span><i class="lg-land"></i>Belum dipilih</span><span><i class="lg-photo"></i>Dipilih: foto rumah adat</span><span><i class="lg-visited"></i>Sudah ada cap paspor</span><span>Ilustrasi busana adalah gambar sederhana, bukan reproduksi detail.</span></p>
+      <p class="map-legend"><span><i class="lg-land"></i>Belum dipilih</span><span><i class="lg-photo"></i>Diklik: zoom ke foto rumah adat</span><span><i class="lg-visited"></i>Sudah ada cap paspor</span><span>Ilustrasi busana adalah gambar sederhana, bukan reproduksi detail.</span></p>
       <div class="prov-index" id="provIndex" aria-label="Daftar provinsi per wilayah"></div>
     </div>
   </section>
@@ -310,6 +309,8 @@
     </a>
   </section>
 </main>
+
+<div id="provinceView" class="province-view" hidden></div>
 
 <footer class="foot">
   <div class="lurik" aria-hidden="true"></div>
