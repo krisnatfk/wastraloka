@@ -25,15 +25,25 @@
       <span>Wastra<em>loka</em></span>
     </a>
     <ul class="nav-links" id="navMenu">
-      <li><a href="#peta">Peta</a></li>
-      <li><a href="#lentera">Lentera</a></li>
-      <li><a href="#galeri">Galeri</a></li>
-      <li><a href="#kuis">Kuis</a></li>
-      <li><a href="#cermin">Cermin</a></li>
-      <li><a href="#wastra">Wastra</a></li>
-      <li><a href="#paspor">Paspor</a></li>
-      <li><a href="#umkm">UMKM</a></li>
-      <li><a href="#sumber">Sumber</a></li>
+      <li class="nav-item"><a href="#peta">Peta</a></li>
+      <li class="nav-item"><a href="#lentera">Lentera</a></li>
+      <li class="nav-item has-sub">
+        <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="subJelajah">Jelajah <svg class="chev" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4.5 6 8.5l4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <ul class="nav-sub" id="subJelajah">
+          <li><a href="#galeri"><b>Galeri budaya</b><small>Rumah adat, tari, musik, busana</small></a></li>
+          <li><a href="#kuis"><b>Kuis tebak asal</b><small>Tebak provinsi dari foto</small></a></li>
+          <li><a href="#paspor"><b>Paspor Wastra</b><small>Kumpulkan 38 cap provinsi</small></a></li>
+        </ul>
+      </li>
+      <li class="nav-item has-sub">
+        <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="subWastra">Wastra <svg class="chev" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4.5 6 8.5l4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <ul class="nav-sub" id="subWastra">
+          <li><a href="#cermin"><b>Cermin AI</b><small>Coba wastra di badanmu</small></a></li>
+          <li><a href="#wastra"><b>Katalog wastra</b><small>Kain yang siap dicoba</small></a></li>
+          <li><a href="#umkm"><b>Perajin &amp; UMKM</b><small>Sentra dan tempat membeli</small></a></li>
+        </ul>
+      </li>
+      <li class="nav-item"><a href="#sumber">Sumber</a></li>
     </ul>
     <a class="pill pill-gold nav-cta" href="#cermin">Coba cermin</a>
     <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Buka menu">

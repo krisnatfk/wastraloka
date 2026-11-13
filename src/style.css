@@ -103,7 +103,7 @@ button:disabled { opacity: 0.45; cursor: default; }
 :root {
   --nav-ease: cubic-bezier(0.32, 0.72, 0, 1);
   --nav-duration: 0.6s;
-  --nav-island: 900px;
+  --nav-island: 980px;
 }
 .nav-sentinel { position: absolute; top: 24px; left: 0; width: 1px; height: 1px; pointer-events: none; }
 .site-nav {
@@ -122,8 +122,10 @@ button:disabled { opacity: 0.45; cursor: default; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  flex-wrap: nowrap;
+  gap: 14px;
   height: 54px;
+  min-width: 0;
   transition: padding var(--nav-duration) var(--nav-ease);
 }
 .nav-glass {
@@ -147,10 +149,45 @@ button:disabled { opacity: 0.45; cursor: default; }
 .site-nav :focus-visible { outline-color: var(--kunyit-soft); }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 21px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
 .brand svg { color: var(--kunyit-soft); }
-.nav-links { display: flex; gap: clamp(14px, 2.2vw, 30px); margin: 0; padding: 0; list-style: none; }
-.nav-links a { font-size: 13.5px; font-weight: 600; text-decoration: none; opacity: 0.92; white-space: nowrap; }
-.nav-links a:hover { opacity: 1; text-decoration: underline; text-decoration-color: var(--kunyit); text-underline-offset: 6px; }
-.nav-cta { min-height: 38px; padding: 0 16px; font-size: 13px; }
+.brand { flex: none; }
+.nav-links { display: flex; flex: 1 1 auto; justify-content: center; align-items: center; gap: clamp(10px, 1.8vw, 26px); min-width: 0; margin: 0; padding: 0; list-style: none; }
+.nav-item { position: relative; }
+.nav-links a, .nav-sub-toggle { font-size: 13.5px; font-weight: 600; text-decoration: none; opacity: 0.92; white-space: nowrap; }
+.nav-item > a:hover { opacity: 1; text-decoration: underline; text-decoration-color: var(--kunyit); text-underline-offset: 6px; }
+.nav-cta { flex: none; min-height: 38px; padding: 0 16px; font-size: 13px; white-space: nowrap; }
+
+/* dropdown (Jelajah, Wastra) */
+.nav-sub-toggle { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 2px; border: 0; background: transparent; color: inherit; font-family: inherit; cursor: pointer; }
+.nav-sub-toggle:hover, .nav-item.is-open > .nav-sub-toggle { opacity: 1; color: var(--kunyit-soft); }
+.nav-sub-toggle .chev { transition: transform 0.25s var(--nav-ease); }
+.nav-item.is-open > .nav-sub-toggle .chev { transform: rotate(180deg); }
+.nav-sub {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  z-index: 5;
+  min-width: 250px;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  border: 1px solid rgba(232, 199, 122, 0.35);
+  border-radius: 18px;
+  background: rgba(40, 22, 12, 0.96);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  backdrop-filter: blur(18px) saturate(1.5);
+  box-shadow: 0 24px 44px -18px rgba(20, 10, 4, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -6px);
+  transition: opacity 0.2s ease, transform 0.3s var(--nav-ease), visibility 0s linear 0.3s;
+}
+.nav-sub::before { content: ""; position: absolute; left: 0; right: 0; top: -14px; height: 14px; } /* jembatan agar kursor tidak "jatuh" di celah */
+.nav-item.is-open > .nav-sub { opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0); transition: opacity 0.2s ease, transform 0.3s var(--nav-ease), visibility 0s; }
+.nav-sub a { display: block; padding: 10px 14px; border-radius: 12px; opacity: 1; white-space: normal; }
+.nav-sub a b { display: block; font-size: 14px; font-weight: 700; }
+.nav-sub a small { display: block; margin-top: 1px; font-size: 12px; font-weight: 500; color: rgba(255, 255, 255, 0.62); }
+.nav-sub a:hover, .nav-sub a:focus-visible { background: rgba(232, 199, 122, 0.16); text-decoration: none; }
 
 /* ============ Hero foto penuh ============ */
 .hero {
@@ -558,8 +595,6 @@ dialog::backdrop { background: rgba(33, 22, 15, 0.5); backdrop-filter: blur(3px)
   .nav-links a { font-size: 12.5px; }
 }
 @media (max-width: 920px) {
-  :root { --nav-island: 420px; }
-  .nav-links { display: none; }
   .hero { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; padding-top: 100px; min-height: auto; }
   .hero-rail { display: none; }
   .hero-strip { grid-column: 1; grid-template-columns: repeat(5, minmax(140px, 1fr)); overflow-x: auto; padding-bottom: 4px; scroll-snap-type: x mandatory; }
@@ -1037,7 +1072,8 @@ body.is-province-open #beranda, body.is-province-open .marquee, body.is-province
 
 /* ---- Menu hamburger di HP: pulau kaca melebar ke bawah berisi menu ---- */
 .nav-toggle { display: none; }
-@media (max-width: 920px) {
+@media (max-width: 1024px) {
+  :root { --nav-island: 560px; }
   .site-nav .nav-shell, .site-nav.is-scrolled .nav-shell, .site-nav.is-open .nav-shell { flex-wrap: wrap; align-items: center; height: auto; min-height: 56px; padding: 6px 6px 6px 16px; row-gap: 0; }
   .brand { margin-right: auto; min-height: 44px; line-height: 1; }
   .brand svg { flex: none; }
@@ -1079,8 +1115,10 @@ body.is-province-open #beranda, body.is-province-open .marquee, body.is-province
     padding: 0 2px;
     transition: max-height 0.5s var(--nav-ease), opacity 0.3s ease, padding 0.5s var(--nav-ease);
   }
-  .site-nav.is-open .nav-links { max-height: 360px; opacity: 1; padding: 10px 2px 12px; }
-  .site-nav .nav-links a {
+  .site-nav.is-open .nav-links { max-height: 640px; opacity: 1; padding: 10px 2px 12px; overflow-y: auto; }
+  .nav-links { justify-content: stretch; align-items: stretch; }
+  .site-nav .nav-links > li:last-child, .site-nav .nav-item.has-sub { grid-column: 1 / -1; }
+  .site-nav .nav-links a, .site-nav .nav-sub-toggle {
     display: flex;
     align-items: center;
     min-height: 48px;
@@ -1090,25 +1128,49 @@ body.is-province-open #beranda, body.is-province-open .marquee, body.is-province
     font-size: 15px;
     opacity: 1;
   }
-  .site-nav .nav-links a:hover, .site-nav .nav-links a:focus-visible { background: rgba(232, 199, 122, 0.18); text-decoration: none; }
+  .site-nav .nav-sub-toggle { width: 100%; justify-content: space-between; color: #fff; }
+  .site-nav .nav-item.is-open > .nav-sub-toggle { background: rgba(232, 199, 122, 0.16); color: var(--kunyit-soft); }
+  .site-nav .nav-links a:hover, .site-nav .nav-links a:focus-visible, .site-nav .nav-sub-toggle:hover { background: rgba(232, 199, 122, 0.18); text-decoration: none; }
+  /* dropdown menjadi akordeon di dalam menu */
+  .site-nav .nav-sub {
+    position: static;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    opacity: 1;
+    transform: none;
+    transition: max-height 0.4s var(--nav-ease), padding 0.4s var(--nav-ease), visibility 0s linear 0.4s;
+  }
+  .site-nav .nav-sub::before { display: none; }
+  .site-nav .nav-item.is-open > .nav-sub { transform: none; max-height: 220px; padding: 6px 0 2px; transition: max-height 0.4s var(--nav-ease), padding 0.4s var(--nav-ease), visibility 0s; }
+  .site-nav .nav-sub a { min-height: 56px; padding: 0 12px; background: rgba(255, 255, 255, 0.05); font-size: 14px; }
+  .site-nav .nav-sub a b { font-size: 14px; }
+  .site-nav .nav-sub a small { display: none; }
   .site-nav.is-open .nav-links li { animation: menuItem 0.4s var(--nav-ease) backwards; }
   .site-nav.is-open .nav-links li:nth-child(2) { animation-delay: 30ms; }
   .site-nav.is-open .nav-links li:nth-child(3) { animation-delay: 60ms; }
   .site-nav.is-open .nav-links li:nth-child(4) { animation-delay: 90ms; }
   .site-nav.is-open .nav-links li:nth-child(5) { animation-delay: 120ms; }
-  .site-nav.is-open .nav-links li:nth-child(6) { animation-delay: 150ms; }
-  .site-nav.is-open .nav-links li:nth-child(7) { animation-delay: 180ms; }
-  .site-nav.is-open .nav-links li:nth-child(8) { animation-delay: 210ms; }
   @keyframes menuItem { from { opacity: 0; transform: translateY(-6px); } }
 
   /* saat menu terbuka, pulau kaca selalu tampil (juga di puncak halaman) dan sudutnya melunak */
-  .site-nav.is-open { padding: 10px 12px 0; }
+  .site-nav.is-open { padding: 10px max(12px, calc((100% - var(--nav-island)) / 2)) 0; }
 
   .site-nav.is-open .nav-glass { opacity: 1; transform: none; border-radius: 26px; }
   .nav-glass { transition: opacity 0.45s var(--nav-ease), transform var(--nav-duration) var(--nav-ease), border-radius 0.4s var(--nav-ease); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-nav .nav-links, .nav-toggle-bars i, .site-nav.is-open .nav-links li { transition: none; animation: none; }
+  .site-nav .nav-links, .nav-toggle-bars i, .site-nav.is-open .nav-links li, .nav-sub, .nav-sub-toggle .chev { transition: none; animation: none; }
 }
 
 /* ---- Petunjuk "geser peta" (HP): pil kaca di bawah peta, hilang setelah peta digeser ---- */
