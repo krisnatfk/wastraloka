@@ -7,7 +7,6 @@ import { FOODS, FOOD_SOURCE, MUSIC, MUSIC_SOURCE, SENTRA, WEAPONS, WEAPON_SOURCE
 import { groupForDisplay, risksForProvince } from "./content/heritage-risk.js";
 import { HISTORY, historySource } from "./content/history.js";
 import { PROVINCE_PHOTOS } from "./content/province-photos.js";
-import { PROVINCE_TEXTILES } from "./content/province-textiles.js";
 import { PROVINCES, SOURCES, regionOf } from "./content/provinces.js";
 import { catalogForProvince, wikimediaSized } from "./content/wastra-catalog.js";
 import { el } from "./dom.js";
@@ -63,21 +62,6 @@ function hero(province, photo, region) {
     ]),
   ]);
 }
-
-// Latar kain khas provinsi: foto wastra dipudarkan di belakang isi halaman (hiasan, jadi alt kosong).
-function textileBackdrop(textile) {
-  if (!textile) return null;
-  const img = el("img", { src: textile.src, alt: "", decoding: "async", fetchPriority: "low" });
-  const layer = el("div", { className: "prov-textile", ariaHidden: "true" }, [img]);
-  // gagal pertama dicoba ulang oleh installImageRetry; gagal kedua: lepas lapisannya, latar batik bawaan tetap tampil
-  let failures = 0;
-  img.addEventListener("error", () => { failures += 1; if (failures > 1) layer.remove(); });
-  return layer;
-}
-
-const textileCredit = (textile) => textile && el("p", { className: "textile-credit" }, [
-  `Latar halaman: ${textile.label} · Foto `, el("a", { href: textile.page, rel: "noopener", target: "_blank", textContent: `${textile.artist}, ${textile.license}` }), " · Wikimedia Commons",
-]);
 
 function chapterNav() {
   const nav = el("nav", { className: "chapter-nav", ariaLabel: "Bab di halaman ini" }, [
@@ -285,7 +269,6 @@ function trackChapters(root) {
 export function renderProvinceView(root, province) {
   const region = regionOf(province);
   const photo = PROVINCE_PHOTOS[province.id];
-  const textile = PROVINCE_TEXTILES[province.id];
   const isNewStamp = stampVisited(province.id);
 
   root.style.setProperty("--accent", region.accent);
@@ -301,11 +284,10 @@ export function renderProvinceView(root, province) {
     el("div", { className: "chapters" }, [
       historyChapter(province), wastraChapter(province), cultureChapter(province), costumeChapter(province),
       fadingChapter(province), weaponFoodChapter(province), shopChapter(province), locationChapter(province, region, isNewStamp),
-      pager(province), ...notes, textileCredit(textile),
+      pager(province), ...notes,
     ]),
   ]);
-  const body = el("div", { className: "prov-body" }, [textileBackdrop(textile), main]);
-  root.replaceChildren(hero(province, photo, region), body);
+  root.replaceChildren(hero(province, photo, region), main);
 
   // peta digambar setelah masuk dokumen: ukuran tiap provinsi baru bisa diukur saat sudah tampil
   const map = renderMap(root.querySelector("#miniMap"), {

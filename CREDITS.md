@@ -10,49 +10,6 @@ thumbnail, tanpa diubah. Lisensinya CC0, domain publik, CC BY, atau CC BY-SA; na
 fotografer dan lisensi juga tampil di halaman tempat foto itu muncul. Untuk CC BY-SA,
 foto tidak kami ubah, jadi kewajiban berbagi serupa tidak berlaku pada kode situs ini.
 
-### Latar kain halaman provinsi
-
-Foto wastra khas tiap provinsi dipakai sebagai latar halaman provinsi. Berkasnya tidak diubah;
-transparansi dan gradasi warna kertas hanya efek tampilan CSS di atasnya. Riau, Kepulauan Riau,
-Sulawesi Barat, dan Maluku Utara belum punya foto yang asal-usulnya jelas, jadi memakai latar batik bawaan.
-
-| Provinsi | Kain | Foto | Lisensi |
-|---|---|---|---|
-| Aceh | Kain sutra Aceh berhias songket benang emas | [Tropenmuseum](https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Ceremoni%C3%ABle_omslagdoek_TMnr_5957-3.jpg) | CC BY-SA 3.0 |
-| Sumatera Utara | Ulos godang, tenun Batak | [Rijksmuseum](https://commons.wikimedia.org/wiki/File:Doek_Ulos_godang,_AK-MAK-1742-86.jpg) | CC0 |
-| Sumatera Barat | Songket khas Minangkabau | [Benchmarknews & Kementerian Perdagangan RI](https://commons.wikimedia.org/wiki/File:Tenunan_songket_khas_Minangkabau.jpg) | Public domain |
-| Jambi | Batik tulis Jambi bertulisan Arab | [Galeri koleksi (anonim)](https://commons.wikimedia.org/wiki/File:Kain_Batik_Tulisan,_Sumatera.png) | Public domain |
-| Sumatera Selatan | Ragam motif songket Palembang | [Msdlfsalsa](https://commons.wikimedia.org/wiki/File:Kain_songket_Palembang.jpg) | CC0 |
-| Bengkulu | Batik besurek Bengkulu | [Gunawan Kartapranata](https://commons.wikimedia.org/wiki/File:Batik_Besurek_Bengkulu.jpg) | CC BY-SA 4.0 |
-| Lampung | Tapis Lampung, kain upacara perempuan | [The Metropolitan Museum of Art](https://commons.wikimedia.org/wiki/File:Woman%27s_Ceremonial_Skirt_(Tapis)_MET_MMA2000.160.5.jpeg) | CC0 |
-| Kepulauan Bangka Belitung | Kain limar dari Pulau Bangka, kerabat tenun cual | [Hiart](https://commons.wikimedia.org/wiki/File:Kain_limar_(shoulder_cloth)_from_Sumatra,_Bangka_Island,_late_19th_century,_HAA.JPG) | CC0 |
-| Banten | Ragam motif batik Banten | [Tubagus Yudhistira](https://commons.wikimedia.org/wiki/File:Batik_of_Banten,_Indonesia.png) | CC BY-SA 4.0 |
-| DKI Jakarta | Batik Betawi motif Fajar Menyingsing | [Naval Scene](https://commons.wikimedia.org/wiki/File:Batik_Fajar_Menyingsing_20240622_121954.jpg) | CC BY-SA 4.0 |
-| Jawa Barat | Batik Mega Mendung, Cirebon | [Gunarta](https://commons.wikimedia.org/wiki/File:Batik_Mega_Mendung.jpg) | CC BY-SA 4.0 |
-| Jawa Tengah | Batik tulis Lasem | [Anonim468](https://commons.wikimedia.org/wiki/File:Kain_batik_tulis_Lasem_di_seri_sarung.jpg) | CC BY-SA 4.0 |
-| Daerah Istimewa Yogyakarta | Batik Parang Rusak | [Anonim](https://commons.wikimedia.org/wiki/File:Collectie_NMvWereldculturen,_RV-847-77,_Batikpatroon,_%27Parang_rusak_barong%27,_voor_1891.jpg) | Public domain |
-| Jawa Timur | Batik Madura | [NaimaraBadry](https://commons.wikimedia.org/wiki/File:Batik_Madura_16.jpg) | CC BY-SA 4.0 |
-| Bali | Tenun gringsing Bali | [Chris Hazzard](https://commons.wikimedia.org/wiki/File:Geringsing_endek_weaving_106_cm_wide.JPG) | CC BY-SA 3.0 |
-| Nusa Tenggara Barat | Tenun ikat Sasak, Desa Sade | [Midori](https://commons.wikimedia.org/wiki/File:Tenun_Ikat_Lombok_Traditional_Sasak_Village_Sade.JPG) | CC BY 3.0 |
-| Nusa Tenggara Timur | Tenun ikat Sumba | [Ian Alexander](https://commons.wikimedia.org/wiki/File:Ikat_cloth_from_Sumba,_detail.JPG) | CC BY-SA 4.0 |
-| Kalimantan Barat | Pua kumbu, tenun ikat Iban | [Hiart](https://commons.wikimedia.org/wiki/File:Pua_kombu_(ceremonial_cloth)_from_Indonesia,_Iban_people,_late_19th_century,_Honolulu_Museum_of_Art.jpg) | CC0 |
-| Kalimantan Tengah | Baju Sangkarut, busana adat Dayak Ngaju | [Martini Rahman](https://commons.wikimedia.org/wiki/File:Baju_Sangkarut.jpg) | CC BY-SA 4.0 |
-| Kalimantan Selatan | Kain sasirangan | [Ezagren](https://commons.wikimedia.org/wiki/File:Kain_Sasirangan_002.JPG) | CC BY-SA 4.0 |
-| Kalimantan Timur | Ragam motif sarung Samarinda | [Abieomar](https://commons.wikimedia.org/wiki/File:Ragam_Motif_Sarung_Samarinda.jpg) | CC BY-SA 4.0 |
-| Kalimantan Utara | Ornamen Dayak Lundayeh | [Johannnindito Adisuryo (Yohanes Nindito Adisuryo)](https://commons.wikimedia.org/wiki/File:Ornamen_Rumah_Panjang_Dayak_Lundayeh_-_Lundayeh_Dayaknese_Long_House_Ornament.jpg) | CC BY-SA 4.0 |
-| Sulawesi Utara | Motif kain Bentenan, Minahasa | [Rahmaziz](https://commons.wikimedia.org/wiki/File:Motif_kain_Bentenan_dari_Minahasa.jpg) | CC BY 4.0 |
-| Gorontalo | Sulaman karawo | [Rosydi A Azhar](https://commons.wikimedia.org/wiki/File:Sulaman_Karawo.jpg) | CC BY-SA 4.0 |
-| Sulawesi Tengah | Tenun ikat Donggala | [Anonim](https://commons.wikimedia.org/wiki/File:Ikatweefsel_afkomstig_uit_Donggala,_KITLV_5528.tiff) | CC BY 4.0 |
-| Sulawesi Selatan | Tenun Toraja | [Samiun Achmad](https://commons.wikimedia.org/wiki/File:Tenun_Toraja_on_Wallpaper_-_panoramio.jpg) | CC BY 3.0 |
-| Sulawesi Tenggara | Sarung tenun Buton dalam tradisi Salibumbu | [Rustamawat](https://commons.wikimedia.org/wiki/File:SALIBUMBU.jpg) | CC BY-SA 4.0 |
-| Maluku | Tenun ikat Tanimbar | [Anonim](https://commons.wikimedia.org/wiki/File:Woman%27s_cerimonial_skirt,_Tanimbar_Islands,_Indonesia,_18th_century,_cotton_with_warp_ikat,_Honolulu_Academy_of_Arts.jpg) | Public domain |
-| Papua | Noken, tas rajut Papua | [Nurul Ichlasiah](https://commons.wikimedia.org/wiki/File:Noken.jpg) | CC BY-SA 4.0 |
-| Papua Barat | Noken, tas rajut Papua | [Nurul Ichlasiah](https://commons.wikimedia.org/wiki/File:Noken.jpg) | CC BY-SA 4.0 |
-| Papua Barat Daya | Noken, tas rajut Papua | [Nurul Ichlasiah](https://commons.wikimedia.org/wiki/File:Noken.jpg) | CC BY-SA 4.0 |
-| Papua Tengah | Membuat noken | [Keenan63](https://commons.wikimedia.org/wiki/File:Membuat_noken.jpg) | CC BY-SA 4.0 |
-| Papua Pegunungan | Merajut noken | [Nurul Ichlasiah](https://commons.wikimedia.org/wiki/File:Merajut_Noken.jpg) | CC BY-SA 4.0 |
-| Papua Selatan | Merajut dan menjual noken | [EmaMukar](https://commons.wikimedia.org/wiki/File:Merajut_dan_menjual_Noken.jpg) | CC BY-SA 4.0 |
-
 ### Katalog wastra di cermin
 
 | Wastra | Fotografer / pemilik | Lisensi | Sumber |
