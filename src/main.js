@@ -114,7 +114,7 @@ async function fetchViaProxy(url) {
   const r = await fetch("/api/image?url=" + encodeURIComponent(url));
   if (!r.ok) {
     let msg = "Gagal mengambil gambar";
-    try { msg = (await r.json()).error || msg; } catch {}
+    try { msg = (await r.json()).error?.message || msg; } catch { /* respons bukan JSON: pakai pesan bawaan */ }
     throw new Error(msg);
   }
   return r.blob();
@@ -290,12 +290,27 @@ function friendly(err) {
   return msg;
 }
 
+// Foto referensi untuk AI. refCrop ([x, y, w, h] pecahan 0..1) memotong foto yang berisi beberapa kain
+// menjadi satu kain saja, supaya AI tidak mencampur motif.
+async function referenceImageOf(g) {
+  const blob = await (await fetch(g.src)).blob();
+  if (!g.refCrop) return blob;
+  const bmp = await createImageBitmap(blob);
+  const [x, y, w, h] = g.refCrop;
+  const sw = Math.round(bmp.width * w), sh = Math.round(bmp.height * h);
+  const c = document.createElement("canvas"); c.width = sw; c.height = sh;
+  c.getContext("2d").drawImage(bmp, Math.round(bmp.width * x), Math.round(bmp.height * y), sw, sh, 0, 0, sw, sh);
+  return new Promise((resolve, reject) => {
+    c.toBlob((cropped) => (cropped ? resolve(cropped) : reject(new Error("Gagal memotong foto referensi"))), "image/jpeg", 0.92);
+  });
+}
+
 // Baju yang sudah dipilih sebelum cermin nyala langsung dikirim saat connect,
 // supaya server tidak mulai tanpa referensi baju.
 async function initialStateFor(id) {
   const g = id && byId(id);
   if (!g) return null;
-  const image = await (await fetch(g.src)).blob();
+  const image = await referenceImageOf(g);
   console.info("[VTON] initialState", { name: g.name, prompt: promptOf(g), imageBytes: image.size });
   return { prompt: { text: promptOf(g), enhance: false }, image };
 }
@@ -659,7 +674,7 @@ async function wear(id) {
   $("nowSub").textContent = rt ? "Memakaikan..." : "Nyalakan cermin untuk mencoba";
   if (!rt) return;
   try {
-    const image = await (await fetch(g.src)).blob();
+    const image = await referenceImageOf(g);
     // enhance dimatikan: prompt enhancer menulis ulang "garment shown in the reference image"
     // jadi deskripsi baju generik, sehingga foto referensi upload-an diabaikan
     console.info("[VTON] set", { name: g.name, prompt: promptOf(g), imageBytes: image.size, imageType: image.type });
@@ -698,8 +713,18 @@ function showKnowCard(g) {
 
 /* ===================== Pembanding motif ===================== */
 // Foto asli wastra tetap terlihat di pojok cermin, supaya pengguna bisa membandingkan dengan tafsiran AI.
+let refObjectUrl = null;
 function showReference(g) {
   $("refImg").src = g.src;
+  // kartu "Motif asli" menampilkan potongan yang sama dengan yang dikirim ke AI
+  if (g.refCrop) {
+    referenceImageOf(g).then((blob) => {
+      if (currentId !== g.id) return;
+      if (refObjectUrl) URL.revokeObjectURL(refObjectUrl);
+      refObjectUrl = URL.createObjectURL(blob);
+      $("refImg").src = refObjectUrl;
+    }).catch((err) => console.warn("[VTON] potongan referensi gagal dibuat", err));
+  }
   $("refImg").alt = `Foto asli: ${g.name}`;
   $("refCard").hidden = !rt;
 }

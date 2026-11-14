@@ -20,6 +20,7 @@ function initDropdowns(nav) {
   if (!items.length) return () => {};
   const hoverMode = window.matchMedia(HOVER_QUERY);
   const timers = new Map();
+  const openedByHover = new Set();
 
   const setItem = (item, isOpen) => {
     clearTimeout(timers.get(item));
@@ -34,6 +35,8 @@ function initDropdowns(nav) {
     const focusLink = (i) => links[(i + links.length) % links.length]?.focus();
 
     toggle.addEventListener("click", () => {
+      // dibuka oleh hover barusan: klik berikutnya tidak boleh malah menutupnya
+      if (openedByHover.has(item)) { openedByHover.delete(item); return; }
       const willOpen = !item.classList.contains("is-open");
       if (!MOBILE_MQ().matches) closeAll(item); // desktop: satu dropdown terbuka sekali waktu
       setItem(item, willOpen);
@@ -52,9 +55,15 @@ function initDropdowns(nav) {
     item.addEventListener("focusout", (e) => {
       if (!MOBILE_MQ().matches && !item.contains(e.relatedTarget)) setItem(item, false);
     });
-    item.addEventListener("mouseenter", () => { if (hoverMode.matches) { closeAll(item); setItem(item, true); } });
+    item.addEventListener("mouseenter", () => {
+      if (!hoverMode.matches) return;
+      const wasOpen = item.classList.contains("is-open");
+      closeAll(item); setItem(item, true);
+      if (!wasOpen) openedByHover.add(item);
+    });
     item.addEventListener("mouseleave", () => {
       if (!hoverMode.matches) return;
+      openedByHover.delete(item);
       timers.set(item, setTimeout(() => setItem(item, false), HOVER_CLOSE_DELAY_MS));
     });
     item.querySelector(".nav-sub").addEventListener("click", (e) => { if (e.target.closest("a")) closeAll(); });
