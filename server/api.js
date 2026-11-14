@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { createAdminAuth } from "./admin-auth.js";
 import { handleAdminRoute } from "./admin-routes.js";
 import { randomId, signPayload, verifySignedPayload } from "./crypto.js";
-import { createClientToken } from "./decart-api.js";
+import { createEnvKeyPool, envKeysFrom } from "./env-key-pool.js";
 import { clientIpFromRequest, createRateLimiter, HttpError, readJson, sendError, sendJson } from "./http.js";
 import { handleImageProxy } from "./image-proxy.js";
 import { createKeyService, NoKeyAvailableError } from "./key-service.js";
@@ -37,7 +37,10 @@ export function createApi({ env, rootDir }) {
   const consumePublic = createRateLimiter({ ...PUBLIC_LIMIT, redis, prefix: "public" });
   const trialConfig = trialConfigFromEnv(env);
   const trial = trialConfig.enabled ? createTrialLimiter({ config: trialConfig, redis, secret }) : null;
-  const envKey = env.DECART_API_KEY && !env.DECART_API_KEY.includes("isi_api_key") ? env.DECART_API_KEY.trim() : null;
+  // DECART_API_KEY = key utama, DECART_API_KEY_2 dst. = cadangan bila key sebelumnya habis/ditolak
+  const envKeys = envKeysFrom(env);
+  const envKey = envKeys[0] ?? null;
+  const envPool = createEnvKeyPool(envKeys);
 
   // Pertama kali: key dari .env otomatis masuk dashboard supaya tidak perlu diketik ulang.
   // Kalau gagal (mis. database lambat saat server baru nyala), dicoba lagi di request berikutnya.
@@ -46,8 +49,10 @@ export function createApi({ env, rootDir }) {
     if (!store || !envKey) return Promise.resolve();
     importPromise ??= (async () => {
       if ((await store.list()).length === 0) {
-        await store.add({ label: "Key utama (.env)", apiKey: envKey });
-        console.info("[admin] API key dari .env diimpor ke dashboard");
+        for (const [index, apiKey] of envKeys.entries()) {
+          await store.add({ label: index === 0 ? "Key utama (.env)" : `Key cadangan ${index + 1} (.env)`, apiKey });
+        }
+        console.info(`[admin] ${envKeys.length} API key dari .env diimpor ke dashboard`);
       }
     })().catch((err) => {
       importPromise = null;
@@ -58,13 +63,10 @@ export function createApi({ env, rootDir }) {
 
   // Token langsung dari key di env, tanpa dashboard (mode lama, juga cadangan kalau database bermasalah).
   async function issueTokenFromEnvKey(tokenOptions) {
-    if (!envKey) throw new HttpError(500, "NO_API_KEY", "DECART_API_KEY belum diisi di file .env");
-    try {
-      const token = await createClientToken(envKey, tokenOptions);
-      return { apiKey: token.apiKey, expiresAt: token.expiresAt, ticket: null };
-    } catch (err) {
-      throw new HttpError(502, "DECART_ERROR", err.message);
-    }
+    const { token, keyIndex } = await envPool.issueToken(tokenOptions);
+    // tiket berisi urutan key, supaya laporan "kredit habis" dari browser bisa melewati key itu
+    const ticket = secret ? signPayload({ e: keyIndex, exp: Date.now() + TICKET_TTL_MS }, secret) : null;
+    return { apiKey: token.apiKey, expiresAt: token.expiresAt, ticket };
   }
 
   async function issueToken(tokenOptions) {
@@ -87,8 +89,12 @@ export function createApi({ env, rootDir }) {
 
   async function recordUsage(req) {
     const body = await readJson(req);
+    const ticket = secret ? verifySignedPayload(body.ticket, secret) : null;
+    if (Number.isInteger(ticket?.e)) {
+      if (body.event === "insufficient_credits") envPool.markExhausted(ticket.e);
+      return { recorded: true };
+    }
     if (!keys) return null;
-    const ticket = verifySignedPayload(body.ticket, secret);
     if (!ticket?.k) throw new HttpError(400, "INVALID_TICKET", "Tiket pemakaian tidak valid.");
     if (body.event === "insufficient_credits") await keys.recordExhausted(ticket.k);
     if (body.seconds !== undefined) await keys.recordSession(ticket.k, body.seconds);

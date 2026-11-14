@@ -83,6 +83,7 @@ Cara kerja:
 | Variabel `.env` | Isi |
 |---|---|
 | `DECART_API_KEY` | Key awal (diimpor otomatis ke dashboard) |
+| `DECART_API_KEY_2` … `_10` | Key cadangan, opsional. Tanpa dashboard, server memakai key utama dulu lalu otomatis pindah ke cadangan saat kredit habis atau key ditolak |
 | `ADMIN_USERNAME` | Username admin (diisi `admin:setup`) |
 | `ADMIN_PASSWORD_HASH` | Hash scrypt password (diisi `admin:setup`) |
 | `ADMIN_SECRET` | Kunci enkripsi & tanda tangan sesi (dibuat otomatis) |
